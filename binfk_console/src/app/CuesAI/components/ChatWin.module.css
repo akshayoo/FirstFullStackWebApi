@@ -1,0 +1,73 @@
+.chatAI {
+    display: flex;
+
+}
+
+.SlideBarDiv {
+    width: 15%;
+    height: 100%;
+    border-right: 2px solid black;
+}
+
+.InputWindow {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    align-items: center;
+    border: 1px solid black;
+    height: 100vh;
+    margin-top: 50px;
+}
+
+.chatScreen {
+    border: 1px solid black;
+    margin-top: 50px;
+    width: 80%;
+}
+
+
+.InputWindow input {
+    position: fixed;
+    bottom: 50px;
+    width: 60%;
+    height: 50px;
+    border: 1px solid rgb(148, 148, 148);
+    border-radius: 20px;
+    background-color: rgb(244, 244, 244);
+    font-size: 16px;
+    padding-inline-start: 20px;
+}
+
+.InputWindow input:focus {
+    border-color: rgb(0, 129, 199);
+    outline: none;
+}
+
+.chatHistoryDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.chatCompUser {
+    align-self: flex-end;
+    padding: 20px 30px;
+    margin: 20px 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+.chatCompBot {
+    align-self: flex-start;
+    padding: 20px 30px;
+    margin: 20px 30px;
+    border: 1px solid rgb(189, 0, 0);
+    border-radius: 10px;
+    max-width: 70%;
+}

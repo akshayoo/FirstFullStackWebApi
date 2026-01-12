@@ -1,0 +1,8 @@
+Sample QC, library QC, and method summary
+Raw data QC, adapter trimming, and preprocessing
+Metagenome assembly summary
+Gene annotation and species/genus/strain-level matching against reference databases
+Identification of phages, episomes, and viral DNA with species rarefaction and abundance profiling
+Alpha diversity analysis (Shannon and Simpson indices)
+Beta diversity and inter-sample diversity estimation (for multi-sample studies)
+Host DNA considered as contamination and ideally removed during sample preparation
