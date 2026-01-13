@@ -34,18 +34,19 @@ export function ChatSlideBar() {
     const [previousChats, setPreviousChats] = useState(UserChatTitles);
 
      return(
-        <>
-            <div>
+        <div className= {styles.chatSideBarComp}>
+            <div className={styles.chatNewChatDIV}>
                 <button>New Chat</button>
             </div>
-            <div className="chatHistoryDiv">
-                {previousChats.map(chat => (
-                    <button key={chat.ChatId}>
-                        {chat.ChatTitle}
+            <div className={styles.chatHistoryDiv}>
+                <h2>Chat History</h2>
+                {previousChats.map(chathist => (
+                    <button key={chathist.ChatId}>
+                        {chathist.ChatTitle}
                     </button>
                 ))}
             </div>
-        </>
+        </div>
      );
 
 }

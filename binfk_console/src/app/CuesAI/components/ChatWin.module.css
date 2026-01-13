@@ -1,73 +1,154 @@
-.chatAI {
-    display: flex;
-
+.chatWin {
+  height: 100vh;
+  display: flex;
+  overflow:hidden
+}
+.chatSideBarComp {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 5px solid rgb(240, 240, 240);
+  padding: 20px 10px;
 }
 
-.SlideBarDiv {
-    width: 15%;
+.chatNewChatDIV {
+    justify-content: center;
+    margin-top: 50px;
+    height: 40px;
+    border: 1px solid rgb(198, 198, 198);
+    transition: background-color 0.3s ease;
+    border-radius: 15px;
+    margin-bottom: 50px;
+}
+
+.chatNewChatDIV button {
     height: 100%;
-    border-right: 2px solid black;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
 }
 
-.InputWindow {
+.chatNewChatDIV:hover{
+    background-color: rgb(242, 242, 242);
+}
+
+.chatHistoryDiv{
     display: flex;
     flex-direction: column;
-    width: 85%;
-    align-items: center;
-    border: 1px solid black;
-    height: 100vh;
-    margin-top: 50px;
+    justify-content: center;
 }
 
-.chatScreen {
-    border: 1px solid black;
-    margin-top: 50px;
+.chatHistoryDiv h2 {
+    font-size: 16px;
+    align-self: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgb(219, 219, 219);
+    border-bottom: 1px solid rgb(219, 219, 219);
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.chatHistoryDiv button {
+    align-self: center;
+    margin-top: 5px;
+    margin-bottom:5px;
+    height: 35px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: rgb(246, 251, 255);
+    transition: background-color 0.5s ease;
     width: 80%;
 }
 
 
-.InputWindow input {
-    position: fixed;
-    bottom: 50px;
-    width: 60%;
-    height: 50px;
-    border: 1px solid rgb(148, 148, 148);
-    border-radius: 20px;
-    background-color: rgb(244, 244, 244);
+.chatHistoryDiv button:hover {
+    background-color: rgb(15, 195, 255);
+}
+
+.chatBar {
+    padding: 50px;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatMessages {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    border: 1px solid rgb(225, 225, 225);
+    background-color: rgb(250, 250, 250);
+    border-radius: 15px;
+    margin-left: 10%;
+    margin-right: 10%;
+    max-height: 60%;
+    overflow: auto;
+}
+
+.chatMessages::-webkit-scrollbar{
+    background-color: rgba(0, 0, 0, 0);
+    width: 5px;
+}
+
+.chatMessages::-webkit-scrollbar-thumb{
+    background-color: rgb(128, 128, 128);
+    border-radius: 25px;
+}
+
+
+
+
+.chatInputBar{
+    align-self: center;
+    width: 70%;
+    height: 40px;
+    margin-top: 50px;
+}
+
+.chatInputBar input{
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    background-color: white;
+    padding-inline-start: 10px;
     font-size: 16px;
-    padding-inline-start: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(180, 180, 180);
 }
 
-.InputWindow input:focus {
-    border-color: rgb(0, 129, 199);
-    outline: none;
+.chatInputBar input:focus {
+    border-color: rgb(82, 104, 0) !important;
+    outline: none !important;
 }
 
-.chatHistoryDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.chatContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.chatCompUser {
+.chatUserMessage {
     align-self: flex-end;
-    padding: 20px 30px;
-    margin: 20px 30px;
-    border: 1px solid black;
-    border-radius: 10px;
     max-width: 70%;
+    padding: 15px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #eaf3ff;
 }
 
-.chatCompBot {
+.chatBotMessage {
     align-self: flex-start;
-    padding: 20px 30px;
-    margin: 20px 30px;
-    border: 1px solid rgb(189, 0, 0);
-    border-radius: 10px;
     max-width: 70%;
+    padding: 15px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #e8ffe9;
 }
+
+
+
+
+
+
+
+
