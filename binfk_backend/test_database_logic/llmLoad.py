@@ -53,8 +53,8 @@ def llm_load_4bit(path):
 def text_handle(query, pipe):
 
     prompt = f"""
-        You are a helpful assistant.
-        Answer for the following question efficiently
+        You are a helpful coding assistant.
+        Generate me code for the following javascript of react queries.
 
         Question: {query}
 
@@ -76,7 +76,7 @@ def text_handle(query, pipe):
 
 PIPE = llm_load_4bit(MODEL_PATH)
 
-QUERY = "Tell me about yourself" 
+QUERY = "Generate me a code for implementing button action in a react component which post the input to a particular endpoint " 
 
 @app.get("/chat/botresponse")
 async def chatbotAns():

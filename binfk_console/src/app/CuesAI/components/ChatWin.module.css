@@ -102,9 +102,10 @@
 
 .chatInputBar{
     align-self: center;
-    width: 70%;
+    width: 60%;
     height: 40px;
     margin-top: 50px;
+    display: flex;
 }
 
 .chatInputBar input{
@@ -142,8 +143,19 @@
     background-color: #e8ffe9;
 }
 
+.InputButton {
+    margin-left: 5px;
+    border: 1px solid rgb(178, 178, 178);
+    border-radius: 100%;
+    background-color: white;
+    transition: border 0.3s ease;
+    
+}
 
-
+.InputButton:hover {
+    border: 1px solid rgb(122, 222, 255);
+    border-radius: 100%; 
+}
 
 
 

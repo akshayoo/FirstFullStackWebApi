@@ -3,21 +3,37 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from './ChatWin.module.css'
+import Image from "next/image";
+import { INFINITE_CACHE } from "next/dist/lib/constants";
 
-
-
-function InputBar() {
-  return <input />;
-}
 
 export function ChatBar() {
-  const [chatMessages, setChatMessages] = useState([]);
 
-  useEffect(() =>{
-    axios.get("http://localhost:4000/chat/chatContent").then(response => {
-      setChatMessages(response.data.conversations[0].messages)
-    })
-  }, [])
+
+  const [inputMessage, setInputMessage] = useState("");
+
+  async function InputMessagePost() {
+
+    if(!inputMessage.trim()) return;
+
+    try {
+
+      const res = await axios.post("http://localhost:4000/chat/chatInputs", {
+        "userID" : "u_001",
+        "conversationId" : crypto.randomUUID(),
+        "role" : "user",
+        "content"  : inputMessage.trim()
+      });
+
+      console.log("Message sent", res.data)
+
+    }
+    catch(error) {
+      console.error(error)
+    }
+    
+  }
+  
 
   return (
     <div className={styles.chatBar}>
@@ -34,4 +50,17 @@ export function ChatBar() {
         </div>
     </div>
   );
+}
+
+function InputBar() {
+  return (
+    <>
+      <input value={inputMessage}
+        onChange={(e) => setInputMessage(e.target.value)}/>
+      <button className={styles.InputButton} onClick={InputMessagePost}>
+        <Image
+          src={"/send.png"} alt="Send_Message" width={30} height={30}/>
+      </button>
+    </>
+  )
 }
