@@ -27,15 +27,48 @@ export function PushComp(){
         lib_summary: ""
     })
 
+    function HandleFile (e){
+        const{value, name, files, type, } = e.target;
+
+        setPushComponents(prev => ({...prev, 
+            [name] : type === 'file' ? files[0] : value
+        }));
+    }
+
+    async function SubmitPushForm() {
+
+        try{
+            
+            const pushForm = new FormData();
+
+            Object.entries(pushComponent).forEach(([key, value]) => {
+                if (value !== null && value !== "") {
+                pushForm.append(key, value);
+                }
+            });
+
+            const pushUpdateResp = await axios.post("http://localhost:4040/labdb/push", pushForm)
+
+            alert(pushUpdateResp.data)
+        }
+
+        catch(error){
+            console.log(error);
+            alert("Could not process request")
+        }
+
+
+    }
+
 
     return(
         <div className={styles.PushcompDiv} >
-            <UpdateInfo data={pushComponent} onChange={OnPushBtn} />
-            <ProjectId data={pushComponent} onChange={OnPushBtn} />
-            <SamAssayInfo data={pushComponent} onChange={OnPushBtn} />
-            <MethodInfo data={pushComponent} onChange={OnPushBtn} />    
-            <RawQcs data={pushComponent} onChange={OnPushBtn} />
-            <LibQcs data={pushComponent} onChange={OnPushBtn} />
+            <UpdateInfo data={pushComponent} onChange={HandleFile} />
+            <ProjectId data={pushComponent} onChange={HandleFile} />
+            <SamAssayInfo data={pushComponent} onChange={HandleFile} />
+            <MethodInfo data={pushComponent} onChange={HandleFile} />    
+            <RawQcs data={pushComponent} onChange={HandleFile} />
+            <LibQcs data={pushComponent} onChange={HandleFile} />
             <PushBtn SubmitPush = {SubmitPushForm} />
         </div>
     );
