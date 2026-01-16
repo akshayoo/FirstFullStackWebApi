@@ -1,10 +1,41 @@
 import styles from './UpdateComp.module.css'
+import { useState } from 'react';
+import axios from 'axios';
 
-function SerachById() {
+
+
+export function UpdateComp(){
+
+
+
+
+    return(
+        <div className={styles.PushcompDiv} >
+            <div className={styles.ProjSearch}>
+                <SerachById SearchByProjId={SearchByProjId}/>
+            </div>
+            <UpdateInfo />
+            <ProjectId />
+            <SamAssayInfo />
+            <MethodInfo />
+            <RawQcs />
+            <LibQcs />
+            <UpdateBtn />
+        </div>
+    );
+}
+
+
+
+
+
+
+function SerachById(value, onChange) {
     return (
         <div className={styles.PushSec}>
             <h2>Serach By Project ID</h2>
-            <input type="text" id="updateprojectId" name="project_id" required />
+            <input value={value} type="text" id="updateprojectId" name="project_id" required />
+            <button onClick={SearchByProjId} className={styles.SearchPrId}>Search</button>
         </div>
     );
 }
@@ -157,17 +188,11 @@ function LibQcs() {
     );
 }
 
-export function UpdateComp(){
+function UpdateBtn({SubmitPush}) {
 
     return(
-        <div className={styles.PushcompDiv} >
-            <SerachById />
-            <UpdateInfo />
-            <ProjectId />
-            <SamAssayInfo />
-            <MethodInfo />
-            <RawQcs />
-            <LibQcs />
-        </div>
+    <div className={styles.PushSec}>
+        <button onClick={SubmitPush}>PUSH</button>
+    </div>
     );
 }

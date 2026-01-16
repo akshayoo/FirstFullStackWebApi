@@ -18,7 +18,8 @@ const navLink = {
     home: "Home",
     labdb: "LabDB",
     aws: "AWSup",
-    aichat: "CuesAI"
+    aichat: "CuesAI",
+    samtrack : "SamTrack"
 }
 
 function NavBtns() {
@@ -48,7 +49,7 @@ function NavBtns() {
             <Link href="/SSubTrack">
                 <button 
                     className= {styles.navBtns}>
-                    {navLink.aws}
+                    {navLink.samtrack}
                 </button>
             </Link>
 
