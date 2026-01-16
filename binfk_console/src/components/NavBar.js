@@ -45,6 +45,13 @@ function NavBtns() {
                 </button>
             </Link>
 
+            <Link href="/SSubTrack">
+                <button 
+                    className= {styles.navBtns}>
+                    {navLink.aws}
+                </button>
+            </Link>
+
             <Link href="/AWSup">
                 <button 
                     className= {styles.navBtns}>

@@ -1,3 +1,5 @@
+"use client";
+
 import {useState} from 'react'
 import axios from 'axios'
 import styles from './PushComp.module.css'
@@ -32,7 +34,7 @@ export function PushComp(){
 
         setPushComponents(prev => ({...prev, 
             [name] : type === 'file' ? files[0] : value
-        }));
+        }))
     }
 
     async function SubmitPushForm() {

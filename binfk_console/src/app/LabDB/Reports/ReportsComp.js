@@ -1,4 +1,4 @@
-import styles from './PushComp.module.css'
+import styles from './Reports.module.css'
 
 function SerachById() {
     return (
@@ -157,7 +157,7 @@ function LibQcs() {
     );
 }
 
-export function UpdateComp(){
+export function ReportsComp(){
 
     return(
         <div className={styles.PushcompDiv} >
@@ -171,3 +171,4 @@ export function UpdateComp(){
         </div>
     );
 }
+

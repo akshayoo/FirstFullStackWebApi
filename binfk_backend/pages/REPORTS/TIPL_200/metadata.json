@@ -1,0 +1,39 @@
+{
+  "project": {
+    "project_id": "TIPL_200",
+    "title": "fgggd",
+    "customer": "dfgbfbfgnf",
+    "organization": "hggfhngtngngh"
+  },
+  "sample": {
+    "type": "Urine",
+    "count": 8,
+    "preservation": "Others",
+    "other_info": "hjmm hjm,hmhkm,h"
+  },
+  "method": {
+    "name": "RnaSeq",
+    "writeup": ",mhn,jh, jnh n, jn",
+    "method_summary": "j,hj,h, ymy  kukk u "
+  },
+  "qc": {
+    "qc_summary": "uik7yujb6yuj ujkyk uku ku",
+    "qc_files": {
+      "quantification": "../REPORTS/TIPL_200/QC/fl.pdf",
+      "integrity": "../REPORTS/TIPL_200/QC/323.pdf"
+    }
+  },
+  "library": {
+    "lib_method": "miRNA",
+    "library_summary": "wdbhwihbjwen hgfjie fie3hfiue3hjien jnihurhf jke3 nkjhiuh uijnf",
+    "library_files": {
+      "report": "../REPORTS/TIPL_200/LIB/Offerings_flyers.pdf",
+      "tapestation_report": "../REPORTS/TIPL_200/LIB/JavaScript.pdf"
+    }
+  },
+  "audit": {
+    "updated_by": "Deschica Dechamma",
+    "updated_date": "2026-01-16T15:43:22.774302"
+  },
+  "_id": "696a0f42248d13d29a74d68d"
+}

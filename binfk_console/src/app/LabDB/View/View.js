@@ -1,12 +1,10 @@
-
 import { NavBar } from "@/components/NavBar";
-import { DbNav } from "./components/DbNav";
-import styles from "./LabDB.module.css";
+import { DbNav } from "../components/DbNav";
+import { ViewComp } from './ViewComp';
+import styles from "../LabDB.module.css";
 
-export function LabDB() {
+export function View() {
 
-  
-    
   return (
     <>
       <NavBar />
@@ -14,7 +12,7 @@ export function LabDB() {
         <DbNav />
       </div>
       <div className={styles.InitialComp}>
-
+        <ViewComp />
       </div>
     </>
   );

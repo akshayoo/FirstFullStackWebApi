@@ -1,0 +1,39 @@
+{
+  "project": {
+    "project_id": "TIPL_100",
+    "title": "tututuutu",
+    "customer": "ergergreger",
+    "organization": "trgrttgrgrtgrtg"
+  },
+  "sample": {
+    "type": "Tear",
+    "count": 10,
+    "preservation": "FFPE",
+    "other_info": "errfefefe"
+  },
+  "method": {
+    "name": "GeoMx",
+    "writeup": "fvegve",
+    "method_summary": "egvetg"
+  },
+  "qc": {
+    "qc_summary": "efgefgefgeer",
+    "qc_files": {
+      "quantification": "../REPORTS/TIPL_100/QC/fl.pdf",
+      "integrity": "../REPORTS/TIPL_100/QC/323.pdf"
+    }
+  },
+  "library": {
+    "lib_method": "DNA",
+    "library_summary": "tghrghrt rthgrt",
+    "library_files": {
+      "report": "../REPORTS/TIPL_100/LIB/Offerings_BULK_TRANSCRIPTOME.pdf",
+      "tapestation_report": "../REPORTS/TIPL_100/LIB/Offerings_flyers_BulkTranscriptome.pdf"
+    }
+  },
+  "audit": {
+    "updated_by": "Rahul Reghunath",
+    "updated_date": "2026-01-16T17:09:57.429292"
+  },
+  "_id": "696a238d248d13d29a74d68e"
+}
