@@ -49,9 +49,9 @@ export function PushComp(){
                 }
             });
 
-            const pushUpdateResp = await axios.post("http://localhost:4040/labdb/push", pushForm)
+            const pushUpdateResp = await axios.post("http://localhost:4050/labdb/push", pushForm)
 
-            alert(pushUpdateResp.data)
+            alert(pushUpdateResp.data.status)
         }
 
         catch(error){

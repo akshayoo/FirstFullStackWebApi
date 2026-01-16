@@ -1,0 +1,41 @@
+{
+  "project": {
+    "project_id": "TIPL_100",
+    "title": "iudwhiewdwjwjfbwei wfwe fw f w fw nw",
+    "customer": "wefwefewfw  w w f w f wfj wf wj wf",
+    "organization": "uwbyefhwiebfiw iewb fiwfijwbjernfberib erhigbrihgbrh gbhgb "
+  },
+  "sample": {
+    "type": "Saliva",
+    "count": 10,
+    "preservation": "FFPE",
+    "other_info": "hguhg vvugvygvgy vgyfc fyc fycy cyc yc"
+  },
+  "method": {
+    "name": "WGS",
+    "writeup": "euhfuwybf whiuwhfbiehbiebhe bhuebhueb",
+    "method_summary": "usdbfhusb fhebfh ebhuerfbherugvgvehuvf  uevfugvvu"
+  },
+  "qc": {
+    "qc_summary": "sfsgfdgd hr ",
+    "qc_files": {
+      "quantification": "../../REPORTS/TIPL_100/QC/323.pdf",
+      "integrity": "../../REPORTS/TIPL_100/QC/AK_accessKeys.csv"
+    }
+  },
+  "library": {
+    "lib_method": "totalRNA",
+    "library_summary": "wrewterby rtyrt",
+    "library_files": {
+      "report": "../../REPORTS/TIPL_100/LIB/FrontEnd.pdf",
+      "tapestation_report": "../../REPORTS/TIPL_100/LIB/JavaScript.pdf"
+    }
+  },
+  "audit": {
+    "updated_by": "Rahul Reghunath",
+    "updated_date": "2026-01-17T01:44:08.470852",
+    "modified_by": "",
+    "modified_date": ""
+  },
+  "_id": "696a9c10579f24302a00d46e"
+}

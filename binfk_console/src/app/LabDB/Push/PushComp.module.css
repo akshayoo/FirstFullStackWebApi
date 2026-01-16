@@ -54,3 +54,20 @@
     border-color: #005fcc;
     box-shadow: 0 0 0 2px rgba(0, 95, 204, 0.1);
 }
+
+
+.PushSec button{
+    align-self: center;
+    height: 40px;
+    width: 40%;
+    border-radius: 20px;
+    border: none;
+    background-color: #00336e;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.PushSec button:hover{
+    background-color: #004491;
+    color: white;
+}

@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-UPLOAD_DIR = "../REPORTS"
+UPLOAD_DIR = "../../REPORTS"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @app.post("/labdb/push")
@@ -45,6 +45,14 @@ async def pushLab(
     lib_report: UploadFile = File(...),
     lib_tape: UploadFile = File(...)
 ):
+    
+    find_proj = collection.find_one({"project.project_id" : project_id})
+    if find_proj:
+        return {
+            "status" : """Project exists cannot update \n 
+            To make changes to an existing project  use the update option"""
+        }
+
     project_dir = f"{UPLOAD_DIR}/{project_id}"
     os.makedirs(project_dir, exist_ok=True)
     
@@ -115,7 +123,9 @@ async def pushLab(
 
             "audit": {
                 "updated_by": updated_by,
-                "updated_date": updated_date
+                "updated_date": updated_date,
+                "modified_by" : "",
+                "modified_date" : ""
             },
         }
     
@@ -135,7 +145,7 @@ async def pushLab(
     await lib_tape.close()
 
     return {
-        "status": "success",
+        "status": "Project uploaded successfully",
         "project_id": project_id,
         "mongo_id": str(ins_id)
     }
