@@ -1,44 +1,62 @@
-.PushcompDiv {
-    max-width: 900px;
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+
+.SidebarSrch {
+
 }
 
-.PushSec {
-    border-radius: 8px;
-    padding: 24px 32px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.PushSec h2 {
+.SidebarSrch h2 {
     font-size: 16px;
-    font-weight: 600;
-    color: #002a4f;
-    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.PushSec label {
-    font-size: 15px;
-    font-weight: bold;
-    color: #000a69;
+.SidebarSrch input {
+    margin-bottom: 10px;
+    height: 35px;
+    width: 90%;
 }
 
-.PushSec input{
+.SidebarSrch input:focus {
+
+    border: 1px solid rgb(152, 240, 0);
+}
+
+
+.SidebarProp{
+    height: 500px;
+    overflow: auto;
+    padding: 5px;
+    border: 1px solid rgb(157, 157, 157);
+    border-radius: 10px;
+
+}
+
+.SidebarProp button{
     width: 100%;
-    padding: 10px 12px;
-    font-size: 14px;
-    border: 1px solid #cfcfcf;
-    border-radius: 6px;
-    outline: none;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
 }
 
+.ViewSideBar {
+    border: 1px solid black;
+    width: 250px;
+    padding: 25px;
+    padding-top: 15px;
+    height: max-content;
 
-.PushSec input:focus {
-    border-color: #005fcc;
-    box-shadow: 0 0 0 2px rgba(0, 95, 204, 0.1);
+}
+
+.ViewSideBar h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.ViewWin {
+    flex: 1;
+}
+
+.View {
+    display: flex;
+    flex-direction: row;
+    height:  100%;
+    overflow: hidden;
 }
