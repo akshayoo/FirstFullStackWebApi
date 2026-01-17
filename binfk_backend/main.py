@@ -1,14 +1,11 @@
 def main():
     print("Hello from binfk-backend!")
 
-a = 2
-b = 3 
+print("Hi HGello")
 
-print(a+b)
+import os
 
-print(a*b)
-
-print(a/b)
+os.makedirs("Test")
 
 if __name__ == "__main__":
     main()
