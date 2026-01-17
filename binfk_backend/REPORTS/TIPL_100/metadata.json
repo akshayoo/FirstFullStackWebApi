@@ -1,0 +1,40 @@
+{
+  "project": {
+    "project_id": "TIPL_100",
+    "title": "Hi howiejdoj uihwef injinbjifdebgfuhb dciljenk ibeuhcben jif ejnc bejb",
+    "customer": "dnwih hweidbhuh inb",
+    "organization": "whjbeduhwbb bheiudnbehbn ie ienb fchbeinein jin "
+  },
+  "sample": {
+    "type": "Saliva",
+    "count": 10,
+    "preservation": "TrisolLysate",
+    "other_info": "ejhdvwub wcuweb dihebduihewbuhegbyhfgeuhfbnehubcfeh b jcbwe ijhcbheibciejncijenceiubnciehbu iuhiuehuheihbeuihbeihcueih ihbiu hguiehiue ihbeifcbheuif ih bfif ibfc ie iebnihbiwcfh weif "
+  },
+  "method": {
+    "name": "WGS",
+    "writeup": "wdecbwejhbvb guy geuegbuycg usygcsvbhbcsjh buhbuh cushbcsuh bcuh vchg cvsuhbcebcuyegeuwhdb neu fceugvgcuewbchevbu ebheub euvfcebfc",
+    "method_summary": "jwbeduwbughw buh gu uwebhhe uhbhuwebhws bcuw cfgybweu cbewuyhegvywecftdwe cewhyuvwe cfvewbufc "
+  },
+  "qc": {
+    "qc_summary": "efnieh fuibhiurefhnveiujfei jueij fvnei jfvbheijnf eijnijnh vc8uenfiuebfuyhebkjnjkdn v iehbeiujhbie bnveiubfiuebniejhbiebhie ijebnjihbhuhebfejnu fiuegyuh",
+    "qc_files": {
+      "quantification": "../../REPORTS/TIPL_100/QC/TC-S-MG-INT-MB.pdf",
+      "integrity": "../../REPORTS/TIPL_100/QC/Table2.xlsx"
+    }
+  },
+  "library": {
+    "lib_method": "mRNA",
+    "library_summary": "ewhfui hueihfiuehfiuwehj ihiuhfiwfj nijb uhfuiebnifebhfueniofjnewij fhuh uihuhufueifhibhfe",
+    "library_files": {
+      "report": "../../REPORTS/TIPL_100/LIB/Offerings_METAG_AGENOME.pdf",
+      "tapestation_report": "../../REPORTS/TIPL_100/LIB/PI_SentilKumari_23_Dec25 (1).pdf"
+    }
+  },
+  "audit": {
+    "updated_by": "Rahul Reghunath",
+    "updated_date": "2026-01-17T10:35:10.282903",
+    "modified_by": "Rahul Reghunath",
+    "modified_date": "2026-01-17T11:13:37.581454"
+  }
+}

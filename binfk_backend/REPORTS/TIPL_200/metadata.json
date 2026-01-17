@@ -1,0 +1,41 @@
+{
+  "project": {
+    "project_id": "TIPL_200",
+    "title": "wkbnchiwj bndhibhiwenwbijnwko nijijdewnjfidnewhufd behib ib cibn ",
+    "customer": "efcbwhbu bwefhubwu ",
+    "organization": "edfcbuh gubuyewghfyuhebwffbweuy  wbh iwuh"
+  },
+  "sample": {
+    "type": "Cells",
+    "count": 14,
+    "preservation": "Rnalater",
+    "other_info": "sciwhb uwy gwudcbhwuybub wuygcwyfdb wudbgw8hyb wdvbwuvuvw yv hwgvduw bvudbwhb"
+  },
+  "method": {
+    "name": "tRNASeq",
+    "writeup": "dcehcfbufhbcwe gehf eiuhfeiuofheuifh eiugh eifghe ifgefiuehiu gf",
+    "method_summary": "wdfhsbfks bfksjfnsbjhb jhgbsuh guig hiu ghdiugdiughduhyg du ed vii vug"
+  },
+  "qc": {
+    "qc_summary": "jhwqbduhwbgwhyg h iuhewf iehfijehnfijewbniwejhh bhu wsguhb fhu gbfisjnfijsfhcni",
+    "qc_files": {
+      "quantification": "../../REPORTS/TIPL_200/QC/TC-S-BT-MIR-DIFF.pdf",
+      "integrity": "../../REPORTS/TIPL_200/QC/TC-S-BT-TRNA-HMR.pdf"
+    }
+  },
+  "library": {
+    "lib_method": "mRNA",
+    "library_summary": "whebfdiuh uhiuddhfieuhni hu fueiwhfish fuighfbus bfcubh fccihbijhbc uhbgcudhcbed ",
+    "library_files": {
+      "report": "../../REPORTS/TIPL_200/LIB/PI_SentilKumari_26_Dec25.pdf",
+      "tapestation_report": "../../REPORTS/TIPL_200/LIB/Transcriptome Catalog_Manju edited.pdf"
+    }
+  },
+  "audit": {
+    "updated_by": "Vijayalakshmi Bhat",
+    "updated_date": "2026-01-17T10:36:47.775279",
+    "modified_by": "",
+    "modified_date": ""
+  },
+  "_id": "696b18e7233c5376cf05d135"
+}

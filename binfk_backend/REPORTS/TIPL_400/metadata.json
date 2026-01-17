@@ -1,0 +1,41 @@
+{
+  "project": {
+    "project_id": "TIPL_400",
+    "title": "ewdw33f",
+    "customer": "3efe3f",
+    "organization": "fre4f4e"
+  },
+  "sample": {
+    "type": "Serum",
+    "count": 9,
+    "preservation": "Alcohol",
+    "other_info": "2fdwefe3rf g r rty y"
+  },
+  "method": {
+    "name": "sRNASeq",
+    "writeup": "fgbfnm  ku uu urtgregrgrgb",
+    "method_summary": "ukui k  iul ilii rgbrfbrgbrbrfbrr"
+  },
+  "qc": {
+    "qc_summary": "yjt6jy6uu",
+    "qc_files": {
+      "quantification": "../../REPORTS/TIPL_400/QC/ML_algo (1).pdf",
+      "integrity": "../../REPORTS/TIPL_400/QC/manualE6440-index details.xlsx"
+    }
+  },
+  "library": {
+    "lib_method": null,
+    "library_summary": null,
+    "library_files": {
+      "report": "",
+      "tapestation_report": ""
+    }
+  },
+  "audit": {
+    "updated_by": "Deschica Dechamma",
+    "updated_date": "2026-01-17T11:09:04.574934",
+    "modified_by": "",
+    "modified_date": ""
+  },
+  "_id": "696b207813506cbf38ef56a1"
+}

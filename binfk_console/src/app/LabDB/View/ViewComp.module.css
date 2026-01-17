@@ -7,7 +7,6 @@
 }
 
 .PushSec {
-    border: 1px solid #dcdcdc;
     border-radius: 8px;
     padding: 24px 32px;
     background-color: #ffffff;
@@ -21,8 +20,6 @@
     font-weight: 600;
     color: #002a4f;
     padding-bottom: 10px;
-    text-decoration: underline;
-    text-underline-offset: 5px;
 }
 
 .PushSec label {
@@ -31,9 +28,7 @@
     color: #000a69;
 }
 
-.PushSec input,
-.PushSec select,
-.PushSec textarea {
+.PushSec input{
     width: 100%;
     padding: 10px 12px;
     font-size: 14px;
@@ -43,14 +38,7 @@
 }
 
 
-.PushSec textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.PushSec input:focus,
-.PushSec select:focus,
-.PushSec textarea:focus {
+.PushSec input:focus {
     border-color: #005fcc;
     box-shadow: 0 0 0 2px rgba(0, 95, 204, 0.1);
 }

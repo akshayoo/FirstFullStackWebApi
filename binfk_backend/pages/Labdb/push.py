@@ -38,12 +38,12 @@ async def pushLab(
     method_writeup: str = Form(...),
     method_summary: str = Form(...),
     qc_summary: str = Form(...),
-    lib_method: str = Form(...),
-    lib_summary: str = Form(...),
+    lib_method: str | None = Form(None),
+    lib_summary: str | None = Form(None),
     quantification: UploadFile = File(...),
     integrity: UploadFile = File(...),
-    lib_report: UploadFile = File(...),
-    lib_tape: UploadFile = File(...)
+    lib_report: UploadFile | None = File(None),
+    lib_tape: UploadFile | None = File(None)
 ):
     
     find_proj = collection.find_one({"project.project_id" : project_id})
@@ -65,8 +65,17 @@ async def pushLab(
     qcQuant_reportPath = f"{qc_report_dir}/{quantification.filename}"
     qcInt_reportPath = f"{qc_report_dir}/{integrity.filename}"
 
-    lib_reportPath = f"{lib_report_dir}/{lib_report.filename}"
-    libTape_reportPath = f"{lib_report_dir}/{lib_tape.filename}"
+    if lib_report:
+        lib_reportPath = f"{lib_report_dir}/{lib_report.filename}"
+        with open (lib_reportPath, 'wb') as f:
+            f.write(await lib_report.read())
+    lib_reportPath = ""
+
+    if lib_tape:
+        libTape_reportPath = f"{lib_report_dir}/{lib_tape.filename}"
+        with open (libTape_reportPath, 'wb') as f:
+            f.write(await lib_tape.read())
+    libTape_reportPath = ""
 
     with open (qcQuant_reportPath, 'wb') as f:
         f.write(await quantification.read())
@@ -74,11 +83,6 @@ async def pushLab(
     with open (qcInt_reportPath, 'wb') as f:
         f.write(await integrity.read())
 
-    with open (lib_reportPath, 'wb') as f:
-        f.write(await lib_report.read())
-
-    with open (libTape_reportPath, 'wb') as f:
-        f.write(await lib_tape.read())
 
     current_date_time = datetime.datetime.now().isoformat()
     updated_date = current_date_time
@@ -141,8 +145,11 @@ async def pushLab(
 
     await quantification.close()
     await integrity.close()
-    await lib_report.close()
-    await lib_tape.close()
+
+    if lib_report:
+        await lib_report.close()
+    if lib_tape:
+        await lib_tape.close()
 
     return {
         "status": "Project uploaded successfully",

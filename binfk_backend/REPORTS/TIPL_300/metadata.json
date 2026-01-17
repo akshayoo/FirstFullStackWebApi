@@ -1,0 +1,41 @@
+{
+  "project": {
+    "project_id": "TIPL_300",
+    "title": "ewdw33f",
+    "customer": "3efe3f",
+    "organization": "fre4f4e"
+  },
+  "sample": {
+    "type": "Serum",
+    "count": 9,
+    "preservation": "Alcohol",
+    "other_info": "2fdwefe3rf g r rty y"
+  },
+  "method": {
+    "name": "sRNASeq",
+    "writeup": "fgbfnm  ku uu u",
+    "method_summary": "ukui k  iul ilii "
+  },
+  "qc": {
+    "qc_summary": "yjt6jy6uu",
+    "qc_files": {
+      "quantification": "../../REPORTS/TIPL_300/QC/JavaScript.pdf",
+      "integrity": "../../REPORTS/TIPL_300/QC/fl.pdf"
+    }
+  },
+  "library": {
+    "lib_method": null,
+    "library_summary": null,
+    "library_files": {
+      "report": "",
+      "tapestation_report": ""
+    }
+  },
+  "audit": {
+    "updated_by": "Vijayalakshmi Bhat",
+    "updated_date": "2026-01-17T11:06:57.001501",
+    "modified_by": "",
+    "modified_date": ""
+  },
+  "_id": "696b1ff913fc6467c8d4d68a"
+}

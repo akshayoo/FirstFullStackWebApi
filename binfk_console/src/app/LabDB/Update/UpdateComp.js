@@ -60,9 +60,17 @@ export function UpdateComp(){
 
         const updateFormData = new FormData()
 
+        const fileFields = ['quantification', 'integrity', 'lib_report', 'lib_tape']
+
         Object.entries(formData).forEach(([key, value]) => {
-            if(value != null && value!= ""){
-                updateFormData.append(key, value)
+            if (fileFields.includes(key)) {
+                if (value instanceof File) {
+                    updateFormData.append(key, value);
+                }
+            } else if (key === "count") {
+                updateFormData.append(key, Number(value));
+            } else {
+                updateFormData.append(key, value ?? "");
             }
         })
 
@@ -140,7 +148,7 @@ function ProjectId({data, onChange}) {
         <div className={styles.PushSec}>
             <h2>Project Info</h2>
             <label htmlFor="updateprojectId">ID</label>
-            <input value={data.project_id} onChange={onChange} type="text" id="updateprojectId" name="project_id" required />
+            <input value={data.project_id} onChange={onChange} type="text" id="updateprojectId" name="project_id" readOnly />
             <label htmlFor="updateprojectTitle">Title</label>
             <input value={data.title} onChange= {onChange} type="text" id="updateprojectTitle" name="title" required />
             <label htmlFor="updateprojectCustomer">Customer name</label>
