@@ -1,10 +1,10 @@
 import styles from './ViewComp.module.css'
 
 
-fields = {
+const fields = {
     updated_by: "Updated By",
     updated_date: "Updated Date",
-    modified_by : "Modified Date",
+    modified_by : "Modified By",
     modified_date : "Modified Date",
     project_id: "Project ID",
     title: "Project Title",
@@ -30,9 +30,17 @@ fields = {
 export function ViewComp(){
 
     return(
-        <div className={styles.PushcompDiv} >
-            <SerachById />
-        </div>
+
+        <>
+            <div className={styles.PushcompDiv} >
+                <SerachById />
+            </div>
+            <UploaderInfo />
+            <ProjectInfo />
+            <SampleInfo />
+            <PrepInfo />
+        
+        </>
     );
 }
 
@@ -47,22 +55,22 @@ function SerachById() {
 
 function UploaderInfo() {
     return (
-        <div className={styles.UploaderInfo}>
-            <div>
-                <h3>{fields.updated_by}</h3>
-                <h3>TIPL_004</h3>
+        <div className={styles.ViewSec}>
+            <div className={styles.ViewItems}>
+                <div>{fields.updated_by}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.updated_date}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.updated_date}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.modified_by}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.modified_by}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.modified_date}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.modified_date}</div>
+                <div>TIPL_004</div>
             </div>
         </div>
     )
@@ -70,22 +78,22 @@ function UploaderInfo() {
 
 function ProjectInfo() {
     return (
-        <div className={styles.UploaderInfo}>
-            <div>
-                <h3>{fields.project_id}</h3>
-                <h3>TIPL_004</h3>
+        <div className={styles.ViewSec}>
+            <div className={styles.ViewItems}>
+                <div>{fields.project_id}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.title}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.title}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.customer}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.customer}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.organization}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.organization}</div>
+                <div>TIPL_004</div>
             </div>
         </div>
     )
@@ -93,22 +101,22 @@ function ProjectInfo() {
 
 function SampleInfo() {
     return (
-        <div className={styles.UploaderInfo}>
-            <div>
-                <h3>{fields.sam_type}</h3>
-                <h3>TIPL_004</h3>
+        <div className={styles.ViewSec}>
+            <div className={styles.ViewItems}>
+                <div>{fields.sam_type}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.count}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.count}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.preservation}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.preservation}</div>
+                <div>TIPL_004</div>
             </div>
-            <div>
-                <h3>{fields.other_info}</h3>
-                <h3>TIPL_004</h3>
+            <div className={styles.ViewItems}>
+                <div>{fields.other_info}</div>
+                <div>TIPL_004</div>
             </div>
         </div>
     )
@@ -116,26 +124,46 @@ function SampleInfo() {
 
 function PrepInfo() {
     return (
-        <div className={styles.UploaderInfo}>
-            <div>
-                <h3>{fields.method_name}</h3>
-                <h3>TIPL_004</h3>
+        <div className={styles.ViewSec}>
+            <div className={styles.ViewItems}>
+                <div>{fields.method_name}</div>
+                <div>TIPL_004</div>
+            </div>
+            <div className={styles.ViewItems}>
+                <div>{fields.method_writeup}</div>
+                <div>TIPL_004</div>
+            </div>
+            <div className={styles.ViewItems}>
+                <div>{fields.method_summary}</div>
+                <div>TIPL_004</div>
+            </div>
+            <div className={styles.ViewItems}>
+                <div>{fields.quantification}</div>
+                <div>TIPL_004</div>
+            </div>
+            <div className={styles.ViewItems}>
+                <div>{fields.integrity}</div>
+                <div>TIPL_004</div>
             </div>
             <div>
-                <h3>{fields.method_writeup}</h3>
-                <h3>TIPL_004</h3>
+                <div>{fields.qc_summary}</div>
+                <div>TIPL_004</div>
             </div>
             <div>
-                <h3>{fields.method_summary}</h3>
-                <h3>TIPL_004</h3>
+                <div>{fields.lib_method}</div>
+                <div>TIPL_004</div>
             </div>
             <div>
-                <h3>{fields.quantification}</h3>
-                <h3>TIPL_004</h3>
+                <div>{fields.lib_report}</div>
+                <div>TIPL_004</div>
             </div>
             <div>
-                <h3>{fields.integrity}</h3>
-                <h3>TIPL_004</h3>
+                <div>{fields.lib_tape}</div>
+                <div>TIPL_004</div>
+            </div>
+            <div>
+                <div>{fields.lib_summary}</div>
+                <div>TIPL_004</div>
             </div>
         </div>
     )
