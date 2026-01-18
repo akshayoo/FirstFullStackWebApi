@@ -1,24 +1,23 @@
 .navLogo {
     width: 130px;
     height: 30px;
-    margin-left: 20px;
+    padding-left: 30px;
 }
 
 .navBtns {
-    width: 70px;
+    padding: 5px;
     margin-left: 10px;
-    background: none;
-    border: none;
-    transition: border-bottom 0.3s ease;
-    border-bottom: 2px solid white;
-    padding-bottom: 5px;
-    font-size: 14px;
-    color: rgb(88, 88, 88);
-
+    font-size: 15px;    
+    color: rgb(246, 246, 246);
+    width: 100px;
+    border: 1px solid rgba(128, 128, 128, 0);
+    border-radius: 8px;
+    background-color: rgb(20, 20, 20);
+    transition: border 0.5s;
 }
 
 .navBtns:hover {
-    border-bottom: 2px solid rgb(129, 192, 255);
+    border: 1px solid rgb(86, 86, 86);
 }
 
 .navBtnsDiv {
@@ -32,5 +31,5 @@
     display: flex;
     align-items: center;
     box-shadow: 0 4px 9px -6px rgb(59, 59, 59);
-    background-color: aliceblue;
+    background-color: rgb(20, 20, 20);
 }

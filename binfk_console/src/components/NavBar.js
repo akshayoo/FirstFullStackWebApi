@@ -22,6 +22,7 @@ const navLink = {
     samtrack : "SamTrack"
 }
 
+
 function NavBtns() {
     return (
         <div className= {styles.navBtnsDiv}>

@@ -1,7 +1,36 @@
+"use client"
+
 import styles from './ViewComp.module.css'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 export function ViewComp(){
+
+    const [projId, setProjId] = useState([])
+
+    useEffect(() => {
+        async function ProjIdFetch() {
+
+            try {
+
+                const resp = await axios.get(
+                    "http://127.0.0.1:4040/labdb/view/pagepop"
+                );
+
+                console.log(resp.data.project_ids);
+                setProjId(resp.data.project_ids);
+
+            } catch (err) {
+
+                console.log("Failed to fetch project Ids", err);
+            }
+
+        }
+
+        ProjIdFetch();
+
+    }, []);
 
     return(
 
@@ -9,7 +38,7 @@ export function ViewComp(){
             <div className={styles.ViewSideBar} >
                 <SerachById />
                 <h2>Recent Entries</h2>
-                <RecentEntries />
+                <RecentEntries projId={projId} />
             </div>
             <div className= {styles.ViewWin}>
                 <ViewWelcome />
@@ -29,25 +58,16 @@ function SerachById() {
 }
 
 
-function RecentEntries(){
+function RecentEntries({projId}){
     return(
-        <div className= {styles.SidebarProp}>
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-            <button />
-        </div>
+        <>
+            <div className= {styles.SidebarProp}>
+                {projId.map(ids => (
+                <button key={ids}>{ids}</button>
+                ))}
+            </div>
+        </>
+
     );
 }
 
