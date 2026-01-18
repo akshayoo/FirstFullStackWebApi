@@ -96,14 +96,31 @@
 }
 
 .SerchBid input{
-    padding: 10px;
     font-size: 14px;
+    padding: 10px;
+    border: 1px solid rgb(159, 159, 159);
+    border-radius: 10px;
+    background-color: transparent;
 }
 
 .SerchBid button{
     padding: 10px;
-
+    background-color: transparent;
+    border: 1px solid rgb(159, 159, 159);
+    transition: background-color 0.3s ease;
+    margin-left: 2px;
+    border-radius: 10px;
 }
+
+.SerchBid button:hover{
+    background-color: rgb(194, 194, 194);
+}
+
+.SerchBid input:focus{
+    border: 1px solid rgb(0, 105, 180);
+    outline: none;
+}
+
 
 
 
