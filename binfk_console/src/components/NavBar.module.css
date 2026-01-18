@@ -7,12 +7,12 @@
 .navBtns {
     padding: 5px;
     margin-left: 10px;
-    font-size: 15px;    
+    font-size: 14px;    
     color: rgb(246, 246, 246);
     width: 100px;
     border: 1px solid rgba(128, 128, 128, 0);
     border-radius: 8px;
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(41, 41, 41);
     transition: border 0.5s;
 }
 
@@ -31,5 +31,6 @@
     display: flex;
     align-items: center;
     box-shadow: 0 4px 9px -6px rgb(59, 59, 59);
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(41, 41, 41);
+    border-bottom: 1px solid rgb(183, 183, 183);
 }

@@ -63,20 +63,47 @@ export function PushComp(){
     }
 
 
-    return(
-        <div className={styles.PushcompDiv} >
-            <UpdateInfo data={pushComponent} onChange={HandleFile} />
-            <ProjectId data={pushComponent} onChange={HandleFile} />
-            <SamAssayInfo data={pushComponent} onChange={HandleFile} />
-            <MethodInfo data={pushComponent} onChange={HandleFile} />    
-            <RawQcs data={pushComponent} onChange={HandleFile} />
-            <LibQcs data={pushComponent} onChange={HandleFile} />
-            <PushBtn SubmitPush = {SubmitPushForm} />
+    return (
+
+
+        <div className={styles.PushcompDiv}>
+            <div className={styles.upDesc}>
+                <PageCont />
+            </div>
+            <div className={styles.PushForm}>
+                <div className={styles.secComp}>
+                    <UpdateInfo data={pushComponent} onChange={HandleFile} />
+                </div>
+                <div className={styles.secComp}>
+                    <ProjectId data={pushComponent} onChange={HandleFile} />
+                    <SamAssayInfo data={pushComponent} onChange={HandleFile} />
+                </div>
+                <div>
+                    <MethodInfo data={pushComponent} onChange={HandleFile} />    
+                    <RawQcs data={pushComponent} onChange={HandleFile} />
+                    <LibQcs data={pushComponent} onChange={HandleFile} />
+                </div>
+                <div className={styles.secComp}>
+                    <PushBtn SubmitPush={SubmitPushForm} />
+                </div>
+            </div>
         </div>
+
     );
 }
 
+function PageCont(){
+    return(
+        <>
+            <h2>Push New Data Here</h2>
+            <p>This is a description paragraph</p>
+            <ul>
+                <li>poiwhejifgiwehbwbgweuigiewbhfihehfe</li>
+            </ul>   
+        </>
 
+    );
+}
 
 
 function UpdateInfo({data, onChange}) {
@@ -207,6 +234,7 @@ function LibQcs({data, onChange}) {
             <label htmlFor="libMethod">Method</label>
             <select value={data.lib_method} onChange= {onChange} id="libMethod" name="lib_method">
                 <option value="" disabled>select</option>
+                <option value="No Data">No Data</option>
                 <option value="totalRNA">total RNA</option>
                 <option value="mRNA">mRNA</option>
                 <option value="miRNA">miRNA</option>

@@ -1,34 +1,24 @@
 
 .DbFeatureDiv {
-    margin: 50px;
-    border: 1px solid rgb(221, 221, 221);
-    border-radius: 40px;
-    padding: 20px;
+    height: fit-content;
+    padding: 10px;
     display: flex;
-    align-items: center;
-    height: 18px;
-    box-shadow: 0 4px 9px -6px rgb(195, 195, 195);
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .DbFeatureBtns {
-    margin-left: 25px;
+    padding: 5px;
+    width: 100px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 15px;
     border: none;
-    background-color: transparent;
-    margin-right: 25px;
-    border-radius: 30px;
-    padding: 10px;
-    width: 150px;
-    height: 35px;
+    margin: 10px;
     font-size: 14px;
-    display: flex;
-    text-decoration: none;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease;
+    box-shadow: 1px 1px 5px rgb(199, 199, 199);
 }
 
 .DbFeatureBtns:hover {
-    border-radius: 30px;
-    background-color: rgb(224, 240, 255);
+    background-color: aliceblue;
 }
 

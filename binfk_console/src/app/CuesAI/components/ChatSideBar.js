@@ -23,8 +23,8 @@ export function ChatSlideBar() {
             <div className={styles.chatNewChatDIV}>
                 <button>New Chat</button>
             </div>
+            <h2>Chat History</h2>
             <div className={styles.chatHistoryDiv}>
-                <h2>Chat History</h2>
                 {previousChats.map(chathist => (
                     <button key={chathist._id}>
                         {chathist.conversationId}

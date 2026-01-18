@@ -1,41 +1,40 @@
 {
   "project": {
     "project_id": "TIPL_200",
-    "title": "wkbnchiwj bndhibhiwenwbijnwko nijijdewnjfidnewhufd behib ib cibn ",
-    "customer": "efcbwhbu bwefhubwu ",
-    "organization": "edfcbuh gubuyewghfyuhebwffbweuy  wbh iwuh"
+    "title": "trkghrthnjtynh jtnjtnhj tknhkjthnjotkn tnh tnt",
+    "customer": "thjntyjhntkhmnjtykojhmnokt yjmhik jktm hkotymj oyumjkoym",
+    "organization": "thjt iojtyojhmtoy jtkonhotnh tjinbjtibji"
   },
   "sample": {
-    "type": "Cells",
-    "count": 14,
-    "preservation": "Rnalater",
-    "other_info": "sciwhb uwy gwudcbhwuybub wuygcwyfdb wudbgw8hyb wdvbwuvuvw yv hwgvduw bvudbwhb"
+    "type": "Serum",
+    "count": 10,
+    "preservation": "Alcohol",
+    "other_info": "thyjyhrtnih rtbhi rbnih rbiujhnijhitj bnhtht"
   },
   "method": {
-    "name": "tRNASeq",
-    "writeup": "dcehcfbufhbcwe gehf eiuhfeiuofheuifh eiugh eifghe ifgefiuehiu gf",
-    "method_summary": "wdfhsbfks bfksjfnsbjhb jhgbsuh guig hiu ghdiugdiughduhyg du ed vii vug"
+    "name": "GeoMx",
+    "writeup": "tghtoyjnhitynhiitrn ijtbnjitnhijt jhit  jint ijbh urngjib nhrtbnith",
+    "method_summary": "ghnthn y uyku kuuku kk ui i uk ukuku "
   },
   "qc": {
-    "qc_summary": "jhwqbduhwbgwhyg h iuhewf iehfijehnfijewbniwejhh bhu wsguhb fhu gbfisjnfijsfhcni",
+    "qc_summary": "jmyhjmy t  gtj y  gh h h m hm h ",
     "qc_files": {
-      "quantification": "../../REPORTS/TIPL_200/QC/TC-S-BT-MIR-DIFF.pdf",
-      "integrity": "../../REPORTS/TIPL_200/QC/TC-S-BT-TRNA-HMR.pdf"
+      "quantification": "../../REPORTS/TIPL_200/QC/HG-TRIO-EXO.pdf",
+      "integrity": "../../REPORTS/TIPL_200/QC/theracues_offerings_25Nov25.xlsx"
     }
   },
   "library": {
-    "lib_method": "mRNA",
-    "library_summary": "whebfdiuh uhiuddhfieuhni hu fueiwhfish fuighfbus bfcubh fccihbijhbc uhbgcudhcbed ",
+    "lib_method": "No Data",
+    "library_summary": "jhtykjhnrtijhg rijhjitrnjhith tih tjhtijhuit",
     "library_files": {
-      "report": "../../REPORTS/TIPL_200/LIB/PI_SentilKumari_26_Dec25.pdf",
-      "tapestation_report": "../../REPORTS/TIPL_200/LIB/Transcriptome Catalog_Manju edited.pdf"
+      "report": "",
+      "tapestation_report": ""
     }
   },
   "audit": {
-    "updated_by": "Vijayalakshmi Bhat",
-    "updated_date": "2026-01-17T10:36:47.775279",
-    "modified_by": "",
-    "modified_date": ""
-  },
-  "_id": "696b18e7233c5376cf05d135"
+    "updated_by": "Deschica Dechamma",
+    "updated_date": "2026-01-18T16:41:51.349589",
+    "modified_by": "Deschica Dechamma",
+    "modified_date": "2026-01-18T17:02:23.629388"
+  }
 }

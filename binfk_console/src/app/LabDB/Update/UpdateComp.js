@@ -92,31 +92,54 @@ export function UpdateComp(){
 
     return(
         <div className={styles.PushcompDiv} >
-            <div className={styles.ProjSearch}>
+            <div className={styles.upDesc}>
+                <PageCont />
                 <SearchById SearchByProjId={SearchByProjId} 
                     setProjectIdcatch={setProjectIdcatch} 
                     projectIdcatch={projectIdcatch}/>
             </div>
-            {formData && (
-                <>
-                    <UpdateInfo data={formData} onChange={changeHandle} />
-                    <ProjectId data={formData} onChange={changeHandle}/>
-                    <SamAssayInfo data={formData} onChange={changeHandle}/>
-                    <MethodInfo data={formData} onChange={changeHandle}/>
-                    <RawQcs data={formData} onChange={changeHandle} DownloadUpFile={DownloadUpFile}/>
-                    <LibQcs data={formData} onChange={changeHandle} DownloadUpFile={DownloadUpFile}/>
-                    <UpdateBtn SubmitUpdate={SubmitUpdateEvent} />
+            <div className={styles.PushForm}>
+                {formData && (
+                <>  
+                    <div className={styles.secComp}>
+                        <UpdateInfo data={formData} onChange={changeHandle} />
+                    </div>
+                    <div className={styles.secComp}>
+                        <ProjectId data={formData} onChange={changeHandle}/>
+                        <SamAssayInfo data={formData} onChange={changeHandle}/>
+                    </div>
+                    <div className={styles.secComp}>
+                        <MethodInfo data={formData} onChange={changeHandle}/>
+                        <RawQcs data={formData} onChange={changeHandle} DownloadUpFile={DownloadUpFile}/>
+                        <LibQcs data={formData} onChange={changeHandle} DownloadUpFile={DownloadUpFile}/>
+                    </div>
+                    <div className={styles.secComp}>
+                        <UpdateBtn SubmitUpdate={SubmitUpdateEvent} />
+                    </div>
                 </>
             )}
-
+            </div>
         </div>
     );
 }
 
 
+function PageCont(){
+    return(
+        <>
+            <h2>Update your project data here</h2>
+            <p>This is a description paragraph</p>
+            <ul>
+                <li>poiwhejifgiwehbwbgweuigiewbhfihehfe</li>
+            </ul>   
+        </>
+
+    );
+}
+
 function SearchById({projectIdcatch, setProjectIdcatch, SearchByProjId}) {
     return (
-        <div className={styles.PushSec}>
+        <div className={styles.SerchBid}>
             <h2>Serach By Project ID</h2>
             <input value={projectIdcatch} onChange={(e) => setProjectIdcatch(e.target.value)} type="text" id="updateprojectId" name="project_id" required/>
             <button onClick={SearchByProjId} className={styles.SearchPrId}>Search</button>
@@ -254,11 +277,13 @@ function LibQcs({data, onChange, DownloadUpFile}) {
             <label htmlFor="libMethod">Method</label>
             <select value={data.lib_method} onChange= {onChange} id="libMethod" name="lib_method">
                 <option value="" disabled>select</option>
+                <option value="No Data">No Data</option>
                 <option value="totalRNA">total RNA</option>
                 <option value="mRNA">mRNA</option>
                 <option value="miRNA">miRNA</option>
                 <option value="DNA">DNA</option>
                 <option value="Others">Others</option>
+                <option value="" disabled></option>
             </select>
             <label htmlFor="libReport">Upload Library QC Report (accepted formats: pdf)</label>
             <button type='button' onClick={() => DownloadUpFile(data.lib_report)}>View uploaded file</button>
