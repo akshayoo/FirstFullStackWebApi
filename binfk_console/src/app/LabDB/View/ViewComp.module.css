@@ -1,58 +1,85 @@
-
-.SidebarSrch h2 {
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.SidebarSrch input {
-    margin-bottom: 10px;
-    height: 35px;
-    width: 90%;
-}
-
-.SidebarSrch input:focus {
-
-    border: 1px solid rgb(152, 240, 0);
-}
-
-
-.SidebarProp{
-    height: 500px;
-    overflow: auto;
-    padding: 5px;
-    border: 1px solid rgb(157, 157, 157);
-    border-radius: 10px;
-
-}
-
-.SidebarProp button{
-    width: 100%;
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-}
-
-.ViewSideBar {
-    border: 1px solid black;
-    width: 250px;
-    padding: 25px;
-    padding-top: 15px;
-    height: max-content;
-
-}
-
-.ViewSideBar h2 {
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.ViewWin {
-    flex: 1;
-}
-
 .View {
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: row;
-    height:  100%;
     overflow: hidden;
+    height: 100%;
+ }
+
+.SideB {
+    border-right: 1px solid rgb(197, 197, 197);
+    border-top: 1px solid rgb(197, 197, 197);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
+
+.HeadIn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+ }
+
+.HeadIn h2{
+    font-size: 15px;
+}
+
+.View h2 {
+    align-self: center;
+    font-size: 15px;
+}
+
+.HeadIn input {
+    padding: 5px;
+    border: 1px solid rgb(174, 174, 174);
+    background-color: transparent;
+    padding-inline-start: 15px;
+    border-radius: 8px;
+    outline: none;
+}
+
+.HeadIn input:focus {
+    padding: 5px;
+    background-color: transparent;
+    outline: none;
+}
+
+.RecEnt {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0; 
+    margin-bottom: 20px;
+}
+
+ .RecEnt button{
+    width: 100%;
+    padding: 5px;
+    background-color: rgb(248, 248, 248);
+    border: none;
+    border-top:1px solid rgb(192, 192, 192) ;
+    margin-bottom: 1px;
+    border-radius: 1px;
+    transition: background-color 0.3s ease;
+ }
+
+ .RecEnt button:hover{
+    background-color: rgb(225, 241, 255);
+ }
+
+ .ViewWin {
+    flex: 1;
+    border-top: 1px solid rgb(197, 197, 197);
+    padding: 20px;
+ }
+
+ .contentWin{
+    border: 1px solid black;
+    min-height: 0;
+    overflow: auto;
+    height: 100%;
+ }

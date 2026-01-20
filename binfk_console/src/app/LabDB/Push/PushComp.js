@@ -62,7 +62,6 @@ export function PushComp(){
 
     }
 
-
     return (
 
 

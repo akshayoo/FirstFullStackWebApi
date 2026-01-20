@@ -4,85 +4,62 @@ import styles from './ViewComp.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 export function ViewComp(){
 
-    const [projId, setProjId] = useState([])
+    const [projectIds, setProjectIds] = useState([])
 
     useEffect(() => {
-        async function ProjIdFetch() {
+        async function FetchProjIds(){
 
-            try {
-
-                const resp = await axios.get(
-                    "http://127.0.0.1:4040/labdb/view/pagepop"
-                );
-
-                console.log(resp.data.project_ids);
-                setProjId(resp.data.project_ids);
-
-            } catch (err) {
-
-                console.log("Failed to fetch project Ids", err);
+            try{
+                const resp = await axios.get("http://localhost:4050/labdb/view/pagepop")
+                setProjectIds(resp.data.project_ids)
             }
-
+            catch(er){
+                console.error("Failed to fetch project", er)
+            }
         }
-
-        ProjIdFetch();
-
-    }, []);
+        FetchProjIds()
+    }, [])
 
     return(
 
         <div className={styles.View}>
-            <div className={styles.ViewSideBar} >
-                <SerachById />
-                <h2>Recent Entries</h2>
-                <RecentEntries projId={projId} />
-            </div>
-            <div className= {styles.ViewWin}>
-                <ViewWelcome />
-            </div>
-        
+            <ViewSideBar projectIds={projectIds}/>
+            <ViewWin />
         </div>
     );
 }
 
-function SerachById() {
-    return (
-        <div className={styles.SidebarSrch}>
-            <h2>Search</h2>
-            <input type="text" id="updateprojectId" name="project_id" placeholder='project Id' required />
-        </div>
-    );
-}
-
-
-function RecentEntries({projId}){
+function ViewSideBar({projectIds}){
     return(
-        <>
-            <div className= {styles.SidebarProp}>
-                {projId.map(ids => (
-                <button key={ids}>{ids}</button>
-                ))}
+        <div className={styles.SideB}>
+            <div className={styles.HeadIn}>
+                <h2>Search by Id</h2>
+                <input />
             </div>
-        </>
-
+            <h2>Recent Entries</h2>
+                <div className={styles.RecEnt}>
+                    {projectIds.map(projids =>(
+                        <button key={projids}>{projids}</button>
+                    ))}
+                </div> 
+        </div>
     );
 }
 
 
-function ViewWelcome() {
+function ViewWin (){
     return(
-        <div>
-            <div>
-                This is the window page
-            </div>
-            <div>
-                Search for changing
+        <div className={styles.ViewWin}>
+            <div className={styles.contentWin}>
+                <div className={styles.fOn}>
+                    <div>Project ID</div>
+                    <div>TIPL_200</div>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
 

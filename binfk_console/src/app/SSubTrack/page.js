@@ -1,8 +1,7 @@
-export default function Page(){
+import { SSF } from "./SSF";
 
-    return (
-        <div>
-            SAMPLE SUBMISSION FORM PAGE
-        </div>
+export default function Page(){
+    return(
+        <SSF />
     );
 }
