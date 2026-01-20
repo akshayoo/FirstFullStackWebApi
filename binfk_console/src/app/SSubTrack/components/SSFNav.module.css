@@ -1,0 +1,24 @@
+
+.DbFeatureDiv {
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.DbFeatureBtns {
+    padding: 5px;
+    width: 100px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 15px;
+    border: none;
+    margin: 10px;
+    font-size: 14px;
+    box-shadow: 1px 1px 5px rgb(199, 199, 199);
+}
+
+.DbFeatureBtns:hover {
+    background-color: aliceblue;
+}
+
