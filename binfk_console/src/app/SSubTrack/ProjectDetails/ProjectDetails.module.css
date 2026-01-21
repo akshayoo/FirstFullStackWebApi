@@ -13,9 +13,9 @@
     width: 400px;
     display: flex;
     flex-direction: column;
-    padding: 30px;
-    border: 1px solid black;
+    padding: 50px;
     overflow: hidden;
+    margin-right: 50px;
 }
 
 
@@ -24,7 +24,6 @@
     display: flex;
     overflow: hidden;
     padding: 30px;
-    border: 1px solid black;
     justify-content: center;
 }
 
@@ -45,12 +44,12 @@
 
 .FormBox::-webkit-scrollbar-track {
   background: #00000000;
-  border-radius: 10px;
+  border-radius: 25px;
 }
 
 .FormBox::-webkit-scrollbar-thumb {
   background: #a1a1a1;
-  border-radius: 10px;
+  border-radius: 25px;
 }
 
 .FormBox::-webkit-scrollbar-thumb:hover {

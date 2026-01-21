@@ -9,7 +9,6 @@ export function ProjectDetailsComp() {
 
     const [extractionNeed, setExtractionNeed] = useState(false)
 
-
     return(
         <div  className={styles.ProgCompDiv}>
             <SideWin />
@@ -17,6 +16,7 @@ export function ProjectDetailsComp() {
         </div>
     );
 }
+
 
 function SideWin(){
     return(
@@ -65,12 +65,14 @@ function MainFormPage({extractionNeed, setExtractionNeed}) {
                         <textarea />
                     </div>
                     <div className={styles.InputcompDiv}>
-                        <label>Platform</label>
-                        <select name="platform">
-                            <option value="Nanostring nCounter">nCounter</option>
-                            <option value="Nanostring nCounter">NGS</option>
-                            <option value="Nanostring nCounter">Long Read</option>
-                            <option value="Nanostring nCounter">GeoMx</option>
+                        <label>Offerings Type</label>
+                        <select name="platform" >
+                            <option value="Bulk Transcriptome">Bulk Transcriptome</option>
+                            <option value="Metagenome/Applied Genomics">Metagenome/Applied Genomics</option>
+                            <option value="Human Genetic Analysis">Human Genetic Analysis</option>
+                            <option value="Human Tumor Biology">Human Tumor Biology</option>
+                            <option value="Targeted Pathway Interogation">Targeted Pathway Interogation</option>
+                            <option value="Applied">Applied</option>
                         </select>
                     </div>
                     <div className={styles.InputcompDiv}>
@@ -122,21 +124,43 @@ function ExtCont() {
     return(
          <div className={styles.ForminBox}>
             <div className={styles.InputcompDiv}>
-                <label>Type of Samples</label>
-                <input name="project_id" type="text" />
+                <label>Platform</label>
+                <div>nCounter</div>
+            </div>
+            <div className={styles.InputcompDiv}>
+                <label>Application</label>
+                <div>nCounter wyejgjw  wbgweb ewjnbhew bcec uhbcejm cceubcje cejbej cenj cbej </div>
+            </div>
+            <div className={styles.InputcompDiv}>
+                <label>Custom Description</label>
+                <div>nCounter bcuebje e uh ej e je e vuh ec e eu ce ijhugieijebi jbgcejnbfehib e bhjjhbd f</div>
+            </div>
+            <div className={styles.InputcompDiv}>
+                <label>Project Description</label>
+                <div>nCounter hsdvgufgegdvbfje hbvceb jen cveubvyhedbv jkn dbvidvb dkn vdeknn</div>
+            </div>
+            <div className={styles.InputcompDiv}>
+                <label>Type of samples</label>
+                <select name="rec_application">
+                    <option value="eddwid">Saliva</option>
+                    <option value="edfrfdwid">Blood</option>
+                    <option value="edfrfrdwid">Tissues</option>
+                    <option value="eddrfrwid">FFPE</option>
+                    <option value="eddfrwid">Body Fluids</option>
+                </select>
             </div>
             <div className={styles.InputcompDiv}>
                 <label>Sample Description</label>
-                <input name="pi_name" type="text" />
+                <div>nCounter hsdvgufgegdvbfje hbvceb jen cveubvyhedbvejfhviebn vceubvru vrbv    jkn dbvidvb dkn vdeknn</div>
             </div>
             <div className={styles.InputcompDiv}>
-                <label>Organization/Institution</label>
-                <input name="institution" type="text" />
+                <label>Other Description</label>
+                <textarea />
             </div>
             <div className={styles.InputcompDiv}>
-                <label>Lab/Department</label>
-                <input name="labdept" type="text" />
-            </div>
+                <label>Sample submission guide lines</label>
+                <div>nCounter hsdvgufgegdvbfje hbvceb jen cveubvyhedbvejfhviebn vceubvru vrbv    jkn dbvidvb dkn vdeknn</div>
+            </div>           
             <SendButton />
         </div>
     );
