@@ -13,11 +13,11 @@ export function SSFNav() {
             <Link href="/SSubTrack/ProjectDetails">
                 <button key= "view" className={styles.DbFeatureBtns} >{dbFeatures.projectDetails}</button>
             </Link>
-            <Link href="/LabDB/Push">
+            <Link href="/SSubTrack/LabForm">
                 <button key="push" className={styles.DbFeatureBtns} >{dbFeatures.sampleQc}</button>
             </Link>
 
-            <Link href="/LabDB/Update">
+            <Link href="/SSubTrack/ProjectDetails">
                 <button key="update" className={styles.DbFeatureBtns} >{dbFeatures.analysis}</button>
             </Link>
         </div>
