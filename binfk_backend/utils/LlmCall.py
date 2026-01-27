@@ -81,3 +81,10 @@ class ModelLoad():
 
         gc.collect()
         torch.cuda.empty_cache()
+
+
+
+
+
+
+        
