@@ -10,6 +10,7 @@ class ModelLoad():
         self.tokenizer = None
         self.model = None
         self.pipe = None
+        self.response = None
 
     def load_in4bit(self, method):
 
@@ -63,7 +64,12 @@ class ModelLoad():
             eos_token_id=self.tokenizer.eos_token_id,
         )[0]["generated_text"]
 
+        self.response = output.split("Answer:")[-1].strip()
+
         return output.split("Answer:")[-1].strip()
+    
+    def __str__(self):
+        return self.response
 
     def clean(self):
         del self.pipe
