@@ -18,19 +18,54 @@ app.add_middleware(
     allow_credentials = True
 )
 
-@app.get("/SamSub/ColDataPush")
-async def stddel():
 
-    cursor = collection.find()
+@app.get("/ssub/projdet/fillinfo")
+async def prilim_info():
 
-    tc_std = []
+    categories = collection.find({}, {"category": 1, "_id": 0})
 
-    for doc in cursor:
-        doc['_id'] = str(doc['_id'])
-        tc_std.append(doc)
+    category_services = {}  
 
+    for cat in categories:
+        category = cat["category"]
 
-    return {
-        "status" : "success",
-        "payload" : tc_std
-    }
+        items = collection.find(
+            {"category": category},
+            {"services.service_name": 1, "_id": 0}
+        )
+
+        service_list = []
+
+        for doc in items:
+            for service in doc.get("services", []):
+                service_list.append(service.get("service_name"))
+
+        category_services[category] = service_list
+    
+    return category_services
+
+"""
+@app.get("/ssub/projdet/fillinfo")
+async def prilim_info():
+
+    pipeline = [
+        {"$unwind": "$services"},
+        {
+            "$group": {
+                "_id": "$category",
+                "services": {"$addToSet": "$services.service_name"}
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "category": "$_id",
+                "services": 1
+            }
+        }
+    ]
+
+    result = collection.aggregate(pipeline)
+
+    return {doc["category"]: doc["services"] for doc in result}
+"""

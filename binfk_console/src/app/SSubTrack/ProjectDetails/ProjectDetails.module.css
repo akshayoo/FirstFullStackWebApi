@@ -75,11 +75,12 @@
 .InputcompDiv textarea,
 .InputcompDiv select,
 .InputcompDiv option {
-    font-size: 15px;
-    padding: 10px 14px;
+    font-size: 14px;
+    padding: 8px 12px;
     border-radius: 6px;
     border: 1px solid rgb(0, 56, 197);
     background-color: transparent;
+    width: 300px;
 }
 
 .InputcompDiv textarea{
@@ -102,6 +103,12 @@
 
 .InputcompDiv label {
   cursor: pointer;
+  font-size: 15px;
+}
+
+.InputcompDiv div {
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .InputcompDiv label:not(:first-child) {

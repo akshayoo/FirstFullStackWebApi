@@ -1,18 +1,45 @@
 "use client"
 
 import styles from './ProjectDetails.module.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 export function ProjectDetailsComp() {
 
+    const [servicesClass, setServicesClass] = useState({})
 
-    const [extractionNeed, setExtractionNeed] = useState(false)
+    const [classServices, setClassServices] = useState([])
+
+    const [selectedClass, setSelectedClass] = useState("");
+
+    useEffect(() =>{
+        async function DataLoad(){
+            try{
+                const response = await axios.get("http://127.0.0.1:4040/ssub/projdet/fillinfo")
+                setServicesClass(response.data)
+            }
+            catch(error){
+                console.log("API Error:" + error)
+            }
+        }
+        DataLoad()
+    }, [])
+
+    const onClassChange = (e) => {
+        const value = e.target.value;
+        setSelectedClass(value);
+        setClassServices(servicesClass[value] || []);
+    };
 
     return(
         <div  className={styles.ProgCompDiv}>
             <SideWin />
-            <MainFormPage extractionNeed={extractionNeed} setExtractionNeed={setExtractionNeed}/>
+            <MainFormPage 
+            servicesClass={servicesClass} 
+            onClassChange={onClassChange}
+            classServices={classServices}
+            />
         </div>
     );
 }
@@ -35,7 +62,7 @@ function SideWin(){
 }
 
 
-function MainFormPage({extractionNeed, setExtractionNeed}) {
+function MainFormPage({ servicesClass, onClassChange, classServices}) {
 
     return(
         <div className={styles.MainFormPage}>
@@ -66,23 +93,30 @@ function MainFormPage({extractionNeed, setExtractionNeed}) {
                     </div>
                     <div className={styles.InputcompDiv}>
                         <label>Offerings Type</label>
-                        <select name="platform" >
-                            <option value="Bulk Transcriptome">Bulk Transcriptome</option>
-                            <option value="Metagenome/Applied Genomics">Metagenome/Applied Genomics</option>
-                            <option value="Human Genetic Analysis">Human Genetic Analysis</option>
-                            <option value="Human Tumor Biology">Human Tumor Biology</option>
-                            <option value="Targeted Pathway Interogation">Targeted Pathway Interogation</option>
-                            <option value="Applied">Applied</option>
+                        <select name="platform" onChange={onClassChange}>
+                            <option value="">Select Offering Type</option>
+                            {Object.keys(servicesClass).map((category) => {
+                                return (
+                                    <option key={category} value={category}>
+                                        {category}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
                     <div className={styles.InputcompDiv}>
                         <label>Recommended Application</label>
                         <select name="rec_application">
-                            <option value="eddwid">wknjfjefj</option>
-                            <option value="edfrfdwid">wknwdedjfjefj</option>
-                            <option value="edfrfrdwid">wknedejfjefj</option>
-                            <option value="eddrfrwid">wkneejfjefj</option>
-                            <option value="eddfrwid">wknefejfjefj</option>
+                            <option value="">Select Offering Type</option>
+                            {
+                                classServices.map((servs) => {
+                                    return(
+                                        <option key={servs} value={servs}>
+                                            {servs}
+                                        </option>
+                                    );
+                                })
+                            }
                         </select>
                     </div>
                     <div className={styles.InputcompDiv}>
@@ -102,16 +136,53 @@ function MainFormPage({extractionNeed, setExtractionNeed}) {
                     <div className={styles.InputcompDiv}>
                         <label>Samples Extracion needed</label>
                         <div>
-                            <input onChange={() =>setExtractionNeed(true)} type="radio" id="eyes" name="extraction" value="yes" />
+                            <input type="radio" id="eyes" name="extraction" value="yes" />
                             <label htmlFor="eyes">Yes</label>
 
-                            <input onChange={() =>setExtractionNeed(false)} type="radio" id="eno" name="extraction" value="no" />
+                            <input type="radio" id="eno" name="extraction" value="no" />
                             <label htmlFor="eno">No</label>
                         </div>
                     </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Type of samples</label>
+                        <select name="rec_application">
+                            <option value="eddwid">Saliva</option>
+                            <option value="edfrfdwid">Blood</option>
+                            <option value="edfrfrdwid">Tissues</option>
+                            <option value="eddrfrwid">FFPE</option>
+                            <option value="eddfrwid">Body Fluids</option>
+                        </select>
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Platform</label>
+                        <div>nCounter</div>
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Application</label>
+                        <div>nCounter wyejgjw  wbgweb ewjnbhew bcec uhbcejm cceubcje cejbej cenj cbej </div>
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Custom Description</label>
+                        <div>nCounter bcuebje e uh ej e je e vuh ec e eu ce ijhugieijebi jbgcejnbfehib e bhjjhbd f</div>
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Project Description</label>
+                        <div>nCounter hsdvgufgegdvbfje hbvceb jen cveubvyhedbv jkn dbvidvb dkn vdeknn</div>
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Sample Description</label>
+                        <div>nCounter hsdvgufgegdvbfje hbvceb jen cveubvyhedbvejfhviebn vceubvru vrbv    jkn dbvidvb dkn vdeknn</div>
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Other Description</label>
+                        <textarea />
+                    </div>
+                    <div className={styles.InputcompDiv}>
+                        <label>Sample submission guide lines</label>
+                        <div>nCounter hsdvgufgegdvbfje hbvceb jen cveubvyhedbvejfhviebn vceubvru vrbv    jkn dbvidvb dkn vdeknn</div>
+                    </div>  
+                    <SendButton />
                 </div>
-
-                {extractionNeed ? <ExtCont /> : <SendButton />}
 
             </div>
         </div>
@@ -119,6 +190,7 @@ function MainFormPage({extractionNeed, setExtractionNeed}) {
     
 }
 
+/** 
 
 function ExtCont() {
     return(
@@ -165,6 +237,7 @@ function ExtCont() {
         </div>
     );
 }
+    */
 
 function SendButton(){
     return(
