@@ -129,7 +129,9 @@ export function ProjectDetailsComp() {
             const proj_id = s_data.project_id
             const status = s_data.status;
 
+
             alert(`Project ${proj_id} submitted successfully (status: ${status})`);
+            window.location.reload();
 
         } catch (error) {
             console.error(error);
@@ -160,7 +162,7 @@ function SideWin(){
     return(
         <div className={styles.projDetSide}>
             <h2>Project Initiation Window</h2>
-            <p>You're about to create a new project. Please keep the following in mind before you continue.</p>
+            <p>You are about to create a new project. Please keep the following in mind before you continue.</p>
             <ul>
                 <li>All fields in this form are <strong>mandatory</strong>.</li>
                 <li>Ensure the project name and description are clear.</li>
@@ -243,12 +245,22 @@ function MainFormPage({
                     </div>
 
                     <div className={styles.InputcompDiv}>
+                        <label>Type of samples</label>
+                        <select name="sample_type" onChange={handleChange}>
+                            <option value="">Select sample type</option>
+                            {selectedServProps?.supported_sample_types?.map((type) => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={styles.InputcompDiv}>
                         <label>Number of samples</label>
                         <input name="sam_number" type="number" onChange={handleChange} />
                     </div>
 
                     <div className={styles.InputcompDiv}>
-                        <label>Are there duplicates</label>
+                        <label>Are there replilicates</label>
                         <div>
                             <input type="radio" name="duplicates" id="dupyes" value="yes" onChange={handleRadioChange} />
                             <label htmlFor="dupyes">Yes</label>
@@ -266,16 +278,6 @@ function MainFormPage({
                             <label htmlFor="extno">No</label>
                         </div>
 
-                    </div>
-
-                    <div className={styles.InputcompDiv}>
-                        <label>Type of samples</label>
-                        <select name="sample_type" onChange={handleChange}>
-                            <option value="">Select sample type</option>
-                            {selectedServProps?.supported_sample_types?.map((type) => (
-                                <option key={type} value={type}>{type}</option>
-                            ))}
-                        </select>
                     </div>
 
                     <div className={styles.InputcompDiv}>
