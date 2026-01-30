@@ -2,7 +2,7 @@ import styles from '../LabForm.module.css'
 import { useState } from 'react';
 
 
-export function NgS() {
+export function NgSForm() {
 
     const [appliCation, setAppliCation] = useState(false)
 

@@ -1,0 +1,105 @@
+{
+    "project_id": "TIPL_408",
+    "project_info": {
+        "pi_name": "Mr. Purushothamman",
+        "email": "purushu@iitmadras.com",
+        "institution": "IIT Madras",
+        "lab_dept": "Aronotics and cosmology lab"
+    },
+    "service_info": {
+        "offering_type": "Bulk Transcriptomics",
+        "service_name": "",
+        "platform": "nCounter",
+        "sample_type": "Cells",
+        "sample_number": 24,
+        "duplicates_present": "Yes",
+        "extraction_needed": "Yes"
+    },
+    "project_details": {
+        "application": "h3eghf3hijr3nbfuhe3f4ufhu54h4ijnrufh4hfu4hu45yh4rjgih9utgy95rgnrtjhg9urghuthjgt",
+        "project_desc": "wihdegfciuerhuyergfen iuweghfiuwernfiuwerhifjebnuyfherlkjfvbnhedionhikedghgijeghd"
+    },
+    "sample_details" : {
+        
+    }
+},
+
+
+  {
+    project: {
+      project_id: 'TIPL_100',
+      title: 'rththtjhty5yty tyjhtyjtyujyjyt jt jy j yj y jy',
+      customer: '5hy6huv6jv j7jg7ju7',
+      organization: '7uuj7j7ibj 78ikb8ik8'
+    },
+    sample: {
+      type: 'Tissue',
+      count: 8,
+      preservation: 'FFPE',
+      other_info: '6ju76u7j7 7 k8uik8i ik8 k8k8 k8i  k8i k  8k8kj 8k'
+    },
+    method: {
+      name: 'RnaSeq',
+      writeup: '67u6u76uib7ki 88k8k 8k8k87',
+      method_summary: '7ij7kji8ki8i 8  k8ik8ik8i'
+    },
+    qc: {
+      qc_summary: '5tiuht5yuithyijyt5 g5 8uy5hbiuh5 uy5uih',
+      qc_files: {
+        quantification: '../../REPORTS/TIPL_100/QC/HG-RGD-WGS.pdf',
+        integrity: '../../REPORTS/TIPL_100/QC/theracues_offerings_25Nov25.xlsx'
+      }
+    },
+    library: {
+      lib_method: 'mRNA',
+      library_summary: 'wert357yn5 eu6i76 i7i 78 i87',
+      library_files: {
+        report: '../../REPORTS/TIPL_100/LIB/HG-RGD-WGS (1).pdf',
+        tapestation_report: '../../REPORTS/TIPL_100/LIB/HG-TRIO-EXO.pdf'
+      }
+    },
+    audit: {
+      updated_by: 'Rahul Reghunath',
+      updated_date: '2026-01-18T16:40:47.908515',
+      modified_by: 'Rahul Reghunath',
+      modified_date: '2026-01-18T16:46:50.555975'
+    }
+  },
+  {
+    _id: ObjectId('696cbff749a425b2faaf0c5e'),
+    project: {
+      project_id: 'TIPL_200',
+      title: 'trkghrthnjtynh jtnjtnhj tknhkjthnjotkn tnh tnt',
+      customer: 'thjntyjhntkhmnjtykojhmnokt yjmhik jktm hkotymj oyumjkoym',
+      organization: 'thjt iojtyojhmtoy jtkonhotnh tjinbjtibji'
+    },
+    sample: {
+      type: 'Serum',
+      count: 10,
+      preservation: 'Alcohol',
+      other_info: 'thyjyhrtnih rtbhi rbnih rbiujhnijhitj bnhtht'
+    },
+    method: {
+      name: 'GeoMx',
+      writeup: 'tghtoyjnhitynhiitrn ijtbnjitnhijt jhit  jint ijbh urngjib nhrtbnith',
+      method_summary: 'ghnthn y uyku kuuku kk ui i uk ukuku '
+    },
+    qc: {
+      qc_summary: 'jmyhjmy t  gtj y  gh h h m hm h ',
+      qc_files: {
+        quantification: '../../REPORTS/TIPL_200/QC/HG-TRIO-EXO.pdf',
+        integrity: '../../REPORTS/TIPL_200/QC/theracues_offerings_25Nov25.xlsx'
+      }
+    },
+    library: {
+      lib_method: 'No Data',
+      library_summary: 'jhtykjhnrtijhg rijhjitrnjhith tih tjhtijhuit',
+      library_files: { report: '', tapestation_report: '' }
+    },
+    audit: {
+      updated_by: 'Deschica Dechamma',
+      updated_date: '2026-01-18T16:41:51.349589',
+      modified_by: 'Deschica Dechamma',
+      modified_date: '2026-01-18T17:02:23.629388'
+    }
+  }

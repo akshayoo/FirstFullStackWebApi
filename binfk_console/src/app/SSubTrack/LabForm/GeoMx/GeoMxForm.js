@@ -1,7 +1,7 @@
 import styles from '../LabForm.module.css'
 
 
-export function NcounterForm() {
+export function GeoMxForm() {
 
     return(
         <div className={styles.MainFormPage}>
