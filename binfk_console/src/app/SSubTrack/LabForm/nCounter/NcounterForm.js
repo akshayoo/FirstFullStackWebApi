@@ -1,12 +1,19 @@
 import styles from '../LabForm.module.css'
+import { useState } from 'react';
 
 
 export function NcounterForm() {
+
+    const [extChange, setExtChange] = useState(false)
+
 
     return(
         <div className={styles.MainFormPage}>
             <div className={styles.FormBox}>
                 <div className={styles.FormFirSec}>
+                    <div className={styles.FFComp}>
+                        <h2>nCounter Sample Submission Window</h2>
+                    </div>
                     <div className={styles.FFComp}>
                         <div>Profiling mRNA or miRNA</div>
                         <div className={styles.FRad}>
@@ -18,51 +25,7 @@ export function NcounterForm() {
                         </div>
                     </div>
                     <div className={styles.FFComp}>
-                        <div>Does sample need miRNA profiling</div>
-                        <div className={styles.FRad}>
-                            <input type="radio" id="n-mrna" name="needmirna" value="yes" />
-                            <label htmlFor="n-mrna">Yes</label>
-
-                            <input type="radio" id="n-mirna" name="needmirna" value="no" />
-                            <label htmlFor="n-mirna">No</label>
-                        </div>
-                    </div>
-                    <div className={styles.FFComp}>
-                        <div>Has Total RNA prep been used</div>
-                        <div className={styles.FRad}>
-                            <input type="radio" id="rnaprep-yes" name="totalrnaprep" value="yes" />
-                            <label htmlFor="rnaprep-yes">Yes</label>
-
-                            <input type="radio" id="rnaprep-no" name="totalrnaprep" value="no" />
-                            <label htmlFor="rnaprep-no">No</label>
-                        </div>
-                    </div>
-                    <div className={styles.FFComp}>
-                        <label>Name of the Kit</label>
-                        <input />
-                    </div>  
-                    <div className={styles.FFComp}>
-                        <div>Has sample been treated with DNAase</div>
-                        <div className={styles.FRad}>
-                            <input type="radio" id="dnaase-yes" name="dnaase" value="yes" />
-                            <label htmlFor="dnaase-yes">Yes</label>
-
-                            <input type="radio" id="dnaase-no" name="dnaase" value="no" />
-                            <label htmlFor="dnaase-no">No</label>
-                        </div>
-                    </div>
-                    <div className={styles.FFComp}>
-                        <label>Method used to estimate sample concentration</label>
-                        <select>
-                            <option>Qubit</option>
-                            <option>Nanodrop</option>
-                            <option>Bio-Analyzer</option>
-                            <option>TapeStation</option>
-                            <option>Other</option>
-                        </select>
-                    </div>  
-                    <div className={styles.FFComp}>
-                        <div>Are there duplicates</div>
+                        <div>Are there Replicates</div>
                         <div className={styles.FRad}>
                             <input type="radio" id="dup-yes" name="dup" value="yes" />
                             <label htmlFor="dup-yes">Yes</label>
@@ -72,15 +35,16 @@ export function NcounterForm() {
                         </div>
                     </div>
                     <div className={styles.FFComp}>
-                        <label>Panel Selection For the run</label>
-                        <select>
-                            <option>Qubit</option>
-                            <option>Nanodrop</option>
-                            <option>Bio-Analyzer</option>
-                            <option>TapeStation</option>
-                            <option>Other</option>
-                        </select>
-                    </div>  
+                        <div>Extrection needed</div>
+                        <div className={styles.FRad}>
+                            <input type="radio" id="ext-yes" name="dup" value="yes" onChange={() => setExtChange(false)} />
+                            <label htmlFor="ext-yes">Yes</label>
+
+                            <input type="radio" id="ext-no" name="dup" value="no" onChange={() => setExtChange(true)}/>
+                            <label htmlFor="ext-no">No</label>
+                        </div>
+                    </div>
+                    {extChange ? <ExtCont /> : <></>}
                 </div>
 
                 <div className={styles.FormSceSec}>
@@ -92,6 +56,49 @@ export function NcounterForm() {
         </div>
     );
     
+}
+
+
+function ExtCont() {
+    return(
+
+        <>
+            <div className={styles.FFComp}>
+                <div>Has Total RNA prep been used</div>
+                <div className={styles.FRad}>
+                    <input type="radio" id="rnaprep-yes" name="totalrnaprep" value="yes" />
+                    <label htmlFor="rnaprep-yes">Yes</label>
+
+                    <input type="radio" id="rnaprep-no" name="totalrnaprep" value="no" />
+                    <label htmlFor="rnaprep-no">No</label>
+                </div>
+            </div>
+            <div className={styles.FFComp}>
+                <label>Name of the Kit</label>
+                <input />
+            </div>  
+            <div className={styles.FFComp}>
+                <div>Has sample been treated with DNAase</div>
+                <div className={styles.FRad}>
+                    <input type="radio" id="dnaase-yes" name="dnaase" value="yes" />
+                    <label htmlFor="dnaase-yes">Yes</label>
+
+                    <input type="radio" id="dnaase-no" name="dnaase" value="no" />
+                    <label htmlFor="dnaase-no">No</label>
+                </div>
+            </div>
+            <div className={styles.FFComp}>
+                <label>Method used to estimate sample concentration</label>
+                <select>
+                    <option>Qubit</option>
+                    <option>Nanodrop</option>
+                    <option>Bio-Analyzer</option>
+                    <option>TapeStation</option>
+                    <option>Other</option>
+                </select>
+            </div>  
+        </>
+    );
 }
 
 function DisplayTable(){
