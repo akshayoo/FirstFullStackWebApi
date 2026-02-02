@@ -9,6 +9,8 @@ export function NgSForm() {
 
     const fileUpload = () => {
 
+        document.input
+
     }
 
     return(
