@@ -26,7 +26,7 @@ async def proj_details(payload : ProjId):
 
     
 
-    collection = db["tcServices"]
+    collection = db["tcProjects"]
     try:
         proj_data = collection.find({"project_id" : project_id}, {
             "_id" : 0,

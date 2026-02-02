@@ -1,18 +1,17 @@
 "use client"
-
 import styles from './ProjectDetails.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export function ProjectDetailsComp() {
-
+    
     const [servicesClass, setServicesClass] = useState({})
     const [classServices, setClassServices] = useState([])
     const [selectedClass, setSelectedClass] = useState("");
     const [selectedServ, setSelectedServ] = useState("");
     const [selectedServProps, setSelectedServProps] = useState(null);
     const [projectDesc, setProjectDesc] = useState("");
-
+    
     const [formData, setFormData] = useState({
         project_id: "",
         pi_name: "",
@@ -26,10 +25,10 @@ export function ProjectDetailsComp() {
         extraction: "",
         sample_type: "",
         platform: "",
-        application: "",
-        project_desc: ""
+        standard_deliverables: [],  
+        added_deliverables: []      
     });
-
+    
     useEffect(() =>{
         async function DataLoad(){
             try{
@@ -42,7 +41,7 @@ export function ProjectDetailsComp() {
         }
         DataLoad()
     }, [])
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -50,63 +49,63 @@ export function ProjectDetailsComp() {
             [name]: value
         }));
     };
-
+    
     const handleRadioChange = (e) => {
         setFormData(prev => ({
             ...prev,
             [e.target.name]: e.target.value
         }));
     };
-
+    
     const onClassChange = (e) => {
         const value = e.target.value;
         setSelectedClass(value);
         setClassServices(servicesClass[value] || [])
-
+        
         setFormData(prev => ({
             ...prev,
             offering_type: value
         }));
     };
-
+    
     const onServiceSelct = (e) => {
         const serv_value = e.target.value;
         setSelectedServ(serv_value);
-
+        
         const selectedServiceObj = classServices.find(
             s => s.service_name === serv_value
         );
-
+        
         setSelectedServProps(selectedServiceObj || null);
-
+        
         if (selectedServiceObj) {
-            const processText = selectedServiceObj.process_map?.join("\n") || "No data available"
-
             const sd = selectedServiceObj.standard_deliverables;
-            const deliverableText = sd
-                ? [
-                    ...(sd.reports || []),
-                    ...(sd["add-ons"] || [])
-                ].join("\n")
-                : "";
-
-            const desc =`PROCESS MAP\n\n${processText}\n\n\nSTANDARD DELIVERABLES\n\n${deliverableText}`
-
-            setProjectDesc(desc);
-
+            let standardDeliverables = [];
+            
+            if (sd) {
+                const reports = sd.reports || [];
+                const addons = sd["add-ons"] || [];
+                standardDeliverables = [...reports, ...addons];
+            }
+            
+            setProjectDesc("");
+            
             setFormData(prev => ({
                 ...prev,
                 service_name: serv_value,
                 platform: selectedServiceObj.instrumentation?.platform || "",
-                application: selectedServiceObj.applications || "",
-                project_desc: desc
+                standard_deliverables: standardDeliverables,  
+                added_deliverables: []  
             }))
         }
     };
-
-
+    
     const validateForm = () => {
-        for (const key in formData) {
+        const requiredFields = ['project_id', 'pi_name', 'email', 'institution', 'labdept', 
+                                'offering_type', 'service_name', 'sam_number', 'duplicates', 
+                                'extraction', 'sample_type', 'platform'];
+        
+        for (const key of requiredFields) {
             if (!formData[key] || formData[key].toString().trim() === "") {
                 alert(`Missing required field: ${key.replaceAll("_", " ")}`);
                 return false;
@@ -114,36 +113,45 @@ export function ProjectDetailsComp() {
         }
         return true;
     }
-
-
+    
     const SendProjectInfo = async () => {
         if (!validateForm()) return;
-
+        
+        const addedDeliverablesArray = projectDesc
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0);  
+        
+        const payload = {
+            ...formData,
+            added_deliverables: addedDeliverablesArray
+        };
+        
         try {
             const mailsendresponse = await axios.post(
-                "http://127.0.0.1:4040/ssub/projdet/submit", formData,
+                "http://127.0.0.1:4040/ssub/projdet/submit", 
+                payload,
                 { headers: { "Content-Type": "application/json" } }
             );
-
+            
             const s_data = mailsendresponse.data;
             const proj_id = s_data.project_id
             const status = s_data.status;
-
-
+            
             alert(`Project ${proj_id} submitted successfully (status: ${status})`);
             window.location.reload();
-
+            
         } catch (error) {
             console.error(error);
             alert("Submission failed");
         }
     }
-
+    
     return(
         <div className={styles.ProgCompDiv}>
             <SideWin />
             <MainFormPage 
-                servicesClass={servicesClass} 
+                servicesClass={servicesClass}
                 onClassChange={onClassChange}
                 classServices={classServices}
                 onServiceSelct={onServiceSelct}
@@ -186,40 +194,50 @@ function MainFormPage({
     handleRadioChange,
     SendProjectInfo
 }) {
-
+    
+    const getStandardDeliverables = () => {
+        if (!selectedServProps?.standard_deliverables) return [];
+        
+        const sd = selectedServProps.standard_deliverables;
+        const reports = sd.reports || [];
+        const addons = sd["add-ons"] || [];
+        
+        return [...reports, ...addons];
+    };
+    
     return(
         <div className={styles.MainFormPage}>
             <div className={styles.FormBox}>
                 <div className={styles.ForminBox}>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Project ID</label>
                         <input name="project_id" type="text" onChange={handleChange} />
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>PI Name</label>
                         <input name="pi_name" type="text" onChange={handleChange} />
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Email</label>
                         <input name="email" type="email" onChange={handleChange} />
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Organization/Institution</label>
                         <input name="institution" type="text" onChange={handleChange} />
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Lab/Department</label>
                         <input name="labdept" type="text" onChange={handleChange} />
                     </div>
                 </div>
-
+                
                 <div className={styles.ForminBox}>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Offerings Type</label>
                         <select name="platform" onChange={onClassChange}>
@@ -231,11 +249,11 @@ function MainFormPage({
                             ))}
                         </select>
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Recommended Application</label>
                         <select name="service_name" onChange={onServiceSelct}>
-                            <option value="">Select Offering Type</option>
+                            <option value="">Select Service</option>
                             {classServices.map((servs) => (
                                 <option key={servs.service_name} value={servs.service_name}>
                                     {servs.service_name}
@@ -243,7 +261,7 @@ function MainFormPage({
                             ))}
                         </select>
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Type of samples</label>
                         <select name="sample_type" onChange={handleChange}>
@@ -253,14 +271,14 @@ function MainFormPage({
                             ))}
                         </select>
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Number of samples</label>
                         <input name="sam_number" type="number" onChange={handleChange} />
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
-                        <label>Are there replilicates</label>
+                        <label>Are there replicates</label>
                         <div>
                             <input type="radio" name="duplicates" id="dupyes" value="yes" onChange={handleRadioChange} />
                             <label htmlFor="dupyes">Yes</label>
@@ -268,7 +286,7 @@ function MainFormPage({
                             <label htmlFor="dupno">No</label>
                         </div>
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Samples Extraction needed</label>
                         <div>
@@ -277,37 +295,49 @@ function MainFormPage({
                             <input type="radio" name="extraction" id="extno" value="no" onChange={handleRadioChange} />
                             <label htmlFor="extno">No</label>
                         </div>
-
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Platform</label>
                         <div className={styles.OutCont}>
                             {selectedServProps?.instrumentation?.platform || "No Info"}
                         </div>
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
                         <label>Application</label>
                         <div className={styles.OutCont}>
                             {selectedServProps?.applications || "No Info"}
                         </div>
                     </div>
-
+                    
                     <div className={styles.InputcompDiv}>
-                        <label>Project Description and Standard Deliverables</label>
+                        <label>Standard Deliverables</label>
+                        <div className={styles.OutCont}>
+                            {getStandardDeliverables().length > 0 ? (
+                                <ul className={styles.List}>
+                                    {getStandardDeliverables().map((item, idx) => (
+                                        <li key={idx}>{item}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <span>No Info</span>
+                            )}
+                        </div>
+                    </div>
+                    
+                    <div className={styles.InputcompDiv}>
+                        <label>Added deliverables (one per line)</label>
                         <textarea
                             rows={12}
                             value={projectDesc}
+                            placeholder="Enter additional deliverables (one per line)"
                             onChange={(e) => {
                                 setProjectDesc(e.target.value);
-                                handleChange({
-                                    target: { name: "project_desc", value: e.target.value }
-                                });
                             }}
                         />
                     </div>
-
+                    
                     <SendButton SendProjectInfo={SendProjectInfo} />
                 </div>
             </div>

@@ -1,11 +1,51 @@
 import styles from '../LabForm.module.css'
 import { useState } from 'react';
-
+import axios from 'axios';
 
 export function NcounterForm() {
 
     const [extChange, setExtChange] = useState(false)
+    const [binfAnalysis, setBinfanalysis] = useState(false)
 
+
+    const [file, setFile] = useState(null)
+
+    const [tablePopulate, setTablePopulate] = useState([])
+
+
+    const fileIn = (e) => {
+        const selFile = e.target.files[0]
+        setFile(selFile)
+    }
+
+    
+    async function fileUpload(){
+
+        try{
+
+            if (!file){
+                alert("Upload the file")
+                return
+            }
+
+            const formData = new FormData()
+            formData.append("file" , file)
+
+            const response = await axios.post("http://127.0.0.1:4060/ssub/samsub/tableupload",
+                formData
+            )
+            const data = response.data  
+            
+            const formPop = data.submission
+
+            setTablePopulate(formPop)
+
+        }
+
+        catch {
+            alert("There was an error communicating with the server")
+        }
+    }
 
     return(
         <div className={styles.MainFormPage}>
@@ -45,11 +85,27 @@ export function NcounterForm() {
                         </div>
                     </div>
                     {extChange ? <ExtCont /> : <></>}
+
+                    <div className={styles.FFComp}>
+                        <div>Needed Bioinformatics Analysis</div>
+                        <div className={styles.FRad}>
+                            <input type="radio" id="binf-yes" name="binfanalysis" value="Yes" onChange={() => setBinfanalysis(true)} />
+                            <label htmlFor="binf-yes">Yes</label>
+
+                            <input type="radio" id="binf-no" name="binfanalysis" value="No" onChange={() => setBinfanalysis(false)}/>
+                            <label htmlFor="binf-no">No</label>
+                        </div>
+                    </div>
+
+                    {
+                        binfAnalysis ? <Binfo /> : <></>
+                    }
+                    
                 </div>
 
                 <div className={styles.FormSceSec}>
                     <div className={styles.FormTableSec}>
-                        <DisplayTable />
+                        <DisplayTable fileIn={fileIn} fileUpload={fileUpload} tablePopulate={tablePopulate} />
                     </div>
                 </div>
             </div>
@@ -101,7 +157,7 @@ function ExtCont() {
     );
 }
 
-function DisplayTable(){
+function DisplayTable({fileIn, fileUpload, tablePopulate}){
     return(
         <>
             <div className={styles.DisplayTable}>
@@ -118,19 +174,31 @@ function DisplayTable(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>SAM_ID- 1</td>
-                                <td>Sample Description- 1</td>
-                                <td>Sample RNA Conc.- 1</td>
-                                <td>Notes</td>
-                                <td>Group Name</td>
-                            </tr>                                                    
+                            {tablePopulate.length > 0 ? (
+                                tablePopulate.map((row, index) => (
+                                    <tr key={index}>
+                                        <td>{row["Sample ID"]}</td>
+                                        <td>{row["Description"]}</td>
+                                        <td>{row["RNA Conc."]}</td>
+                                        <td>{row["Notes"]}</td>
+                                        <td>{row["Replicate(Group Name)"]}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: "center" }}>
+                                        NO DATA
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
                 <div className= {styles.DispUpbtn}>
                     <a href='/template.ncounter.csv' download><button>Download Template</button></a>
-                    <button>Upload File</button>
+                    <label id='fileupload'>Select the file</label>
+                    <input onChange={fileIn} htmlFor='fileupload' type='file' accept='.csv, .xlsx' />
+                    <button onClick={fileUpload}>Upload File</button>
                 </div>
                 <SendButton />
                 
@@ -140,6 +208,31 @@ function DisplayTable(){
     );
 }
 
+function Binfo() {
+    return(
+        <>
+            <div className={styles.FFComp}>
+                <div>Key Objectives</div>
+                <textarea rows={6} />
+            </div>
+
+            <div className={styles.FFComp}>
+                <div>Comparisons for differential analysis</div>
+                <textarea rows={6} />
+            </div>
+
+            <div className={styles.FFComp}>
+                <div>Any additional analysis</div>
+                <textarea rows={6} />
+            </div>
+
+            <div className={styles.FFComp}>
+                <div>Any reference study to follow for the analysis</div>
+                <textarea rows={6} />
+            </div>
+        </>
+    );
+}
 
 function SendButton(){
     return(

@@ -39,28 +39,41 @@
         "prepared_with" : "",
         "rnase-dnaase" : "",
         "accesed_by" : "",
-        "sample_details" : {
-          "sample_id" : [
-            "sam_1", "sam_2", "sam_2", "sam_4"
-          ],
-          "description" : [
-            "", "", "", ""
-          ],
-          "rna_conc" : [
-            2.14, 3.45, 5.64, 7
-          ],
-          "notes" : [
-            "", "", "", ""
-          ],
-          "replicates_grpname": [
-            "dwsx", "uyed", "uyed", "dwsx"
-          ]
+        "sample_details" : [
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          }
+        ],
+        "audit" : {
+          "datetime": "73238heh"
         }
       },
-      "submission_time" : {
-        "time": "",
-        "date" : ""
-      },
+
       "method" : {
         "name" : "RNA-seq",
         "writup" : "werfegrghrhgrtghtht",
@@ -68,23 +81,36 @@
       },
       "qc" : {
         "qc_summary" : "efge7ygtyuegfyuegrhfueuyge",
-        "qc_sample_details" : {
-          "sample_id" : [
-            "sam_1", "sam_2", "sam_2", "sam_4"
-          ],
-          "description" : [
-            "", "", "", ""
-          ],
-          "rna_conc" : [
-            2.14, 3.45, 5.64, 7
-          ],
-          "notes" : [
-            "", "", "", ""
-          ],
-          "replicates_grpname": [
-            "dwsx", "uyed", "uyed", "dwsx"
-          ]
-        },
+        "qc_sample_details" : [
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          }
+        ],
         "audit" : {
         "datetime": "",
         "date" : ""
@@ -93,23 +119,36 @@
       "library" : {
         "library_method" : "euty3ubue3g",
         "library_summary" : "ejhfeufejihfuehf",
-        "lib_sam" : {
-          "sample_id" : [
-            "sam_1", "sam_2", "sam_2", "sam_4"
-          ],
-          "description" : [
-            "", "", "", ""
-          ],
-          "rna_conc" : [
-            2.14, 3.45, 5.64, 7
-          ],
-          "notes" : [
-            "", "", "", ""
-          ],
-          "replicates_grpname": [
-            "dwsx", "uyed", "uyed", "dwsx"
-          ]
-        },
+        "lib_sam" : [
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          },
+          {
+            "sample_id" : "32884",
+            "description" : "hewfiwjhfwiuhkwjbfwhfiufeferhfiefbe",
+            "rnaconc" : 3.45,
+            "notes": "dnsjbkn f efejf ken gebfekn ffedf",
+            "replicate_grpname" : "eiuhfriejrb"
+          }
+        ],
         "audit" : {
         "datetime": "",
         "date" : ""

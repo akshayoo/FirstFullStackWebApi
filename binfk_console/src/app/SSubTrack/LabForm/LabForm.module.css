@@ -112,6 +112,7 @@
    padding: 10px;
    margin-top: 50px;
    margin-bottom: 50px;
+   overflow-y: auto;
 }
 
 .FFComp{
@@ -133,6 +134,18 @@
   outline: none;
   border: 1px solid rgb(1, 119, 255);
   border-radius: 4px;
+}
+
+.FFComp textarea{
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 8px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.FFComp textarea:focus{
+  outline: none;
+  border: 1px solid rgb(1, 119, 255);
 }
 
 .FFTableComp{
@@ -286,7 +299,6 @@
 
 .DispUpbtn button {
   padding: 4px;
-  margin-left: 20px;
   margin-top: 10px;
   font-size: 14px;
   font-weight: 500;
@@ -301,6 +313,16 @@
 .DispUpbtn button:hover {
   background-color: #7abcff;
   border-color: #9fa0a1;
+}
+
+.DispUpbtn label{
+  font-size: 14px ;
+  margin-left: 20px;
+}
+
+.DispUpbtn input {
+  font-size:  14px;
+  margin-left: 20px;
 }
 
 .SendAppButton {
@@ -325,3 +347,6 @@
     background-color: rgb(0, 67, 166);
     box-shadow: 1px 1px 5px rgb(56, 56, 56) ;
 }
+
+
+

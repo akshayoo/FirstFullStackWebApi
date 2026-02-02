@@ -5,7 +5,9 @@ from pydantic import BaseModel, EmailStr
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from fastapi.exceptions import HTTPException
 from dotenv import load_dotenv
+from typing import List
 import os
+from datetime import datetime
 
 
 CLIENT = MongoClient("mongodb://localhost:27017")
@@ -85,8 +87,6 @@ async def prilim_info():
 
                 service_list.append(serv)
 
-
-
         category_services[category] = service_list
     
     return category_services
@@ -105,13 +105,13 @@ class ProjectSubmission(BaseModel):
     extraction: str
     sample_type: str
     platform: str
-    application: str
-    project_desc: str
+    standard_deliverables: List
+    added_deliverables: List
 
 @app.post("/ssub/projdet/submit")
 async def form_fetch_mail(payload: ProjectSubmission):
 
-    collection = db['tcServices']
+    collection = db['tcProjects']
 
     document = {
         "project_id": payload.project_id,
@@ -119,7 +119,10 @@ async def form_fetch_mail(payload: ProjectSubmission):
             "pi_name": payload.pi_name,
             "email": payload.email,
             "institution": payload.institution,
-            "lab_dept": payload.labdept
+            "lab_dept": payload.labdept,
+            "audit" : {
+                "datetime" : datetime.now()
+            }
         },
         "service_info": {
             "offering_type": payload.offering_type,
@@ -127,12 +130,18 @@ async def form_fetch_mail(payload: ProjectSubmission):
             "platform": payload.platform,
             "sample_type": payload.sample_type,
             "sample_number": payload.sam_number,
-            "duplicates_present": payload.duplicates,
-            "extraction_needed": payload.extraction
+            "replicates_present": payload.duplicates,
+            "extraction_needed": payload.extraction,
+            "audit" : {
+                "datetime" : datetime.now()
+            }
         },
         "project_details": {
-            "application": payload.application,
-            "project_desc": payload.project_desc
+            "standard_deliverables": payload.standard_deliverables ,
+            "added_deliverables": payload.added_deliverables,
+            "audit" : {
+                "datetime" : datetime.now()
+            }
         }
     }
 
@@ -214,10 +223,6 @@ async def form_fetch_mail(payload: ProjectSubmission):
                                             <td style="border:1px solid #e5e7eb;">{payload.extraction}</td>
                                         </tr>
 
-                                        <tr>
-                                            <td style="border:1px solid #e5e7eb;"><strong>Application</strong></td>
-                                            <td style="border:1px solid #e5e7eb;">{payload.application}</td>
-                                        </tr>
 
                                     </table>
 
@@ -234,7 +239,17 @@ async def form_fetch_mail(payload: ProjectSubmission):
                                         white-space:pre-wrap;
                                         font-size:13px;
                                     ">
-                                        {payload.project_desc}
+                                        {payload.standard_deliverables}
+                                    </div>
+                                    <div style="
+                                        background:#f9fafb;
+                                        border:1px solid #e5e7eb;
+                                        padding:12px;
+                                        border-radius:6px;
+                                        white-space:pre-wrap;
+                                        font-size:13px;
+                                    ">
+                                        {payload.added_deliverables}
                                     </div>
 
                                     <p>
