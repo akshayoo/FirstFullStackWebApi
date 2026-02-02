@@ -3,8 +3,7 @@ import Link from 'next/link';
 
 const dbFeatures = {
     "projectDetails" : "Initialization",
-    "sampleQc" : "Sample QC",
-    "analysis" : "Analysis",
+    "sampleQc" : "Intake"
 }
 
 export function SSFNav() {
@@ -15,10 +14,6 @@ export function SSFNav() {
             </Link>
             <Link href="/SSubTrack/LabForm">
                 <button key="push" className={styles.DbFeatureBtns} >{dbFeatures.sampleQc}</button>
-            </Link>
-
-            <Link href="/SSubTrack/ProjectDetails">
-                <button key="update" className={styles.DbFeatureBtns} >{dbFeatures.analysis}</button>
             </Link>
         </div>
     );

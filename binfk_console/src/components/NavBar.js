@@ -16,10 +16,12 @@ function Logo() {
 
 const navLink = {
     home: "Home",
-    labdb: "LabDB",
+    projects: "Projects",
+    servitems: "Items",
     aws: "AWSup",
     aichat: "CuesAI",
-    samtrack : "SamTrack"
+    intake : "Submissions",
+    items : "Items"
 }
 
 
@@ -43,21 +45,21 @@ function NavBtns() {
             <Link href="/LabDB">
                 <button
                     className= {styles.navBtns}>
-                    {navLink.labdb}
+                    {navLink.projects}
+                </button>
+            </Link>
+
+            <Link href="/Items">
+                <button
+                    className= {styles.navBtns}>
+                    {navLink.items}
                 </button>
             </Link>
 
             <Link href="/SSubTrack">
                 <button 
                     className= {styles.navBtns}>
-                    {navLink.samtrack}
-                </button>
-            </Link>
-
-            <Link href="/AWSup">
-                <button 
-                    className= {styles.navBtns}>
-                    {navLink.aws}
+                    {navLink.intake}
                 </button>
             </Link>
         </div>

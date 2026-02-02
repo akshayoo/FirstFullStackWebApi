@@ -5,6 +5,11 @@ import { useState } from 'react';
 export function NgSForm() {
 
     const [appliCation, setAppliCation] = useState(false)
+    const [extNeeded, setExtNeeded] = useState(false)
+
+    const fileUpload = () => {
+
+    }
 
     return(
         <div className={styles.MainFormPage}>
@@ -26,20 +31,22 @@ export function NgSForm() {
                     <div className={styles.FFComp}>
                         <div>Are there replicates</div>
                         <div className={styles.FRad}>
-                            <input type="radio" id="rep-yes" name="profiling" value="DNA" onChange={() => setAppliCation(false)} />
+                            <input type="radio" id="rep-yes" name="replicates" value="DNA" onChange={() => setAppliCation(false)} />
                             <label htmlFor="rep-yes">Yes</label>
 
-                            <input type="radio" id="rep-no" name="profiling" value="RNA" onChange={() => setAppliCation(true)} />
+                            <input type="radio" id="rep-no" name="replicates" value="RNA" onChange={() => setAppliCation(true)} />
                             <label htmlFor="rep-no">No</label>
                         </div>
                     </div>
 
-                    {appliCation ? <RnaForm /> : <DnaForm />}
+                    {appliCation ? <RnaForm setExtNeeded={setExtNeeded}
+                    extNeeded= {extNeeded} /> : <DnaForm setExtNeeded={setExtNeeded}
+                    extNeeded = {extNeeded} />}
                 </div>
 
                 <div className={styles.FormSceSec}>
                     <div className={styles.FormTableSec}>
-                        <DisplayTable />
+                        <DisplayTable fileUpload={fileUpload} />
                     </div>
                 </div>
             </div>
@@ -47,23 +54,108 @@ export function NgSForm() {
     );
 }
 
-function RnaForm(){
+function RnaForm({setExtNeeded, extNeeded}){
     return(
         <>
-            <ExtTrue />       
+            <ExtTrue setExtNeeded={setExtNeeded} />     
+            {extNeeded ? <RnaExtTrue /> : <></>}  
         </>
     );
 }
 
-function DnaForm(){
+function DnaForm({setExtNeeded, extNeeded}){
     return(
         <>
-            <ExtTrue />  
+            <ExtTrue setExtNeeded={setExtNeeded} />  
+            {extNeeded ? <DnaExtTrue /> : <></>}
         </>
     );
 }
 
-function DisplayTable(){
+function ExtTrue({setExtNeeded}){
+    return(
+        <>
+            <div className={styles.FFComp}>
+                <div>Extrection needed</div>
+                <div className={styles.FRad}>
+                    <input type="radio" id="ext-yes" name="duplicates" value="yes" onChange={() => setExtNeeded(false)} />
+                    <label htmlFor="ext-yes">Yes</label>
+
+                    <input type="radio" id="ext-no" name="duplicates" value="no" onChange={() => setExtNeeded(true)} />
+                    <label htmlFor="ext-no">No</label>
+                </div>
+            </div>
+        </>
+    );
+}
+
+function RnaExtTrue(){
+    return(
+        <>
+            <div className={styles.FFComp}>
+                <div>Has RNA been prepared with Total RNA or Coloumn Extraction</div>
+                <div className={styles.FRad}>
+                    <input type="radio" id="t-rna" name="prep" value="Total RNA" />
+                    <label htmlFor="t-rna">Total RNA</label>
+
+                    <input type="radio" id="c-rna" name="prep" value="Column Extraction" />
+                    <label htmlFor="c-rna">Column Extraction</label>
+                </div>
+            </div>
+            <div className={styles.FFComp}>
+                <div>Has sample been treated with DNAase</div>
+                <div className={styles.FRad}>
+                    <input type="radio" id="dnaase-yes" name="dnase" value="yes" />
+                    <label htmlFor="dnaase-yes">Yes</label>
+
+                    <input type="radio" id="dnaase-no" name="dnase" value="no" />
+                    <label htmlFor="dnaase-no">No</label>
+                </div>
+            </div>
+            <div className={styles.FFComp}>
+                <label>RNA has be assesed by</label>
+                <select>
+                    <option>Qubit</option>
+                    <option>Nanodrop</option>
+                    <option>Bio-Analyzer</option>
+                    <option>TapeStation</option>
+                    <option>Not assesed</option>
+                    <option>Other</option>
+                </select>
+            </div>    
+        </>
+    );
+}
+
+function DnaExtTrue(){
+    return(
+        <>
+            <div className={styles.FFComp}>
+                <div>Has sample been treated with RNAase</div>
+                <div className={styles.FRad}>
+                    <input type="radio" id="dnaase-yes" name="dnase" value="yes" />
+                    <label htmlFor="dnaase-yes">Yes</label>
+
+                    <input type="radio" id="dnaase-no" name="dnase" value="no" />
+                    <label htmlFor="dnaase-no">No</label>
+                </div>
+            </div>
+            <div className={styles.FFComp}>
+                <label>DNA QC has be assesed by</label>
+                <select>
+                    <option>Qubit</option>
+                    <option>Nanodrop</option>
+                    <option>Bio-Analyzer</option>
+                    <option>TapeStation</option>
+                    <option>Not assesed</option>
+                    <option>Other</option>
+                </select>
+            </div> 
+        </>
+    );
+}
+
+function DisplayTable({fileUpload}){
     return(
         <>
             <div className={styles.DisplayTable}>
@@ -93,96 +185,13 @@ function DisplayTable(){
                 </div>
                 <div className= {styles.DispUpbtn}>
                     <button>Download Template</button>
-                    <button>Upload File</button>
+                    <button onClick={fileUpload}>Upload File</button>
                 </div>
                 <SendButton />
                 
             </div>
         </>
 
-    );
-}
-
-function ExtTrue(){
-    return(
-        <>
-            <div className={styles.FFComp}>
-                <div>Extrection needed</div>
-                <div className={styles.FRad}>
-                    <input type="radio" id="ext-yes" name="dup" value="yes" />
-                    <label htmlFor="ext-yes">Yes</label>
-
-                    <input type="radio" id="ext-no" name="dup" value="no" />
-                    <label htmlFor="ext-no">No</label>
-                </div>
-            </div>
-        </>
-    );
-}
-
-function RnaExtTrue(){
-    return(
-        <>
-            <div className={styles.FFComp}>
-                <div>Has RNA been prepared with Total RNA or Coloumn Extraction</div>
-                <div className={styles.FRad}>
-                    <input type="radio" id="t-rna" name="needmirna" value="Total RNA" />
-                    <label htmlFor="t-rna">Total RNA</label>
-
-                    <input type="radio" id="c-rna" name="needmirna" value="Column Extraction" />
-                    <label htmlFor="c-rna">Column Extraction</label>
-                </div>
-            </div>
-            <div className={styles.FFComp}>
-                <div>Has sample been treated with DNAase</div>
-                <div className={styles.FRad}>
-                    <input type="radio" id="dnaase-yes" name="dnaase" value="yes" />
-                    <label htmlFor="dnaase-yes">Yes</label>
-
-                    <input type="radio" id="dnaase-no" name="dnaase" value="no" />
-                    <label htmlFor="dnaase-no">No</label>
-                </div>
-            </div>
-            <div className={styles.FFComp}>
-                <label>RNA has be assesed by</label>
-                <select>
-                    <option>Qubit</option>
-                    <option>Nanodrop</option>
-                    <option>Bio-Analyzer</option>
-                    <option>TapeStation</option>
-                    <option>Not assesed</option>
-                    <option>Other</option>
-                </select>
-            </div>    
-        </>
-    );
-}
-
-function DnaExtTrue(){
-    return(
-        <>
-            <div className={styles.FFComp}>
-                <div>Has sample been treated with RNAase</div>
-                <div className={styles.FRad}>
-                    <input type="radio" id="dnaase-yes" name="dnaase" value="yes" />
-                    <label htmlFor="dnaase-yes">Yes</label>
-
-                    <input type="radio" id="dnaase-no" name="dnaase" value="no" />
-                    <label htmlFor="dnaase-no">No</label>
-                </div>
-            </div>
-            <div className={styles.FFComp}>
-                <label>DNA QC has be assesed by</label>
-                <select>
-                    <option>Qubit</option>
-                    <option>Nanodrop</option>
-                    <option>Bio-Analyzer</option>
-                    <option>TapeStation</option>
-                    <option>Not assesed</option>
-                    <option>Other</option>
-                </select>
-            </div> 
-        </>
     );
 }
 
