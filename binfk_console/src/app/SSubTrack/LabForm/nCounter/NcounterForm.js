@@ -7,10 +7,40 @@ export function NcounterForm() {
     const [extChange, setExtChange] = useState(false)
     const [binfAnalysis, setBinfanalysis] = useState(false)
 
-
     const [file, setFile] = useState(null)
-
     const [tablePopulate, setTablePopulate] = useState([])
+
+    const [formData, setFormData] = useState({
+        application : "",
+        replicates : " ",
+        extraction_needed : "",
+
+        rna_prep : "",
+        rna_kit_name : "",
+        dnase_treated : "",
+        rna_assessment : "",
+
+        bioinformatics_needed : "",
+        key_objectives: "",
+        differential_comparisons: "",
+        additional_analysis: "",
+        reference_study: ""
+    })
+
+    const handleFieldChange = (e) => {
+        const{name, value} = e.target
+        setFormData(prev =>({
+            ...prev, [name] : value
+        }))
+
+    }
+
+    const handleRadiooptChange = (e) => {
+        const{name, value} = e.target
+        setFormData(prev =>({
+            ...prev, [name] : value
+        }))
+    }
 
 
     const fileIn = (e) => {
@@ -28,11 +58,11 @@ export function NcounterForm() {
                 return
             }
 
-            const formData = new FormData()
-            formData.append("file" , file)
+            const uploadData = new FormData()
+            uploadData.append("file" , file)
 
             const response = await axios.post("http://127.0.0.1:4060/ssub/samsub/tableupload",
-                formData
+                uploadData
             )
             const data = response.data  
             
@@ -47,6 +77,29 @@ export function NcounterForm() {
         }
     }
 
+    async function sendNcounterForm() {
+        if(!formData.application || !formData.replicates || 
+            !formData.extraction_needed || !formData.bioinformatics_needed)
+            {alert("Missing fields"); return}
+        
+        if (!tablePopulate.length){alert("Upload sample tables"); return}
+
+        const payload = {...formData, table: tablePopulate}
+
+        try{
+            const response = await axios.post("http://127.0.0.1:4060/ssub/projdet/ncounter", payload)
+
+            const data = response.data
+
+            alert(data.status)
+
+            window.location.reload()
+        }
+        catch {
+
+        }
+    }
+
     return(
         <div className={styles.MainFormPage}>
             <div className={styles.FormBox}>
@@ -57,55 +110,55 @@ export function NcounterForm() {
                     <div className={styles.FFComp}>
                         <div>Profiling mRNA or miRNA</div>
                         <div className={styles.FRad}>
-                            <input type="radio" id="mrna" name="profiling" value="mRNA" />
+                            <input type="radio" id="mrna" name="application" value="mRNA" onChange={handleRadiooptChange} />
                             <label htmlFor="mrna">mRNA</label>
 
-                            <input type="radio" id="mirna" name="profiling" value="miRNA" />
+                            <input type="radio" id="mirna" name="application" value="miRNA" onChange={handleRadiooptChange} />
                             <label htmlFor="mirna">miRNA</label>
                         </div>
                     </div>
                     <div className={styles.FFComp}>
                         <div>Are there Replicates</div>
                         <div className={styles.FRad}>
-                            <input type="radio" id="dup-yes" name="dup" value="yes" />
-                            <label htmlFor="dup-yes">Yes</label>
+                            <input type="radio" id="rep-yes" name="replicates" value="yes" />
+                            <label htmlFor="rep-yes">Yes</label>
 
-                            <input type="radio" id="dup-no" name="dup" value="no" />
-                            <label htmlFor="dup-no">No</label>
+                            <input type="radio" id="rep-no" name="replicates" value="no" />
+                            <label htmlFor="rep-no">No</label>
                         </div>
                     </div>
                     <div className={styles.FFComp}>
-                        <div>Extrection needed</div>
+                        <div>Extraction needed</div>
                         <div className={styles.FRad}>
-                            <input type="radio" id="ext-yes" name="dup" value="yes" onChange={() => setExtChange(false)} />
+                            <input type="radio" id="ext-yes" name="extraction_needed" value="yes" onChange={(e) => {setExtChange(false); handleRadiooptChange(e)}} />
                             <label htmlFor="ext-yes">Yes</label>
 
-                            <input type="radio" id="ext-no" name="dup" value="no" onChange={() => setExtChange(true)}/>
+                            <input type="radio" id="ext-no" name="extraction_needed" value="no" onChange={(e) => {setExtChange(true); handleRadiooptChange(e)}}/>
                             <label htmlFor="ext-no">No</label>
                         </div>
                     </div>
-                    {extChange ? <ExtCont /> : <></>}
+                    {extChange ? <ExtCont handleFieldChange={handleFieldChange} handleRadiooptChange={handleRadiooptChange} /> : <></>}
 
                     <div className={styles.FFComp}>
                         <div>Needed Bioinformatics Analysis</div>
                         <div className={styles.FRad}>
-                            <input type="radio" id="binf-yes" name="binfanalysis" value="Yes" onChange={() => setBinfanalysis(true)} />
+                            <input type="radio" id="binf-yes" name="bioinformatics_needed" value="Yes" onChange={(e) => {setBinfanalysis(true); handleRadiooptChange(e)}} />
                             <label htmlFor="binf-yes">Yes</label>
 
-                            <input type="radio" id="binf-no" name="binfanalysis" value="No" onChange={() => setBinfanalysis(false)}/>
+                            <input type="radio" id="binf-no" name="bioinformatics_needed" value="No" onChange={(e) => {setBinfanalysis(false); handleRadiooptChange(e)}}/>
                             <label htmlFor="binf-no">No</label>
                         </div>
                     </div>
 
                     {
-                        binfAnalysis ? <Binfo /> : <></>
+                        binfAnalysis ? <Binfo handleFieldChange={handleFieldChange} /> : <></>
                     }
                     
                 </div>
 
                 <div className={styles.FormSceSec}>
                     <div className={styles.FormTableSec}>
-                        <DisplayTable fileIn={fileIn} fileUpload={fileUpload} tablePopulate={tablePopulate} />
+                        <DisplayTable fileIn={fileIn} fileUpload={fileUpload} tablePopulate={tablePopulate} sendNcounterForm={sendNcounterForm} />
                     </div>
                 </div>
             </div>
@@ -115,49 +168,49 @@ export function NcounterForm() {
 }
 
 
-function ExtCont() {
+function ExtCont({handleFieldChange, handleRadiooptChange}) {
     return(
 
         <>
             <div className={styles.FFComp}>
                 <div>Has Total RNA prep been used</div>
                 <div className={styles.FRad}>
-                    <input type="radio" id="rnaprep-yes" name="totalrnaprep" value="yes" />
+                    <input type="radio" id="rnaprep-yes" name="rna_prep" value="yes" onChange={handleRadiooptChange} />
                     <label htmlFor="rnaprep-yes">Yes</label>
 
-                    <input type="radio" id="rnaprep-no" name="totalrnaprep" value="no" />
+                    <input type="radio" id="rnaprep-no" name="rna_prep" value="no" onChange={handleRadiooptChange} />
                     <label htmlFor="rnaprep-no">No</label>
                 </div>
             </div>
             <div className={styles.FFComp}>
                 <label>Name of the Kit</label>
-                <input />
+                <input name="rna_kit_name" onChange={handleFieldChange} />
             </div>  
             <div className={styles.FFComp}>
                 <div>Has sample been treated with DNAase</div>
                 <div className={styles.FRad}>
-                    <input type="radio" id="dnaase-yes" name="dnaase" value="yes" />
+                    <input type="radio" id="dnaase-yes" name="dnase_treated" value="yes" onChange={handleRadiooptChange} />
                     <label htmlFor="dnaase-yes">Yes</label>
 
-                    <input type="radio" id="dnaase-no" name="dnaase" value="no" />
+                    <input type="radio" id="dnaase-no" name="dnase_treated" value="no" onChange={handleRadiooptChange} />
                     <label htmlFor="dnaase-no">No</label>
                 </div>
             </div>
             <div className={styles.FFComp}>
                 <label>Method used to estimate sample concentration</label>
-                <select>
-                    <option>Qubit</option>
-                    <option>Nanodrop</option>
-                    <option>Bio-Analyzer</option>
-                    <option>TapeStation</option>
-                    <option>Other</option>
+                <select name="rna_assessment" onChange={handleFieldChange} >
+                    <option value="Qubit">Qubit</option>
+                    <option value="Nanodrop">Nanodrop</option>
+                    <option value="Bio-Analyzer">Bio-Analyzer</option>
+                    <option value="Tapestation">TapeStation</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>  
         </>
     );
 }
 
-function DisplayTable({fileIn, fileUpload, tablePopulate}){
+function DisplayTable({fileIn, fileUpload, tablePopulate, sendNcounterForm}){
     return(
         <>
             <div className={styles.DisplayTable}>
@@ -200,7 +253,7 @@ function DisplayTable({fileIn, fileUpload, tablePopulate}){
                     <input onChange={fileIn} htmlFor='fileupload' type='file' accept='.csv, .xlsx' />
                     <button onClick={fileUpload}>Upload File</button>
                 </div>
-                <SendButton />
+                <SendButton sendNcounterForm={sendNcounterForm} />
                 
             </div>
         </>
@@ -208,36 +261,36 @@ function DisplayTable({fileIn, fileUpload, tablePopulate}){
     );
 }
 
-function Binfo() {
+function Binfo({handleFieldChange}) {
     return(
         <>
             <div className={styles.FFComp}>
                 <div>Key Objectives</div>
-                <textarea rows={6} />
+                <textarea value="key_objectives" onChange={handleFieldChange} rows={5} />
             </div>
 
             <div className={styles.FFComp}>
                 <div>Comparisons for differential analysis</div>
-                <textarea rows={6} />
+                <textarea value="differential_comparisons" onChange={handleFieldChange} rows={5} />
             </div>
 
             <div className={styles.FFComp}>
                 <div>Any additional analysis</div>
-                <textarea rows={6} />
+                <textarea value="additional_analysis" onChange={handleFieldChange} rows={5} />
             </div>
 
             <div className={styles.FFComp}>
                 <div>Any reference study to follow for the analysis</div>
-                <textarea rows={6} />
+                <textarea value="reference_study" onChange={handleFieldChange} rows={5} />
             </div>
         </>
     );
 }
 
-function SendButton(){
+function SendButton({sendNcounterForm}){
     return(
         <div className={styles.SendAppButton}>
-            <button>Submit</button>
+            <button onClick={sendNcounterForm}>Submit</button>
         </div>
     );
 }

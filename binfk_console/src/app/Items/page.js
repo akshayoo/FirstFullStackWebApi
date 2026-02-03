@@ -1,8 +1,8 @@
-import { AWSup } from "./AWSup";
+import { Items } from "./Items";
 
 export default function Page(){
 
     return (
-        <AWSup />
+        <Items />
     );
 }
