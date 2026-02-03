@@ -1,0 +1,115 @@
+.CatalogMainWin {
+    display: flex;
+    padding: 5px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sideBar {
+    border: 1px solid black;
+    width: 400px;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+.sideBarIn {
+    display: flex;
+    border-top: 2px solid rgb(106, 106, 106) ;
+    border-bottom: 2px solid rgb(106, 106, 106) ;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.sideBarIn div {
+    font-size: 15px;
+}
+
+.sideBarIn button {
+    display: flex;
+    border-radius: 80px;
+    vertical-align: middle;
+    padding: 1px;
+    margin-left: auto;
+    background-color: transparent;
+    transition: background-color 0.5s ease;
+}
+
+.sideBarIn button:hover{
+    background-color: rgb(143, 212, 255);
+}
+
+.PushImage{
+    width: 15px;
+    height:15px;
+}
+
+.InComp {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: left;
+    transition: background-color 0.5s ease;
+}
+
+.InComp:hover {
+    background-color: rgb(201, 255, 147);
+}
+
+.MainWin {
+    border: 1px solid black;
+    flex: 1px;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 50px;
+}
+
+.MainSub {
+    border: 1px solid black;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.ItemInitial {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 20px;
+    margin: 10px;
+    font-size: 20px;
+}
+
+.ItemAppl {
+    padding: 20px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.ItemPrNo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.ItemSamp {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 20px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.ItemProcess {
+    padding: 20px;
+    margin: 10px;
+    font-size: 16px; 
+}
