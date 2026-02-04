@@ -1,174 +1,210 @@
+"use client"
+
 import styles from './Catalog.module.css'
-import Image from 'next/image';
-
-
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export function CatalogComp(){
-    return(
-        <div className={styles.CatalogMainWin}>
-            <SideBar />
-            <MainWin />
+
+  const [catalogData, setCatalogData] = useState({})
+  const [selectedService, setSelectedService] = useState(null)
+
+  useEffect(() =>{
+    async function fieldsData(){
+      try{
+        const response = await axios.get("http://127.0.0.1:4070/items/catalog/pulldata")
+        setCatalogData(response.data)
+      }
+      catch{
+        console.log("Error connecting to the server")
+      }
+    }
+    fieldsData()
+  }, [])
+
+  return(
+    <div className={styles.CatalogMainWin}>
+      <SideBar 
+        catalogData={catalogData}
+        setSelectedService={setSelectedService}
+      />
+      <MainWin selectedService={selectedService}/>
+    </div>
+  )
+}
+
+function SideBar({ catalogData, setSelectedService }){
+
+  const [openCategory, setOpenCategory] = useState(null)
+
+  return(
+    <div className={styles.sideBar}>
+
+      {Object.keys(catalogData).map((category) => (
+
+        <div key={category}>
+
+          <div className={styles.sideBarIn}>
+            <div>{category}</div>
+            <button onClick={() => 
+              setOpenCategory(openCategory === category ? null : category)
+            }>
+              <Image 
+                className={styles.PushImage}
+                src="/down.png"
+                alt="push-down"
+                width={20}
+                height={20}
+              />
+            </button>
+          </div>
+
+          {openCategory === category && (
+            <div className={styles.subList}>
+              {catalogData[category].map((service, index) => (
+                <button
+                  key={index}
+                  className={styles.InComp}
+                  onClick={() => setSelectedService(service)}
+                >
+                  {service.service_name}
+                </button>
+              ))}
+            </div>
+          )}
+
         </div>
-    );
+
+      ))}
+
+    </div>
+  )
 }
 
+function MainWin({ selectedService }){
 
-function SideBar() {
+  if(!selectedService){
     return(
-        <>
-        
-            <div className={styles.sideBar}>
-                <div className={styles.sideBarIn}>
-                    <div>Bulk Transcriptomics</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div> 
-                <SideBarComps />
-                <div className={styles.sideBarIn}>
-                    <div>Metagenomics and Applied Genomics</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div>
-                <SideBarComps />
-                <div className={styles.sideBarIn}>
-                    <div>Human Genetics</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div>
-                <SideBarComps />
-                <div className={styles.sideBarIn}>
-                    <div>Targeted Panels</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div>
-                <SideBarComps />
-                <div className={styles.sideBarIn}>
-                    <div>Applied</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div>
-                <SideBarComps />
-                <div className={styles.sideBarIn}>
-                    <div>Human DNA</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div>
-                <SideBarComps />
-                <div className={styles.sideBarIn}>
-                    <div>Custom Services</div>
-                    <button><Image className={styles.PushImage} src="/down.png" alt="push-down" width={120} height={60}/></button>
-                </div>
-                <SideBarComps />
-
-            </div>
-        
-        </>
-    )
-}
-
-function SideBarComps() {
-    return(
-        <>
-            <button className={styles.InComp}>hebdwjbfhjwbfhewh</button>
-            <button className={styles.InComp}>egfuhghfueggfehugr</button>
-            <button className={styles.InComp}>ehrfbhefueghfberhfberhu</button>
-            <button className={styles.InComp}>hefruyehrjebruyegh</button>
-            <button className={styles.InComp}>ekdfbebfrnhuegfueghfuge</button>
-            <button className={styles.InComp}>hebdwjbfhjwbfhewh</button>
-            <button className={styles.InComp}>egfuhghfueggfehugr</button>
-            <button className={styles.InComp}>ehrfbhefueghfberhfberhu</button>
-            <button className={styles.InComp}>hefruyehrjebruyegh</button>
-            <button className={styles.InComp}>ekdfbebfrnhuegfueghfuge</button>
-            <button className={styles.InComp}>hebdwjbfhjwbfhewh</button>
-            <button className={styles.InComp}>egfuhghfueggfehugr</button>
-            <button className={styles.InComp}>ehrfbhefueghfberhfberhu</button>
-            <button className={styles.InComp}>hefruyehrjebruyegh</button>
-            <button className={styles.InComp}>ekdfbebfrnhuegfueghfuge</button>
-            <button className={styles.InComp}>hebdwjbfhjwbfhewh</button>
-            <button className={styles.InComp}>egfuhghfueggfehugr</button>
-            <button className={styles.InComp}>ehrfbhefueghfberhfberhu</button>
-            <button className={styles.InComp}>hefruyehrjebruyegh</button>
-            <button className={styles.InComp}>ekdfbebfrnhuegfueghfuge</button>
-        </>
-    );
-}
-
-
-function MainWin() {
-    return(
-        <>
-            <div className={styles.MainWin}>
-                <div className={styles.MainSub}>
-                    <div className={styles.ItemInitial}>
-                        <div>Item Title</div>
-                        <div>Catlogue numbers</div>
-                    </div>
-                    <div className={styles.ItemAppl}>
-                        <div>Application</div>
-                        <div>gwedwuguywghuew gfheug huegfuehwjb beihfbheifbhiefh iefbhiebfiegfheibfheigfuhebfhuegfeuhugfhjebfhgjvfhgevfhge  v fuev uegv uveu vfuegv ueg uevuegv uegvfuhegfbheu gfeuhgfehjfgeuygfehufe gfeuhbehjfvbehjgfhejfbhejrgfjhevfgfvhejvfegh</div>
-                    </div>
-                    <div className={styles.ItemPrNo}>
-                        <div>
-                            <div>Pros</div>
-                            <ul>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <div>Notes</div>
-                            <ul>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                                <li>ehrfierfefehgfhjergfheg</li>
-                            </ul>
-                        </div>
-                        <div className={styles.ItemSamp}>
-                            <div>
-                                <div>Sample Input</div>
-                                <div>hwuegdhwgbewhvwhhjwwhjwjhvewvfevfejvfjhevfevfevjveb</div>
-                            </div>
-                            <div>
-                                <div>Sample Types</div>
-                                <ul>
-                                    <li>ehrfierfefehgfhjergfheg</li>
-                                    <li>ehrfierfefehgfhjergfheg</li>
-                                    <li>ehrfierfefehgfhjergfheg</li>
-                                    <li>ehrfierfefehgfhjergfheg</li>
-                                    <li>ehrfierfefehgfhjergfheg</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className={styles.ItemProcess}>
-                            <div>Process map</div>
-                            <div>
-                                <div>ewvdwuyegfeg</div>
-                                <div>ewvdwuyegfeg</div>
-                                <div>ewvdwuyegfeg</div>
-                                <div>ewvdwuyegfeg</div>
-                                <div>ewvdwuyegfeg</div>
-                                <div>ewvdwuyegfeg</div>
-                                <div>ewvdwuyegfeg</div>
-                            </div>
-                        </div>
-                        <div className={styles.ItemAppl}>
-                            <div>Standard Deliverables</div>
-                            <div>
-                                <ul>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                    <li>wgfuygweeugfegfvgevfghervfgefhejfbhuegfhjerbfhegfhefhjegfhehfervfegvfhevef</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+        <div className={styles.MainWin}>
+            <div className={styles.MainSub}>
+                <div className={styles.ItemAppl}>
+                    <div className={styles.ItemHead}>Service Actions</div>
+                    <ul>
+                        <li>Select a service from the sidebar to view full description</li>
+                        <li>Compare multiple services</li>
+                        <li>Download service brochure</li>
+                        <li>To add new service, switch to the next window</li>
+                        <li>New services always gets added to the Custom Services section</li>
+                    </ul>
                 </div>
             </div>
-        
-        </>
+        </div>
+    
     )
+  }
+
+  return(
+        <div className={styles.MainWin}>
+            <div className={styles.MainSub}>
+
+                <div className={styles.ItemInitial}>
+                    <div>{selectedService.service_name}</div>
+                    <div>{selectedService.service_code}</div>
+                </div>
+
+                <div className={styles.ItemAppl}>
+                    <div className={styles.ItemHead}>Application</div>
+                    <div>{selectedService.applications}</div>
+                </div>
+
+                <div className={styles.ItemPrNo}>
+
+                    <div className={styles.ItemSec}>
+                        <div className={styles.ItemHead}>Pros</div>
+                        <ul>
+                            {selectedService.pros_cons?.pros?.map((p,i)=>(
+                                <li key={i}>{p}</li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className={styles.ItemSec}>
+                        <div className={styles.ItemHead}>Notes</div>
+                        <ul>
+                            {selectedService.pros_cons?.notes?.map((n,i)=>(
+                                <li key={i}>{n}</li>
+                            ))}
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div className={styles.ItemSamp}>
+
+                    <div className={styles.ItemSampDiv}>
+                        <div className={styles.ItemHead}>Sample Input</div>
+                            <div>{selectedService.input_req?.sample_type}</div>
+
+                            <div className={styles.ItemHead}>Platform</div>
+                        <div>{selectedService.instrumentation?.platform}</div>
+                    </div>
+
+                    <div className={styles.ItemSampDiv}>
+                        <div className={styles.ItemHead}>Sample Types</div>
+                        <ul>
+                            {selectedService.supported_sample_types?.map((s,i)=>(
+                                <li key={i}>{s}</li>
+                            ))}
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div className={styles.ItemProcess}>
+                    <div className={styles.ItemHead}>Process Map</div>
+                    <div className={styles.ProcessMap}>
+                        {Array.isArray(selectedService.process_map) &&
+                        selectedService.process_map.map((step,i)=>(
+                            <div key={i}>{step}</div>
+                        ))
+                        }
+                    </div>
+                </div>
+
+                <div className={styles.ItemAppl}>
+                    <div className={styles.ItemHead}>Standard Deliverables</div>
+
+                    <ul>
+                        {selectedService.standard_deliverables?.reports?.map((d,i)=>(
+                        <li key={i}>{d}</li>
+                        ))}
+                    </ul>
+
+                    {selectedService.standard_deliverables?.["add-ons"] && (
+                        <>
+                        <div className={styles.ItemHead}>Add-ons</div>
+                        <ul>
+                            {selectedService.standard_deliverables["add-ons"].map((a,i)=>(
+                            <li key={i}>{a}</li>
+                            ))}
+                        </ul>
+                        </>
+                    )}
+
+                </div>
+
+                <div className={styles.ButtonSec}>
+                <DownloadSc/>
+                </div>
+
+            </div>
+        </div>
+  )
+}
+
+function DownloadSc(){
+  return(
+    <button>Download Soft Copy</button>
+  )
 }
