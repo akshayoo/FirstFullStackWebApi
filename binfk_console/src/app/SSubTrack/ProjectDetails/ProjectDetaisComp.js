@@ -16,6 +16,7 @@ export function ProjectDetailsComp() {
         project_id: "",
         pi_name: "",
         email: "",
+        phone: "",
         institution: "",
         labdept: "",
         offering_type: "",
@@ -115,35 +116,34 @@ export function ProjectDetailsComp() {
     }
     
     const SendProjectInfo = async () => {
-        if (!validateForm()) return;
-        
+        if (!validateForm()) return Promise.reject("Invalid Form")
+
         const addedDeliverablesArray = projectDesc
             .split('\n')
             .map(line => line.trim())
-            .filter(line => line.length > 0);  
-        
+            .filter(line => line.length > 0)
+
         const payload = {
             ...formData,
             added_deliverables: addedDeliverablesArray
-        };
-        
+        }
+
         try {
-            const mailsendresponse = await axios.post(
-                "http://127.0.0.1:4040/ssub/projdet/submit", 
-                payload,
-                { headers: { "Content-Type": "application/json" } }
-            );
-            
-            const s_data = mailsendresponse.data;
-            const proj_id = s_data.project_id
-            const status = s_data.status;
-            
-            alert(`Project ${proj_id} submitted successfully (status: ${status})`);
-            window.location.reload();
-            
+            const response = await axios.post(
+            "http://127.0.0.1:4040/ssub/projdet/submit",
+            payload,
+            { headers: { "Content-Type": "application/json" } }
+            )
+
+            const s_data = response.data
+            alert(`Project ${s_data.project_id} submitted successfully`)
+            window.location.reload()
+
+            return response  
         } catch (error) {
-            console.error(error);
-            alert("Submission failed");
+            console.error(error)
+            alert("Submission failed")
+            throw error        
         }
     }
     
@@ -223,6 +223,11 @@ function MainFormPage({
                     <div className={styles.InputcompDiv}>
                         <label>Email</label>
                         <input name="email" type="email" onChange={handleChange} />
+                    </div>
+
+                    <div className={styles.InputcompDiv}>
+                        <label>Phone</label>
+                        <input name="phone" type="tel" onChange={handleChange} />
                     </div>
                     
                     <div className={styles.InputcompDiv}>
@@ -345,12 +350,28 @@ function MainFormPage({
     );
 }
 
-function SendButton({ SendProjectInfo }){
-    return(
+function SendButton({ SendProjectInfo }) {
+
+    const [isSending, setIsSending] = useState(false)
+
+    const handleClick = async () => {
+        if (isSending) return
+
+        setIsSending(true)
+
+        try {
+            await SendProjectInfo()
+        } catch (err) {
+            console.error(err)
+            setIsSending(false)  
+        }
+    }
+
+    return (
         <div className={styles.SendAppButton}>
-            <button onClick={SendProjectInfo}>
-                Submit and Send for approval
+            <button onClick={handleClick} disabled={isSending}>
+                {isSending ? "Submitting..." : "Submit and Send for approval"}
             </button>
         </div>
-    );
+    )
 }

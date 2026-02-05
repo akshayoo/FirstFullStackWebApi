@@ -96,6 +96,7 @@ class ProjectSubmission(BaseModel):
     project_id: str
     pi_name: str
     email: EmailStr
+    phone: str
     institution: str
     labdept: str
     offering_type: str
@@ -113,16 +114,34 @@ async def form_fetch_mail(payload: ProjectSubmission):
 
     collection = db['tcProjects']
 
+    std_del_list = []
+    added_del_list = []
+
+    for std_deliverables in payload.standard_deliverables:
+        std_dict = {
+            "label" : std_deliverables,
+            "completed" : False,
+            "completed_at" : None
+        }
+        std_del_list.append(std_dict)
+    
+    for added_deliverables in payload.added_deliverables:
+        add_dict = {
+            "label" : added_deliverables,
+            "completed" : False,
+            "completed_at" : None
+        }
+        added_del_list.append(add_dict)
+
+
     document = {
         "project_id": payload.project_id,
         "project_info": {
             "pi_name": payload.pi_name,
             "email": payload.email,
+            "phone" : payload.phone,
             "institution": payload.institution,
             "lab_dept": payload.labdept,
-            "audit" : {
-                "datetime" : datetime.now()
-            }
         },
         "service_info": {
             "offering_type": payload.offering_type,
@@ -132,16 +151,13 @@ async def form_fetch_mail(payload: ProjectSubmission):
             "sample_number": payload.sam_number,
             "replicates_present": payload.duplicates,
             "extraction_needed": payload.extraction,
-            "audit" : {
-                "datetime" : datetime.now()
-            }
         },
         "project_details": {
-            "standard_deliverables": payload.standard_deliverables ,
-            "added_deliverables": payload.added_deliverables,
-            "audit" : {
-                "datetime" : datetime.now()
-            }
+            "standard_deliverables": std_del_list ,
+            "added_deliverables": added_del_list,
+        },
+        "audit": {
+            "created_at": datetime.now()
         }
     }
 
@@ -279,6 +295,7 @@ async def form_fetch_mail(payload: ProjectSubmission):
         message = MessageSchema(
             subject="Project Created Successfully",
             recipients=[payload.email],
+            cc=["itsmeakshay8055@theracues.com"],
             body=template,
             subtype="html",
         )

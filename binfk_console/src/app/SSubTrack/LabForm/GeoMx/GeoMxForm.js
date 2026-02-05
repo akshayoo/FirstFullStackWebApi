@@ -1,7 +1,7 @@
 import styles from '../LabForm.module.css'
 
 
-export function GeoMxForm() {
+export function GeoMxForm({projectId}) {
 
     return(
         <div className={styles.MainFormPage}>

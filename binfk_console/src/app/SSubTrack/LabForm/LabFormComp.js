@@ -22,6 +22,8 @@ export function LabFormComp() {
 
     const [techNology, setTechNology] = useState("")
 
+    const [projectId,  setProjectID] = useState("")
+
     async function projectSearch(){
 
         if (!searchCont.trim()){
@@ -49,6 +51,7 @@ export function LabFormComp() {
 
             setSearchValue(payload)
             setTechNology(payload.technology)
+            setProjectID(payload.project_id)
         }
 
         catch(error) {
@@ -64,9 +67,9 @@ export function LabFormComp() {
     }
 
     const FORM_BY_TECH = {
-        NGS: <NgSForm />,
-        nCounter: <NcounterForm />,
-        GeoMx: <GeoMxForm />
+        NGS: <NgSForm projectId={projectId} />,
+        nCounter: <NcounterForm projectId={projectId} />,
+        GeoMx: <GeoMxForm projectId={projectId} />
     }
 
     return(

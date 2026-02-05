@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-export function NgSForm() {
+export function NgSForm({projectId}) {
 
     const [appliCation, setAppliCation] = useState(null)
     const [extNeeded, setExtNeeded] = useState(false)
@@ -13,13 +13,14 @@ export function NgSForm() {
     const [tablePopulate, setTablePopulate] = useState([])
 
     const [formData, setFormData] = useState({
+        project_id: projectId,
+        technology : "NGS",
         application: "",
         replicates: "",
         extraction_needed: "",
         
-        rna_prep_method: "",
-        rna_kit_name: "",
         dnase_treated: "",
+        rna_kit_name: "",
         rna_assessment: "",
         
         rnase_treated: "",
@@ -85,9 +86,10 @@ export function NgSForm() {
 
     async function submitNGSForm() {
 
-        if(!tablePopulate.length){alert("No submission table found"); return}
+        if(!tablePopulate.length){alert("No submission table found"); window.location.reload(); return}
 
-        if (!formData.application || !formData.extraction_needed || !formData.bioinformatics_needed) {alert("Missing fields"); return}
+        if (!formData.application || !formData.extraction_needed || !formData.bioinformatics_needed) {alert("Missing fields");
+            window.location.reload(); return}
 
         const payload = {...formData, table: tablePopulate}
 
@@ -222,21 +224,7 @@ function ExtTrue({setExtNeeded, handleRadiooptChange}){
 
 function RnaExtTrue({handleFieldChange, handleRadiooptChange}){
     return(
-        <>
-            <div className={styles.FFComp}>
-                <div>Has RNA been prepared with Total RNA or Coloumn Extraction</div>
-                <div className={styles.FRad}>
-                    <input type="radio" id="t-rna" name="rna_prep_method" value="Total RNA" onChange={handleRadiooptChange} />
-                    <label htmlFor="t-rna">Total RNA</label>
-
-                    <input type="radio" id="c-rna" name="rna_prep_method" value="Column Extraction" onChange={handleRadiooptChange} />
-                    <label htmlFor="c-rna">Column Extraction</label>
-                </div>
-            </div>
-            <div className={styles.FFComp}>
-                <label>Name of the Kit</label>
-                <input name="rna_kit_name" onChange={handleFieldChange} />
-            </div>  
+        <> 
             <div className={styles.FFComp}>
                 <div>Has sample been treated with DNAase</div>
                 <div className={styles.FRad}>
@@ -247,6 +235,10 @@ function RnaExtTrue({handleFieldChange, handleRadiooptChange}){
                     <label htmlFor="dnaase-no">No</label>
                 </div>
             </div>
+            <div className={styles.FFComp}>
+                <label>Name of the Kit</label>
+                <input name="rna_kit_name" onChange={handleFieldChange} />
+            </div> 
             <div className={styles.FFComp}>
                 <label>RNA has be assesed by</label>
                 <select name='rna_assessment' onChange={handleFieldChange}>
@@ -371,10 +363,26 @@ function Binfo({handleFieldChange}) {
     );
 }
 
-function SendButton({submitNGSForm}){
-    return(
+function SendButton({ submitNGSForm }) {
+    const [sending, setSending] = useState(false)
+
+    const handleClick = async () => {
+        if (sending) return
+        setSending(true)
+
+        try {
+            await submitNGSForm()
+        } catch (err) {
+            console.error(err)
+            setSending(false)
+        }
+    }
+
+    return (
         <div className={styles.SendAppButton}>
-            <button onClick={submitNGSForm}>Submit</button>
+        <button onClick={handleClick} disabled={sending}>
+            {sending ? "Submitting..." : "Submit"}
+        </button>
         </div>
-    );
+    )
 }

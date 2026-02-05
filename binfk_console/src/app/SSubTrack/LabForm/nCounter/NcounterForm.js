@@ -2,7 +2,7 @@ import styles from '../LabForm.module.css'
 import { useState } from 'react';
 import axios from 'axios';
 
-export function NcounterForm() {
+export function NcounterForm({projectId}) {
 
     const [extChange, setExtChange] = useState(false)
     const [binfAnalysis, setBinfanalysis] = useState(false)
@@ -11,13 +11,15 @@ export function NcounterForm() {
     const [tablePopulate, setTablePopulate] = useState([])
 
     const [formData, setFormData] = useState({
+        project_id: projectId,
+        technology: "nCounter",
         application : "",
-        replicates : " ",
+        replicates : "",
         extraction_needed : "",
 
         rna_prep : "",
-        rna_kit_name : "",
         dnase_treated : "",
+        rna_kit_name : "",
         rna_assessment : "",
 
         bioinformatics_needed : "",
@@ -80,9 +82,9 @@ export function NcounterForm() {
     async function sendNcounterForm() {
         if(!formData.application || !formData.replicates || 
             !formData.extraction_needed || !formData.bioinformatics_needed)
-            {alert("Missing fields"); return}
+            {alert("Missing fields"); window.location.reload(); return}
         
-        if (!tablePopulate.length){alert("Upload sample tables"); return}
+        if (!tablePopulate.length){alert("Upload sample tables"); window.location.reload(); return}
 
         const payload = {...formData, table: tablePopulate}
 
@@ -120,10 +122,10 @@ export function NcounterForm() {
                     <div className={styles.FFComp}>
                         <div>Are there Replicates</div>
                         <div className={styles.FRad}>
-                            <input type="radio" id="rep-yes" name="replicates" value="yes" />
+                            <input type="radio" id="rep-yes" name="replicates" value="yes" onChange={handleRadiooptChange}  />
                             <label htmlFor="rep-yes">Yes</label>
 
-                            <input type="radio" id="rep-no" name="replicates" value="no" />
+                            <input type="radio" id="rep-no" name="replicates" value="no" onChange={handleRadiooptChange}  />
                             <label htmlFor="rep-no">No</label>
                         </div>
                     </div>
@@ -183,10 +185,6 @@ function ExtCont({handleFieldChange, handleRadiooptChange}) {
                 </div>
             </div>
             <div className={styles.FFComp}>
-                <label>Name of the Kit</label>
-                <input name="rna_kit_name" onChange={handleFieldChange} />
-            </div>  
-            <div className={styles.FFComp}>
                 <div>Has sample been treated with DNAase</div>
                 <div className={styles.FRad}>
                     <input type="radio" id="dnaase-yes" name="dnase_treated" value="yes" onChange={handleRadiooptChange} />
@@ -196,6 +194,10 @@ function ExtCont({handleFieldChange, handleRadiooptChange}) {
                     <label htmlFor="dnaase-no">No</label>
                 </div>
             </div>
+            <div className={styles.FFComp}>
+                <label>Name of the Kit</label>
+                <input name="rna_kit_name" onChange={handleFieldChange} />
+            </div>  
             <div className={styles.FFComp}>
                 <label>Method used to estimate sample concentration</label>
                 <select name="rna_assessment" onChange={handleFieldChange} >
@@ -266,31 +268,47 @@ function Binfo({handleFieldChange}) {
         <>
             <div className={styles.FFComp}>
                 <div>Key Objectives</div>
-                <textarea value="key_objectives" onChange={handleFieldChange} rows={5} />
+                <textarea name="key_objectives" onChange={handleFieldChange} rows={5} />
             </div>
 
             <div className={styles.FFComp}>
                 <div>Comparisons for differential analysis</div>
-                <textarea value="differential_comparisons" onChange={handleFieldChange} rows={5} />
+                <textarea name="differential_comparisons" onChange={handleFieldChange} rows={5} />
             </div>
 
             <div className={styles.FFComp}>
                 <div>Any additional analysis</div>
-                <textarea value="additional_analysis" onChange={handleFieldChange} rows={5} />
+                <textarea name="additional_analysis" onChange={handleFieldChange} rows={5} />
             </div>
 
             <div className={styles.FFComp}>
                 <div>Any reference study to follow for the analysis</div>
-                <textarea value="reference_study" onChange={handleFieldChange} rows={5} />
+                <textarea name="reference_study" onChange={handleFieldChange} rows={5} />
             </div>
         </>
     );
 }
 
-function SendButton({sendNcounterForm}){
-    return(
+function SendButton({ sendNcounterForm }) {
+    const [sending, setSending] = useState(false)
+
+    const handleClick = async () => {
+        if (sending) return
+        setSending(true)
+
+        try {
+            await sendNcounterForm()
+        } catch (err) {
+            console.error(err)
+            setSending(false)
+        }
+    }
+
+    return (
         <div className={styles.SendAppButton}>
-            <button onClick={sendNcounterForm}>Submit</button>
+        <button onClick={handleClick} disabled={sending}>
+            {sending ? "Submitting..." : "Submit"}
+        </button>
         </div>
-    );
+    )
 }
