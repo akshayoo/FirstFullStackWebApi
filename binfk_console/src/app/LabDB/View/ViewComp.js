@@ -212,7 +212,11 @@ function SampleSubDetails(){
     return(
 
         <div className={styles.ProjectComp}>
-            <h2 className={styles.sech}>Sample Submission Details</h2>
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Sample Submission Details</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
                     <div>Service Name</div>
@@ -263,17 +267,17 @@ function SampleSubDetails(){
                 <div>
                     <div className={styles.ProjecIn}>
                         <div>Key Objectives</div>
-                        <div>Comprehensive genomic analysis to identify germline variants associated with hereditary conditions. Focus on exonic regions to detect pathogenic mutations and variants of uncertain significance.</div>
+                        <div>Comprhjedbnfjfnjvkrfn gkjnt gkbg   ain sigtgrtnthyitftihcrtahnrchtrehrh.rh</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Comparisons for Differential Analysis</div>
-                        <div>Case-control comparison between affected individuals and healthy controls. Family-based segregation analysis to track variant inheritance patterns.</div>
+                        <div>Casecekjfh ij3hfnij4nfij4hi nmkf nieh  okerkjfokemekojoi joitjrui9tyrtn nerns.</div>
                     </div>
                 </div>
                 <div>
                     <div className={styles.ProjecIn}>
                         <div>Additional Analysis</div>
-                        <div>Pathway enrichment analysis, variant annotation with clinical databases (ClinVar, OMIM), and population frequency assessment using gnomAD database.</div>
+                        <div>Paejfijrebn ihbiuhngirjutgnr iujhnrhni jnijrnijn gijrnhtij nmntgirjngiur jirntgijrh abagfbfgse.</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Reference Studies</div>
@@ -281,11 +285,11 @@ function SampleSubDetails(){
                     </div>
                 </div>
             </div>
-            <div className={styles.GridtF}>
+            <div className={styles.ProjecTabView}>
                 <div>Sample Submission Table</div>
                 <div className={styles.SamSubTables}>
                     <div>
-                        <table>
+                        <table className={styles.TableCont}>
                             <thead>
                                 <tr>
                                     <th>Sample ID</th>
@@ -301,6 +305,104 @@ function SampleSubDetails(){
                                     <td>Blood sample from proband - Family A</td>
                                     <td>8.14</td>
                                     <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>Blood sample from proband - Family A</td>
+                                    <td>8.14</td>
+                                    <td>High quality extraction</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>Blood sample from mother - Family A</td>
+                                    <td>7.92</td>
+                                    <td>Optimal concentration</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>Blood sample from mother - Family A</td>
+                                    <td>7.92</td>
+                                    <td>Optimal concentration</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>Blood sample from mother - Family A</td>
+                                    <td>7.92</td>
+                                    <td>Optimal concentration</td>
+                                    <td>GP_1</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>Blood sample from mother - Family A</td>
+                                    <td>7.92</td>
+                                    <td>Optimal concentration</td>
                                     <td>GP_1</td>
                                 </tr>
                                 <tr>
@@ -343,11 +445,12 @@ function SampleSubDetails(){
                     </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <button>Upload QC Report - New and Existing</button>
-                    <button>Download Sample Submission Report</button>
-                    <button>Send QC Report</button>
+            <div className={styles.GridTwo}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Form (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Form (.csv)`}</button>
                 </div>
             </div>
         </div>
@@ -358,22 +461,27 @@ function SampleSubDetails(){
 function QcSamDetails() {
     return(
         <div className={styles.ProjectComp}>
-            <h2 className={styles.sech}>QC and Other Details</h2>
+
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Sample Submission Details</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+
             <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
                     <div>Method Writeup</div>
-                    <div>DNA extraction was performed using standard phenol-chloroform protocol followed by ethanol precipitation. Quality assessment was conducted using spectrophotometry and gel electrophoresis to ensure sample integrity.</div>
+                    <div>DNA extraction wergrtyhrthrthtrhthtyllowed by ethanohhntglity asswekfhweifbjewr yurgfiuhbfijehfiueh ibiue hfuehfuj iorhniegrity.</div>
                 </div>
                 <div className={styles.ProjecIn}>
                     <div>Method Summary</div>
-                    <div>High-throughput exome sequencing using Illumina platform with 100x average coverage. Library preparation using NEB Ultra II kit with dual indexing for multiplexing capabilities.</div>
+                    <div>High-throughnghhnghnghngh coverage. Libredgjbjgjhga II kiwkhfgejf ehe bfejrfejf jefeilities.</div>
                 </div>
             </div>
             <div className={styles.ProjecIn}>
                 <div>QC Summary</div>
-                <div>All samples passed quality control metrics with A260/A280 ratios between 1.8-2.0 and RNA integrity numbers above 7.5. Samples exhibit optimal concentration and purity for downstream sequencing applications.</div>
+                <div>Awkjhfbejif efehifbiebniejonoeijrgnirgnjrokjgnro rnoijhjnrio0jmrpk ri0jrijrpgoikroi0ru oirjkpoijhiohjojkfnhfoijh oighnogh jiofnjnhf ihjifhiujn fnions.</div>
             </div>
-            <div>
+            <div className={styles.ProjecIn}>
                 <div>QC Report</div>
                 <div>
                     <div style={{
@@ -396,67 +504,162 @@ function QcSamDetails() {
                             <path d="M12 3v6h6"/>
                         </svg>
                         <div>PDF Report Viewer</div>
-                        <div style={{fontSize: '0.85rem'}}>Quality control report will be displayed here</div>
+                        <div style={{fontSize: '0.85rem'}}>Quality control reporty</div>
                     </div>
                 </div>
             </div>
-            <div>
+
+            <div className={styles.ProjecTabView}>
                 <div>QC Table</div>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Sample ID</th>
-                                <th>theraCUES Sample ID</th>
-                                <th>Qubit RNA Conc. (ng/ul)</th>
-                                <th>Integrity Number</th>
-                                <th>Comments</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Sam_001</td>
-                                <td>SAMBA_734847</td>
-                                <td>167</td>
-                                <td>8.14</td>
-                                <td>Optimal</td>
-                            </tr>
-                            <tr>
-                                <td>Sam_002</td>
-                                <td>SAMBA_734848</td>
-                                <td>152</td>
-                                <td>7.92</td>
-                                <td>Optimal</td>
-                            </tr>
-                            <tr>
-                                <td>Sam_003</td>
-                                <td>SAMBA_734849</td>
-                                <td>178</td>
-                                <td>8.45</td>
-                                <td>Excellent</td>
-                            </tr>
-                            <tr>
-                                <td>Sam_004</td>
-                                <td>SAMBA_734850</td>
-                                <td>145</td>
-                                <td>7.68</td>
-                                <td>Good</td>
-                            </tr>
-                            <tr>
-                                <td>Sam_005</td>
-                                <td>SAMBA_734851</td>
-                                <td>163</td>
-                                <td>8.21</td>
-                                <td>Optimal</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div className={styles.SamSubTables}>
+                    <div>
+                        <table className={styles.TableCont}>
+                            <thead>
+                                <tr>
+                                    <th>Sample ID</th>
+                                    <th>theraCUES Sample ID</th>
+                                    <th>Qubit RNA Conc. (ng/ul)</th>
+                                    <th>Integrity Number</th>
+                                    <th>Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sam_001</td>
+                                    <td>SAMBA_734847</td>
+                                    <td>167</td>
+                                    <td>8.14</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>SAMBA_734848</td>
+                                    <td>152</td>
+                                    <td>7.92</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_003</td>
+                                    <td>SAMBA_734849</td>
+                                    <td>178</td>
+                                    <td>8.45</td>
+                                    <td>Excellent</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_004</td>
+                                    <td>SAMBA_734850</td>
+                                    <td>145</td>
+                                    <td>7.68</td>
+                                    <td>Good</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_005</td>
+                                    <td>SAMBA_734851</td>
+                                    <td>163</td>
+                                    <td>8.21</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>SAMBA_734848</td>
+                                    <td>152</td>
+                                    <td>7.92</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_003</td>
+                                    <td>SAMBA_734849</td>
+                                    <td>178</td>
+                                    <td>8.45</td>
+                                    <td>Excellent</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_004</td>
+                                    <td>SAMBA_734850</td>
+                                    <td>145</td>
+                                    <td>7.68</td>
+                                    <td>Good</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_005</td>
+                                    <td>SAMBA_734851</td>
+                                    <td>163</td>
+                                    <td>8.21</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>SAMBA_734848</td>
+                                    <td>152</td>
+                                    <td>7.92</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_003</td>
+                                    <td>SAMBA_734849</td>
+                                    <td>178</td>
+                                    <td>8.45</td>
+                                    <td>Excellent</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_004</td>
+                                    <td>SAMBA_734850</td>
+                                    <td>145</td>
+                                    <td>7.68</td>
+                                    <td>Good</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_005</td>
+                                    <td>SAMBA_734851</td>
+                                    <td>163</td>
+                                    <td>8.21</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_002</td>
+                                    <td>SAMBA_734848</td>
+                                    <td>152</td>
+                                    <td>7.92</td>
+                                    <td>Optimal</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_003</td>
+                                    <td>SAMBA_734849</td>
+                                    <td>178</td>
+                                    <td>8.45</td>
+                                    <td>Excellent</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_004</td>
+                                    <td>SAMBA_734850</td>
+                                    <td>145</td>
+                                    <td>7.68</td>
+                                    <td>Good</td>
+                                </tr>
+                                <tr>
+                                    <td>Sam_005</td>
+                                    <td>SAMBA_734851</td>
+                                    <td>163</td>
+                                    <td>8.21</td>
+                                    <td>Optimal</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <button>Download QC Report</button>
-                    <button>Send QC Report</button>
+            <div className={styles.GridFour}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Template (.csv)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Upload QC Data`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download QC Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
                 </div>
             </div>
         </div>
@@ -467,7 +670,12 @@ function QcSamDetails() {
 function LibSamDetails() {
     return(
         <div className={styles.ProjectComp}>
-            <h2 className={styles.sech}>Library QC Details</h2>
+
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Sample Submission Details</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+            
             <div className={styles.ProjecIn}>
                 <div>Library QC Summary</div>
                 <div>Library preparation successful with optimal fragment size distribution (300-400bp). Adequate library concentration achieved for sequencing platform. Quality metrics meet all specified thresholds.</div>
@@ -495,15 +703,19 @@ function LibSamDetails() {
                             <path d="M12 3v6h6"/>
                         </svg>
                         <div>PDF Report Viewer</div>
-                        <div style={{fontSize: '0.85rem'}}>Library QC report will be displayed here</div>
+                        <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
                     </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <button>Upload Library Report - New and Existing</button>
-                    <button>Download Library Report</button>
-                    <button>Send Library QC Report</button>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Upload Lib QC Data`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Lib QC Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
                 </div>
             </div>
         </div>

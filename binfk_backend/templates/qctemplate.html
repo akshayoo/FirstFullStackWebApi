@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>QC Report</title>
+
+        <style>
+            .a4-page {
+                width: 210mm;
+                height: 297mm;
+                margin: 20px auto;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+                background-color: #ffffff;
+                border: 1px solid #ddd;
+            }
+
+            body {
+                background-color: #e0e0e0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                font-family: "Sofia", sans-serif;
+            }
+
+            h1, p {
+                margin-bottom: 10px;
+            }
+
+            .header-comp {
+                background-color: rgb(170, 204, 45);
+                height: 20px;
+            }
+
+            .header-div {
+                display: flex;
+                margin: 5px;
+                align-self: center;
+                height: 50px;
+            }
+            .header-img{
+                margin-left: auto;
+            }
+
+            .header-img img {
+                margin-right: 30px;
+                height: 50px;
+                padding: 5px;
+            }
+
+            .header-comp2 {
+                margin: 5px;
+                height: 25px;
+                background-color: #0e4a66;
+            }
+
+            .header-comp2 h3 {
+                margin-left: 30px;
+                color: #ffffff;
+                padding: 4px;
+            }
+
+            .general-cont {
+                margin-left: 50px;
+                margin-right: 50px;
+            }
+
+            .grid-inside-comp {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid-inside-comp > div:first-child,
+            .grid-inside-comp > div:last-child{
+                padding: 5px;
+                display: flex;
+                justify-content: center;
+                border: 1px solid #ffffff;
+                background-color: #e0e0e0;
+            }
+
+            .overview-head {
+                display: flex;
+                justify-content: center;
+            }
+
+            .grid-comp-tr {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .grid-comp-tr-in {
+                padding: 5px;
+                border: 1px dashed #0e4a66;
+                border-radius: 5px;
+                margin: 2px;
+            }
+
+            .grid-comp-tr-in  > div:first-child,
+            .grid-comp-tr-in > div:last-child{
+                padding: 5px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .grid-comp-tr-in  > div:first-child{
+                background-color: #0e4a66;
+                color: #ffffff;
+                border-radius: 4px;
+            }
+
+            .grid-comp-tr-in > div:last-child {
+                border-top: 1px dotted gray;
+                color: #0e4a66;
+            }
+
+            .styled-table {
+                border-collapse: collapse;
+                margin: 25px 0;
+                font-size: 0.9em;
+                font-family: sans-serif;
+                width: 100%;
+            }
+
+            .styled-table thead tr {
+                background-color: #0e4a66;
+                color: #ffffff;
+                text-align: left;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 8px 10px;
+            }
+            .styled-table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .styled-table tbody tr:last-of-type {
+                border-bottom: 2px solid #0e4a66;;
+            }
+
+            .styled-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+
+            div{
+                color: #303030;
+                font-size: 14px;
+            }
+
+            h3 {
+                color: #0e4a66;
+                font-size: 16px;
+            }
+
+            .footer-comp {
+                margin-right: 10px;
+            }
+
+
+
+
+
+        </style>
+    </head>
+
+    <body>
+        <div class="a4-page">
+            <div class="header-comp"></div>
+            <div class="header-div">
+                <div class="header-img">
+                    <img src="./logo.webp" alt="theracues logo">
+                </div>
+            </div>
+            <div class="header-comp2">
+                <h3>QC REPORT</h3>
+            </div>
+            <div class="general-cont">
+                <div class="overview-head">
+                    <h3>GENERAL INFO</h3>
+                </div>
+                <div class="grid-comp">
+                    <div class="grid-inside-comp">
+                        <div>Project ID</div>
+                        <div>TIPL_100</div>
+                    </div>
+                    <div class="grid-inside-comp">
+                        <div>Client Name</div>
+                        <div>Dr. Tutu manoharan</div>
+                    </div>
+                    <div class="grid-inside-comp">
+                        <div>Institution/ Organization</div>
+                        <div>IIT Madras</div>
+                    </div>
+                    <div class="grid-inside-comp">
+                        <div>Lab/ Department </div>
+                        <div>Cosmology Lab</div>
+                    </div>
+                    <div class="grid-inside-comp">
+                        <div>QC Report Date</div>
+                        <div>02/02/2025</div>
+                    </div>
+                </div>
+            </div>
+            <div class="general-cont">
+                <div class="overview-head">
+                    <h3>PROJECT OVERVIEW</h3>
+                </div>
+                <div class="grid-comp-tr">
+                    <div class="grid-comp-tr-in">
+                        <div>Service Offered</div>
+                        <div>Exome- Standard (Germline)</div>
+                    </div>
+                    <div class="grid-comp-tr-in">
+                        <div>Sample Type</div>
+                        <div>FFPE Tissue</div>
+                    </div>
+                    <div class="grid-comp-tr-in">
+                        <div>Application</div>
+                        <div>RNA</div>
+                    </div>
+                </div>
+                <div class="grid-comp-tr">
+                    <div class="grid-comp-tr-in">
+                        <div>Extraction</div>
+                        <div>Yes</div>
+                    </div>
+                    <div class="grid-comp-tr-in">
+                        <div>Number of samples</div>
+                        <div>344</div>
+                    </div>
+                    <div class="grid-comp-tr-in">
+                        <div>Platform</div>
+                        <div>Tapestation and Quibit</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="general-cont">
+                <div class="overview-head">
+                    <h3>QC DETAILS</h3>
+                </div>
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Sample ID</th>
+                                <th>theraCUES Sample ID</th>
+                                <th>Qubit RNA Conc. (ng/ul)</th>
+                                <th>Integrity Number</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                            <tr>
+                                <td>Sample ID</td>
+                                <td>theraCUES Sample ID</td>
+                                <td>Qubit RNA Conc. (ng/ul)</td>
+                                <td>Integrity Number</td>
+                                <td>Comments</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+            <div class="general-cont">
+                <div class="overview-head">
+                    <div class="footer-comp"><h3>Comments</h3></div>
+                    <div class="footer-comp-tab">
+                        <p>All samples were quantitated by Qubit RNA HS assay and integrity check done on Agilent Bioanalyzer. Kindly review the report. </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="general-cont">
+            
+                <div class="footer-comp"><h3>For Queries</h3></div>
+                <div class="footer-comp-tab-c">
+                    <div>Kindly Contact:</div> 
+                    <div>Project Management Team</div> 
+                    <div>TheraCUES Innovations Pvt. Ltd. </div>
+                    <div>Bangalore - 560 092 </div>
+                    <div>Phone: +91 80 4866 1874 </div>
+                    <div>Email- projectmgt@theracues.com </div>
+                </div>
+    
+            </div>
+
+        </div>
+    </body>
+</html>
