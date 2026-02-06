@@ -27,13 +27,13 @@ export function LabFormComp() {
     async function projectSearch(){
 
         if (!searchCont.trim()){
-            alert("No ProjectID found")
+            alert("No Token found")
             return
         }
 
         try {
             const response =  await axios.post("http://127.0.0.1:4050/ssub/samsub/projidsearch",
-                {"project_id" : searchCont}
+                {"project_token" : searchCont}
             )
 
             const data = response.data
@@ -91,7 +91,7 @@ function SideWin({handleSearch, searchCont, projectSearch, searchValue}){
         <>
             <div className={styles.projDetSide}>
                 <div className={styles.SideFDiv}>
-                    <label>Search By Project ID</label>
+                    <label>Paste your project token</label>
                     <input onChange={handleSearch} value={searchCont}/>
                     <button onClick={projectSearch}>Search</button>
                 </div>

@@ -333,6 +333,38 @@
     grid-template-columns: 1fr 3fr;
 }
 
+.TaskProp {
+    padding: 20px;
+    justify-content: center;
+    border: 1px dotted black;
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.TaskProp > div:first-child{
+    padding: 5px;
+    justify-self: center;
+    margin-bottom: 5px;
+}
+
+.TaskComp {
+    display: flex;
+    padding: 5px;
+    justify-content: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.TaskComp div{
+    align-items: flex-start;
+}
+
+.TaskComp button{
+    align-items: flex-end;
+}
+
 .ProjecTabView {
     padding: 10px;
     border: 1px dotted grey;

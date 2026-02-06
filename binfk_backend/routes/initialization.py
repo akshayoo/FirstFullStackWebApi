@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from typing import List
 import os
 from datetime import datetime
+from uuid import uuid1
 
 
 CLIENT = MongoClient("mongodb://localhost:27017")
@@ -133,9 +134,12 @@ async def form_fetch_mail(payload: ProjectSubmission):
         }
         added_del_list.append(add_dict)
 
+    project_token = str(uuid1())
+
 
     document = {
         "project_id": payload.project_id,
+        "project_token" : project_token,
         "project_info": {
             "pi_name": payload.pi_name,
             "email": payload.email,
@@ -156,13 +160,26 @@ async def form_fetch_mail(payload: ProjectSubmission):
             "standard_deliverables": std_del_list ,
             "added_deliverables": added_del_list,
         },
+        "form_status": {
+            "project_info": True,
+            "service_info": True,
+            "project_details": True,
+            "sample_submission": False,
+            "method": False,
+            "qc": False,
+            "library": False,
+            "bioinformatics": False
+        },
         "audit": {
-            "created_at": datetime.now()
+            "created_at": datetime.now(),
+            "created_by" : "Ak"
         }
     }
 
     try:
         collection.insert_one(document)
+
+        print("Added to DB")
 
         template = f"""
         <!DOCTYPE html>
@@ -240,11 +257,17 @@ async def form_fetch_mail(payload: ProjectSubmission):
                                         </tr>
 
 
+                                        <tr style="background:#f9fafb;">
+                                            <td style="border:1px solid #e5e7eb;"><strong>Project Token: Use the token to access the sample submission form</strong></td>
+                                            <td style="border:1px solid #e5e7eb;">{project_token}</td>
+                                        </tr>
+
+
                                     </table>
 
                                     <!-- Description -->
                                     <p style="margin-top:20px;">
-                                        <strong>Project Description:</strong>
+                                        <strong>Project Standard and Added Deliverables:</strong>
                                     </p>
 
                                     <div style="
@@ -295,7 +318,7 @@ async def form_fetch_mail(payload: ProjectSubmission):
         message = MessageSchema(
             subject="Project Created Successfully",
             recipients=[payload.email],
-            cc=["itsmeakshay8055@theracues.com"],
+            cc=["itsmeakshay8055@gmail.com", "yashaswini.g@theracues.com"],
             body=template,
             subtype="html",
         )

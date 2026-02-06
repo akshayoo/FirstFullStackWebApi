@@ -17,18 +17,19 @@ app.add_middleware(
     allow_credentials = True
 )
 
-class ProjId(BaseModel):
-    project_id : str
+class ProjToken(BaseModel):
+    project_token : str
 
 @app.post("/ssub/samsub/projidsearch")
-async def proj_details(payload : ProjId):
-    project_id = payload.project_id.strip()
+async def proj_details(payload : ProjToken):
+    project_token = payload.project_token.strip()
 
     
 
     collection = db["tcProjects"]
     try:
-        proj_data = collection.find({"project_id" : project_id}, {
+        proj_data = collection.find({"project_token" : project_token}, {
+            "project_id" : 1,
             "_id" : 0,
             "project_info.pi_name": 1,
             "project_info.email": 1,
@@ -43,11 +44,9 @@ async def proj_details(payload : ProjId):
         for doc in proj_data:
             data.append(doc)
 
- 
-        project_id = project_id
 
         if data == []:  return{"status" : "No Project found, Check project ID or Initialize again"}
-
+        project_id = data[0].get("project_id")
         pi_name = data[0].get("project_info", {}).get("pi_name", "")
         email =  data[0].get("project_info", {}).get("email", "")
         institution =  data[0].get("project_info", {}).get("institution", "")

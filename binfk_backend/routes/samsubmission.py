@@ -101,11 +101,18 @@ async def ngs_form(payload : ngsForm):
 
     project_id = payload.project_id
 
-    collection.update_one({"project_id" : project_id},
-                          {"$set" : {"sample_submission" : document}})
+    collection.update_one(
+        {"project_id": project_id},
+        {
+            "$set": {
+                "sample_submission": document,
+                "form_status.sample_submission": True
+            }
+        }
+    )
 
     return {
-        "status" : "successfull"
+        "status" : "Added sample submission form"
     }
 
 class NcounterForm(BaseModel):
@@ -159,8 +166,16 @@ async def ncounter_form(payload: NcounterForm):
 
     project_id = payload.project_id
 
-    collection.update_one({"project_id" : project_id},
-                          {"$set" : {"sample_submission" : document}})
+    collection.update_one(
+        {"project_id": project_id},
+        {
+            "$set": {
+                "sample_submission": document,
+                "form_status.sample_submission": True
+            }
+        }
+    )
+
 
     return {
         "status" : "Success"
