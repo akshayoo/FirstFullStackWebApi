@@ -7,204 +7,157 @@ import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp } from './com
 
 export function ViewComp(){
 
+    const [ projectCont, setProjectCont ] = useState(null)
+
     return(
 
         <div className={styles.View}>
-            <ViewSideBar/>
-            <ViewWin />
+            <ViewSideBar setProjectCont={setProjectCont}/>
+            <ViewWin projectCont={projectCont}/>
         </div>
     );
 }
 
-function ViewWin (){
+function ViewSideBar({setProjectCont}){
+
+    const [projectPipeline, setProjectPipeline] = useState([])
+
+    useEffect(() => {
+        async function ProjectsPipeline() {
+            try{
+                const response = await axios.get("http://127.0.0.1:4080/project/projects")
+                const data = await response.data
+                console.log(data.status)
+
+                setProjectPipeline(data.payload)
+
+            }
+            catch(error) {
+                console.log(error)
+            }
+        }
+        ProjectsPipeline()
+    }, [])
+
+    const ProjectPop = async(projectId, projectStatus) => {
+
+        if(!projectId) return
+        if(!projectStatus) return
+
+        try{
+            const response = await axios.post("http://127.0.0.1:4080/project/projectcomp",
+                {
+                    "project_id" : projectId,
+                    "project_status" : projectStatus 
+                }
+            )   
+            const data = response.data
+
+            setProjectCont(data.payload)
+
+        }
+        catch {
+            alert("Could not connect to the server")
+        }
+    }
+
+    return(
+        <div className={styles.SideB}>
+            <h2>Projects</h2>
+            <div className={styles.RecEnt}>
+                {
+                    projectPipeline.map((project) => {
+                        const percent = project.percent
+                        return(
+                            <button key={project.project_id} className={styles.projectBtns} onClick={() => ProjectPop(project.project_id, project.status)}>
+                                <div className={styles.BtnsHeader}>
+                                    <span id='projectId' className={styles.projectId}>{project.project_id}</span>
+                                    <span className={`${styles.statusBadge} ${styles.accepted}`}>{project.status}</span>
+                                </div>
+                                
+                                <div className={styles.progressContainer}>
+                                    <div className={styles.progressText}>
+                                        <span>Completion</span>
+                                        <span>{`${project.percent}%`}</span>
+                                    </div>
+                                    <div className={styles.progressBar}>
+                                        <div className={styles.progressFill} style={{ width: `${percent}%` }}></div>
+                                    </div>
+                                </div>
+                            </button>
+                        )
+                    })
+                }
+            </div> 
+        </div>
+    );
+}
+
+
+function ViewWin ({projectCont}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
-                <div className={styles.ProjectView}>
-                    <ViewProjDetails />
-                    <StatusPop />
-                    <SampleSubDetails />
-                    <QcSamDetails />
-                    <LibSamDetails />
-                    <BiInfoDetails />
-                    <Reports />
-                </div>
+                {projectCont && 
+                
+                    <div className={styles.ProjectView}>
+                        <ViewProjDetails projectCont={projectCont} />
+                        <StatusPop projectCont={projectCont} />
+                        <SampleSubDetails />
+                        <QcSamDetails />
+                        <LibSamDetails />
+                        <BiInfoDetails />
+                        <Reports />
+                    </div>
+                
+                }
             </div>
         </div>
     );
 }
 
-function ViewSideBar(){
-    return(
-        <div className={styles.SideB}>
-            <h2>Projects</h2>
-                <div className={styles.RecEnt}>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_100</span>
-                            <span className={`${styles.statusBadge} ${styles.accepted}`}>Accepted</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>70%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '70%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_101</span>
-                            <span className={`${styles.statusBadge} ${styles.analysis}`}>Analysis</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>10%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '10%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_102</span>
-                            <span className={`${styles.statusBadge} ${styles.reporting}`}>Reporting</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>60%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '60%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_103</span>
-                            <span className={`${styles.statusBadge} ${styles.completed}`}>Completed</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>100%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '100%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_104</span>
-                            <span className={`${styles.statusBadge} ${styles.closed}`}>Closed</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>100%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '100%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_105</span>
-                            <span className={`${styles.statusBadge} ${styles.lab_stage}`}>Lab Stage</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>35%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '35%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_106</span>
-                            <span className={`${styles.statusBadge} ${styles.not_accepted}`}>Not Accepted</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>5%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '5%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                    <button className={styles.projectBtns}>
-                        <div className={styles.BtnsHeader}>
-                            <span className={styles.projectId}>TIPL_200</span>
-                            <span className={`${styles.statusBadge} ${styles.accepted}`}>Accepted</span>
-                        </div>
-                        
-                        <div className={styles.progressContainer}>
-                            <div className={styles.progressText}>
-                                <span>Completion</span>
-                                <span>45%</span>
-                            </div>
-                            <div className={styles.progressBar}>
-                                <div className={styles.progressFill} style={{ width: '45%' }}></div>
-                            </div>
-                        </div>
-                    </button>
-                </div> 
-        </div>
-    );
-}
 
-
-
-function ViewProjDetails() {
+function ViewProjDetails({projectCont}) {
     return(
         <>
             <div className={styles.ProjectSection}>
                 <div className={styles.IdComponent}>
                     <div>Project ID</div>
-                    <div>TIPL_200</div>
+                    <div>{projectCont.project_id}</div>
                 </div>
                 <div className={styles.ProjectHealth}>
-                    <div>ACCEPTED</div>
+                    <div>{projectCont.project_status}</div>
                 </div>
             </div>
 
             <div className={styles.ProjectComp}>
                 <h2 className={styles.sech}>Client Information</h2>
-                <div className={styles.ProjectCustomer}>
+                <div className={styles.GridTwo}>
                     <div className={styles.ProjecIn}>
                         <div>PI Name</div>
-                        <div>Sugunan Varkey</div>
+                        <div>{projectCont.pi_name}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Client Email</div>
-                        <div>sugunan.varkey@iitm.ac.in</div>
+                        <div>{projectCont.email}</div>
+                    </div>
+                </div>
+                <div className={styles.ProjectCustomer}>
+                    <div className={styles.ProjecIn}>
+                        <div>Phone</div>
+                        <div>{projectCont.phone}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Organization/Institution</div>
-                        <div>IIT Madras</div>
+                        <div>{projectCont.institution}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Lab/Department</div>
-                        <div>Tomman Memorial Nanobiology Lab</div>
+                        <div>{projectCont.lab_dept}</div>
+                    </div>
+                    <div className={styles.ProjecIn}>
+                        <div>Offering Type</div>
+                        <div>{projectCont.offering_type}</div>
                     </div>
                 </div>
             </div>
@@ -299,7 +252,6 @@ function SampleSubDetails(){
                 <h2 className={styles.sech}>Sample Submission Details</h2>
                 <button className={styles.fieldPop}>&#8693;</button>
             </div>
-            <SampleSubDetailsComp />
         </div>
     )
 }

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
+from pydantic import BaseModel
 
 CLIENT = MongoClient("mongodb://localhost:27017")
 db = CLIENT.tcDB
@@ -57,19 +58,19 @@ async def projects_comp():
 
         def get_project_status(flags: dict) -> str:
 
-            if flags.get("bioinformatics"):
+            if flags.get("bioinformatics") == True:
                 return "Completed"
 
-            if flags.get("library"):
+            if flags.get("library") == True:
                 return "Bioinformatics Stage"
 
-            if flags.get("qc"):
+            if flags.get("qc") == True:
                 return "Library Stage"
 
-            if flags.get("method"):
+            if flags.get("method") == True:
                 return "In QC Stage"
 
-            if flags.get("sample_submission"):
+            if flags.get("sample_submission") == True:
                 return "Accepted"
 
             return "Initiated"
@@ -88,3 +89,60 @@ async def projects_comp():
         "status" : "Fetch successfull",
         "payload" : payload
     }
+
+
+
+class ProjId(BaseModel):
+    project_id : str
+    project_status : str
+
+@app.post("/project/projectcomp")
+async def projectcomp_pop(payload: ProjId):
+
+    collections = db['tcProjects']
+
+
+    
+    project_id = payload.project_id.strip()
+    
+    data = collections.find_one({"project_id" : project_id}, {"_id" : 0,
+                                               "project_info.pi_name" : 1,
+                                               "project_info.email" : 1,
+                                               "project_info.phone": 1,
+                                               "project_info.institution" : 1,
+                                               "project_info.lab_dept" : 1,
+                                               "service_info.offering_type" : 1,
+                                               "service_info.platform" : 1,
+                                               "project_details.standard_deliverables" : 1,
+                                               "project_details.added_deliverables" : 1})
+    
+    if not data:pass
+    
+    pi_name = data["project_info"]["pi_name"]
+    email = data["project_info"]["email"]
+    phone = data["project_info"]["phone"]
+    institution = data["project_info"]["institution"]
+    lab_dept =  data["project_info"]["lab_dept"]
+    offering_type = data["service_info"]["offering_type"]
+    platform = data["service_info"]["platform"]
+    std_del = data["project_details"]["standard_deliverables"]
+    add_del = data["project_details"]["added_deliverables"]
+
+    return {
+        "status" : "Fetch Successfull",
+        "payload" : {
+            "project_id" : project_id,
+            "project_status" : payload.project_status,
+            "pi_name" : pi_name, 
+            "email" : email, 
+            "phone" : phone,
+            "institution" : institution,
+            "lab_dept" : lab_dept,
+            "offering_type" : offering_type,
+            "platform" : platform,
+            "std_del" : std_del,
+            "add_del" : add_del 
+        }
+    }
+
+    
