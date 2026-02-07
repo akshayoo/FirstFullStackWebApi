@@ -306,11 +306,11 @@ function DisplayTable({ fileIn, fileUpload, tablePopulate, submitNGSForm}){
                             {tablePopulate.length > 0 ? (
                                 tablePopulate.map((row, index) => (
                                     <tr key={index}>
-                                        <td>{row["Sample ID"]}</td>
-                                        <td>{row["Description"]}</td>
-                                        <td>{row["RNA Conc."]}</td>
-                                        <td>{row["Notes"]}</td>
-                                        <td>{row["Replicate(Group Name)"]}</td>
+                                        <td>{row["sample_id"]}</td>
+                                        <td>{row["description"]}</td>
+                                        <td>{row["concentration"]}</td>
+                                        <td>{row["notes"]}</td>
+                                        <td>{row["replicate_group"]}</td>
                                     </tr>
                                 ))
                             ) : (

@@ -223,7 +223,7 @@ function DisplayTable({fileIn, fileUpload, tablePopulate, sendNcounterForm}){
                             <tr>
                                 <th >Sample ID</th>
                                 <th>Description</th>
-                                <th>RNA Conc.</th>
+                                <th>Conc.</th>
                                 <th>Notes</th>
                                 <th>{"Replicate(Group Name)"}</th>
                             </tr>
@@ -232,11 +232,11 @@ function DisplayTable({fileIn, fileUpload, tablePopulate, sendNcounterForm}){
                             {tablePopulate.length > 0 ? (
                                 tablePopulate.map((row, index) => (
                                     <tr key={index}>
-                                        <td>{row["Sample ID"]}</td>
-                                        <td>{row["Description"]}</td>
-                                        <td>{row["RNA Conc."]}</td>
-                                        <td>{row["Notes"]}</td>
-                                        <td>{row["Replicate(Group Name)"]}</td>
+                                        <td>{row["sample_id"]}</td>
+                                        <td>{row["description"]}</td>
+                                        <td>{row["concentration"]}</td>
+                                        <td>{row["notes"]}</td>
+                                        <td>{row["replicate_group"]}</td>
                                     </tr>
                                 ))
                             ) : (

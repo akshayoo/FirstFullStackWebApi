@@ -27,7 +27,13 @@ async def populate_form(file: UploadFile = File(...)):
         csv_data = StringIO(contents.decode("utf-8"))
 
         data = pd.read_csv(csv_data)
-        data.columns = data.columns.str.strip()
+        data = data.rename(columns={
+            data.columns[0]: "sample_id",
+            data.columns[1]: "description",
+            data.columns[2]: "concentration",
+            data.columns[3]: "notes",
+            data.columns[4]: "replicate_group"
+        })
 
         records = data.fillna("No Value").to_dict(orient="records")
 

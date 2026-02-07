@@ -103,11 +103,11 @@ function ViewWin ({projectCont}){
                     <div className={styles.ProjectView}>
                         <ViewProjDetails projectCont={projectCont} />
                         <StatusPop projectCont={projectCont} />
-                        <SampleSubDetails />
-                        <QcSamDetails />
-                        <LibSamDetails />
-                        <BiInfoDetails />
-                        <Reports />
+                        <SampleSubDetails projectCont={projectCont} />
+                        <QcSamDetails projectCont={projectCont} />
+                        <LibSamDetails projectCont={projectCont} />
+                        <BiInfoDetails projectCont={projectCont} />
+                        <Reports projectCont={projectCont} />
                     </div>
                 
                 }
@@ -166,7 +166,7 @@ function ViewProjDetails({projectCont}) {
 }
 
 
-function StatusPop(){
+function StatusPop({projectCont}){
     return(
 
         <div className={styles.ProjectComp}>
@@ -178,65 +178,25 @@ function StatusPop(){
             <div className={styles.GridTwo}>
                 <div className={styles.TaskProp}>
                     <div>Standard Tasks</div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
+                    {projectCont.std_del.map((stdDel) => {
+                        return(
+                            <div key={stdDel.label} className={styles.TaskComp}>
+                                <div>{stdDel.label}</div>
+                                <button className={styles.FalseBtn}>&#10004;</button>
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className={styles.TaskProp}>
                     <div>Added Tasks</div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>&#10004;</button>
-                    </div>               
+                    {projectCont.add_del.map((addDel) => {
+                        return(
+                            <div key={addDel.label} className={styles.TaskComp}>
+                                <div>{addDel.label}</div>
+                                <button className={styles.TrueBtn}>&#10004;</button>
+                            </div>
+                        );
+                    })}             
                 </div>
             </div>
         </div>
@@ -244,14 +204,31 @@ function StatusPop(){
 }
 
 
-function SampleSubDetails(){
-    return(
+function SampleSubDetails({projectCont}){
 
+    const [samsubDetails, setSamsubDetails] = useState({})
+
+    async function SampleSub(projectId) {
+        const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
+            {"project_id" : projectId}
+        )
+
+        const data = response.data
+        console.log(data.status)
+
+        setSamsubDetails(data.payload)
+    }
+
+    return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Sample Submission Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
+                <button className={styles.fieldPop} onClick={() => SampleSub(projectCont.project_id)}>&#8693;</button>
             </div>
+            {
+                Object.keys(samsubDetails).length > 0 && (
+                <SampleSubDetailsComp samsubDetails={samsubDetails} />)
+            }
         </div>
     )
 }
@@ -260,7 +237,6 @@ function SampleSubDetails(){
 function QcSamDetails() {
     return(
         <div className={styles.ProjectComp}>
-
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>QC Details</h2>
                 <button className={styles.fieldPop}>&#8693;</button>
@@ -272,7 +248,6 @@ function QcSamDetails() {
 function LibSamDetails() {
     return(
         <div className={styles.ProjectComp}>
-
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Library QC Details</h2>
                 <button className={styles.fieldPop}>&#8693;</button>
@@ -285,7 +260,6 @@ function LibSamDetails() {
 function BiInfoDetails() {
     return(
         <div className={styles.ProjectComp}>
-
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Analysis</h2>
                 <button className={styles.fieldPop}>&#8693;</button>
@@ -297,7 +271,6 @@ function BiInfoDetails() {
 function Reports() {
     return(
         <div className={styles.ProjectComp}>
-
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Reports</h2>
                 <button className={styles.fieldPop}>&#8693;</button>

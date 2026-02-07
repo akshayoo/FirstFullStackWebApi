@@ -2,22 +2,22 @@ import styles from '../ViewComp.module.css'
 
 
 
-export function SampleSubDetailsComp(){
+export function SampleSubDetailsComp({samsubDetails}){
     return(
 
         <>
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
                     <div>Service Name</div>
-                    <div>Exome Sequeiehrwereijijncing - Standard (Germline)</div>
+                    <div>{samsubDetails.service_technology}</div>
                 </div>
                 <div className={styles.ProjecIn} >
                     <div>Technology</div>
-                    <div>NGS</div>
+                    <div>{samsubDetails.service_technology}</div>
                 </div>
                 <div className={styles.ProjecIn}>
                     <div>Application</div>
-                    <div>DNA</div>
+                    <div>{samsubDetails.application}</div>
                 </div>
             </div>
 
@@ -29,25 +29,25 @@ export function SampleSubDetailsComp(){
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Replicates Present</div>
-                        <div>Yes</div>
+                        <div>{samsubDetails.replicates}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Extraction Needed</div>
-                        <div>No</div>
+                        <div>{samsubDetails.extraction_needed}</div>
                     </div>
                 </div>
                 <div>
                     <div className={styles.ProjecIn}>
                         <div>Treated with RNAase</div>
-                        <div>Yes</div>
+                        <div>{samsubDetails.nucleases}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Name of the Kit</div>
-                        <div>NEB Ultra DNA Detection Kit</div>
+                        <div>{samsubDetails.kit_name}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Bioinformatics Analysis</div>
-                        <div>Required</div>
+                        <div>{samsubDetails.bioinformatics_required}</div>
                     </div>                    
                 </div>
             </div>
@@ -56,21 +56,21 @@ export function SampleSubDetailsComp(){
                 <div>
                     <div className={styles.ProjecIn}>
                         <div>Key Objectives</div>
-                        <div>Comprhjedbnfjfnjvkrfn gkjnt gkbg   ain sigtgrtnthyitftihcrtahnrchtrehrh.rh</div>
+                        <div>{samsubDetails.key_objectives}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Comparisons for Differential Analysis</div>
-                        <div>Casecekjfh ij3hfnij4nfij4hi nmkf nieh  okerkjfokemekojoi joitjrui9tyrtn nerns.</div>
+                        <div>{samsubDetails.comparisons}</div>
                     </div>
                 </div>
                 <div>
                     <div className={styles.ProjecIn}>
                         <div>Additional Analysis</div>
-                        <div>Paejfijrebn ihbiuhngirjutgnr iujhnrhni jnijrnijn gijrnhtij nmntgirjngiur jirntgijrh abagfbfgse.</div>
+                        <div>{samsubDetails.additional_analysis}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Reference Studies</div>
-                        <div>www.theracues.com, www.tutu.com</div>
+                        <div>{samsubDetails.reference_studies}</div>
                     </div>
                 </div>
             </div>
@@ -83,152 +83,21 @@ export function SampleSubDetailsComp(){
                                 <tr>
                                     <th>Sample ID</th>
                                     <th>Description</th>
-                                    <th>RNA Conc.</th>
+                                    <th>Conc.</th>
                                     <th>Notes</th>
                                     <th>Replicate (Group Name)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>Blood sample from proband - Family A</td>
-                                    <td>8.14</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>Blood sample from mother - Family A</td>
-                                    <td>7.92</td>
-                                    <td>Optimal concentration</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>Blood sample from mother - Family A</td>
-                                    <td>7.92</td>
-                                    <td>Optimal concentration</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>Blood sample from mother - Family A</td>
-                                    <td>7.92</td>
-                                    <td>Optimal concentration</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>Blood sample from mother - Family A</td>
-                                    <td>7.92</td>
-                                    <td>Optimal concentration</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>Blood sample from mother - Family A</td>
-                                    <td>7.92</td>
-                                    <td>Optimal concentration</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_003</td>
-                                    <td>Blood sample from father - Family A</td>
-                                    <td>8.45</td>
-                                    <td>High quality extraction</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_004</td>
-                                    <td>Blood sample from sibling - Family A</td>
-                                    <td>7.68</td>
-                                    <td>Good quality</td>
-                                    <td>GP_1</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_005</td>
-                                    <td>Control sample - unaffected</td>
-                                    <td>8.21</td>
-                                    <td>Reference sample</td>
-                                    <td>GP_2</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_006</td>
-                                    <td>Control sample - unaffected</td>
-                                    <td>7.95</td>
-                                    <td>Reference sample</td>
-                                    <td>GP_2</td>
-                                </tr>
+                                {samsubDetails.sample_details.map((comp, index) => (
+                                    <tr key={index}>
+                                        <td>{comp["sample_id"]}</td>
+                                        <td>{comp["description"]}</td>
+                                        <td>{comp["concentration"]}</td>
+                                        <td>{comp["notes"]}</td>
+                                        <td>{comp["replicate_group"]}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

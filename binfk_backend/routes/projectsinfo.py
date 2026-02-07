@@ -101,8 +101,6 @@ async def projectcomp_pop(payload: ProjId):
 
     collections = db['tcProjects']
 
-
-    
     project_id = payload.project_id.strip()
     
     data = collections.find_one({"project_id" : project_id}, {"_id" : 0,
@@ -144,5 +142,83 @@ async def projectcomp_pop(payload: ProjId):
             "add_del" : add_del 
         }
     }
+
+
+
+class ProjIdSamSub(BaseModel):
+    project_id : str
+
+@app.post("/project/samsubdetails")
+async def samsub_pop(payload : ProjIdSamSub):
+
+    collections = db['tcProjects']
+
+    project_id = payload.project_id.strip()
+
+    data = collections.find_one({"project_id" : project_id}, {"_id" : 0,
+                                                              "service_info.service_name" : 1,
+                                                              "service_info.sample_type" : 1,
+                                                              "service_info.sample_number" : 1,
+                                                                "sample_submission.service_technology" : 1,
+                                                                "sample_submission.details.application" : 1,
+                                                                "sample_submission.details.replicates": 1,
+                                                                "sample_submission.details.extraction_needed" : 1,
+                                                                "sample_submission.details.nucleases" : 1,
+                                                                "sample_submission.details.kit_name" : 1,
+                                                                "sample_submission.details.qc_accessed" : 1,
+                                                                "sample_submission.details.bioinformatics_required" : 1,
+                                                                "sample_submission.details.key_objectives" : 1,
+                                                                "sample_submission.details.comparisons" : 1,
+                                                                "sample_submission.details.additional_analysis" : 1,
+                                                                "sample_submission.details.reference_studies" : 1,
+                                                                "sample_submission.details.sample_details" : 1
+                                                                })
+    
+
+    if not data: pass
+
+    service_technology = data.get("sample_submission", {}).get("service_technology", "No data available")
+    application = data.get("sample_submission", {}).get("details", {}).get("application", "No data available")
+    replicates = data.get("sample_submission", {}).get("details", {}).get("replicates", "No data available")
+    extraction_needed = data.get("sample_submission", {}).get("details", {}).get("extraction_needed", "No data available")
+    total_rna_prep = data.get("sample_submission", {}).get("details", {}).get("total_rna_prep", "No data available")
+    nucleases = data.get("sample_submission", {}).get("details", {}).get("nucleases", "No data available")
+    kit_name = data.get("sample_submission", {}).get("details", {}).get("kit_name", "No data available")
+    qc_accessed = data.get("sample_submission", {}).get("details", {}).get("qc_accessed", "No data available")
+    bioinformatics_required = data.get("sample_submission", {}).get("details", {}).get("bioinformatics_required", "No data available")
+    key_objectives = data.get("sample_submission", {}).get("details", {}).get("key_objectives", "No data available")
+    comparisons = data.get("sample_submission", {}).get("details", {}).get("comparisons", "No data available")
+    additional_analysis = data.get("sample_submission", {}).get("details", {}).get("additional_analysis", "No data available")
+    reference_studies = data.get("sample_submission", {}).get("details", {}).get("reference_studies", "No data available")
+    sample_details = data.get("sample_submission", {}).get("details", {}).get("sample_details", [{
+
+            "sample_id": "No data",
+            "description": "No data",
+            "concentration": "No data",
+            "notes": "No data",
+            "replicate_group": "No data"
+    }])
+
+    return {
+        "status" : "Fetch successfull",
+        "payload" : {
+            "service_technology" : service_technology,
+            "application": application,
+            "replicates": replicates,
+            "extraction_needed": extraction_needed,
+            "total_rna_prep": total_rna_prep,
+            "nucleases": nucleases,
+            "kit_name": kit_name,
+            "qc_accessed": qc_accessed,
+            "bioinformatics_required": bioinformatics_required,
+            "key_objectives": key_objectives,
+            "comparisons": comparisons,
+            "additional_analysis": additional_analysis,
+            "reference_studies": reference_studies,
+            "sample_details" : sample_details
+        }
+    }
+
+
 
     
