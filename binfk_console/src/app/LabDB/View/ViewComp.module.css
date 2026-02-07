@@ -350,19 +350,29 @@
 
 .TaskComp {
     display: flex;
-    padding: 5px;
-    justify-content: center;
+    padding: 8px;
+    align-items: center;
     border: 1px solid gray;
     border-radius: 5px;
     font-size: 14px;
+    margin: 4px;
 }
 
 .TaskComp div{
     align-items: flex-start;
+    padding: 5px;
 }
 
 .TaskComp button{
     align-items: flex-end;
+    font-size: 14px;
+    border: 1px solid grey;
+    color: gray;
+    background-color: white;
+    border-radius: 100px;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: 5px;
 }
 
 .ProjecTabView {

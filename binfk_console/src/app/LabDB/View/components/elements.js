@@ -1,154 +1,11 @@
 import styles from '../ViewComp.module.css'
 
-export function ViewWin (){
-    return(
-        <div className={styles.ViewWin}>
-            <div className={styles.contentWin}>
-                <div className={styles.ProjectView}>
-                    <ViewProjDetails/>
-                    <StatusPop />
-                    <SampleSubDetails />
-                    <QcSamDetails />
-                    <LibSamDetails />
-                </div>
-            </div>
-        </div>
-    );
-}
 
 
-function ViewProjDetails() {
+export function SampleSubDetailsComp(){
     return(
+
         <>
-            <div className={styles.ProjectSection}>
-                <div className={styles.IdComponent}>
-                    <div>Project ID</div>
-                    <div>TIPL_200</div>
-                </div>
-                <div className={styles.ProjectHealth}>
-                    <div>ACCEPTED</div>
-                </div>
-            </div>
-
-            <div className={styles.ProjectComp}>
-                <h2 className={styles.sech}>Client Information</h2>
-                <div className={styles.ProjectCustomer}>
-                    <div className={styles.ProjecIn}>
-                        <div>PI Name</div>
-                        <div>Sugunan Varkey</div>
-                    </div>
-                    <div className={styles.ProjecIn}>
-                        <div>Client Email</div>
-                        <div>sugunan.varkey@iitm.ac.in</div>
-                    </div>
-                    <div className={styles.ProjecIn}>
-                        <div>Organization/Institution</div>
-                        <div>IIT Madras</div>
-                    </div>
-                    <div className={styles.ProjecIn}>
-                        <div>Lab/Department</div>
-                        <div>Tomman Memorial Nanobiology Lab</div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-}
-
-
-
-
-function StatusPop(){
-    return(
-
-        <div className={styles.ProjectComp}>
-            <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Sample Submission Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
-            </div>
-
-            <div className={styles.GridTwo}>
-                <div className={styles.TaskProp}>
-                    <div>Standard Tasks</div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                </div>
-                <div className={styles.TaskProp}>
-                    <div>Added Tasks</div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>
-                    <div className={styles.TaskComp}>
-                        <div>Number of Samples</div>
-                        <button>Mark Done</button>
-                    </div>               
-                </div>
-            </div>
-        </div>
-    );
-}
-
-
-
-
-
-
-function SampleSubDetails(){
-    return(
-
-        <div className={styles.ProjectComp}>
-            <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Sample Submission Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
-            </div>
-
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
                     <div>Service Name</div>
@@ -385,7 +242,7 @@ function SampleSubDetails(){
                     <button className={styles.ProjecInBtn}>{`Download Form (.csv)`}</button>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -399,15 +256,9 @@ function SampleSubDetails(){
 
 
 
-function QcSamDetails() {
+export function QcSamDetailsComp() {
     return(
-        <div className={styles.ProjectComp}>
-
-            <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Sample Submission Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
-            </div>
-
+        <>
             <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
                     <div>Method Writeup</div>
@@ -603,7 +454,7 @@ function QcSamDetails() {
                     <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -611,15 +462,9 @@ function QcSamDetails() {
 
 
 
-function LibSamDetails() {
+export function LibSamDetailsComp() {
     return(
-        <div className={styles.ProjectComp}>
-
-            <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Sample Submission Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
-            </div>
-            
+        <>   
             <div className={styles.ProjecIn}>
                 <div>Library QC Summary</div>
                 <div>Library preparation successful with optimal fragment size distribution (300-400bp). Adequate library concentration achieved for sequencing platform. Quality metrics meet all specified thresholds.</div>
@@ -662,6 +507,6 @@ function LibSamDetails() {
                     <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

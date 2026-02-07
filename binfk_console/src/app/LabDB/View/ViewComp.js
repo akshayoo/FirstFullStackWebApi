@@ -3,7 +3,7 @@
 import styles from './ViewComp.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ViewWin } from './components/components';
+import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp } from './components/elements';
 
 export function ViewComp(){
 
@@ -12,6 +12,24 @@ export function ViewComp(){
         <div className={styles.View}>
             <ViewSideBar/>
             <ViewWin />
+        </div>
+    );
+}
+
+function ViewWin (){
+    return(
+        <div className={styles.ViewWin}>
+            <div className={styles.contentWin}>
+                <div className={styles.ProjectView}>
+                    <ViewProjDetails />
+                    <StatusPop />
+                    <SampleSubDetails />
+                    <QcSamDetails />
+                    <LibSamDetails />
+                    <BiInfoDetails />
+                    <Reports />
+                </div>
+            </div>
         </div>
     );
 }
@@ -156,5 +174,182 @@ function ViewSideBar(){
 
 
 
+function ViewProjDetails() {
+    return(
+        <>
+            <div className={styles.ProjectSection}>
+                <div className={styles.IdComponent}>
+                    <div>Project ID</div>
+                    <div>TIPL_200</div>
+                </div>
+                <div className={styles.ProjectHealth}>
+                    <div>ACCEPTED</div>
+                </div>
+            </div>
+
+            <div className={styles.ProjectComp}>
+                <h2 className={styles.sech}>Client Information</h2>
+                <div className={styles.ProjectCustomer}>
+                    <div className={styles.ProjecIn}>
+                        <div>PI Name</div>
+                        <div>Sugunan Varkey</div>
+                    </div>
+                    <div className={styles.ProjecIn}>
+                        <div>Client Email</div>
+                        <div>sugunan.varkey@iitm.ac.in</div>
+                    </div>
+                    <div className={styles.ProjecIn}>
+                        <div>Organization/Institution</div>
+                        <div>IIT Madras</div>
+                    </div>
+                    <div className={styles.ProjecIn}>
+                        <div>Lab/Department</div>
+                        <div>Tomman Memorial Nanobiology Lab</div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
 
 
+function StatusPop(){
+    return(
+
+        <div className={styles.ProjectComp}>
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Project Tasks</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+
+            <div className={styles.GridTwo}>
+                <div className={styles.TaskProp}>
+                    <div>Standard Tasks</div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                </div>
+                <div className={styles.TaskProp}>
+                    <div>Added Tasks</div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>
+                    <div className={styles.TaskComp}>
+                        <div>Number of Samples</div>
+                        <button>&#10004;</button>
+                    </div>               
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
+function SampleSubDetails(){
+    return(
+
+        <div className={styles.ProjectComp}>
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Sample Submission Details</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+            <SampleSubDetailsComp />
+        </div>
+    )
+}
+
+
+function QcSamDetails() {
+    return(
+        <div className={styles.ProjectComp}>
+
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>QC Details</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+        </div>
+    )
+}
+
+function LibSamDetails() {
+    return(
+        <div className={styles.ProjectComp}>
+
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Library QC Details</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+        </div>
+    )
+}
+
+
+function BiInfoDetails() {
+    return(
+        <div className={styles.ProjectComp}>
+
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Analysis</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+        </div>
+    )
+}
+
+function Reports() {
+    return(
+        <div className={styles.ProjectComp}>
+
+            <div className={styles.HeadComp}>
+                <h2 className={styles.sech}>Reports</h2>
+                <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+        </div>
+    )
+}
