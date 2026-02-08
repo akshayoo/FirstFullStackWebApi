@@ -466,3 +466,61 @@
 .ProjecInBtn:hover {
     background-image: linear-gradient(rgb(106, 225, 255), rgb(69, 218, 255));   
 }
+
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.269);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalBox {
+    background: #ffffff;
+    width: 70%;
+    max-width: 900px;
+    height: 400px;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.modalHeader button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modalBody {
+  margin-top: 20px;
+}
+
+.formElem {
+    padding: 5px;
+    margin: 5px;
+}
+
+.formElemel {
+    margin: 5px;
+}
+
+.modalBox textarea,
+.modalBox select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  margin-top: 6px;
+}

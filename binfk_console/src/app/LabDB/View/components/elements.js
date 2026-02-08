@@ -1,4 +1,5 @@
 import styles from '../ViewComp.module.css'
+import { QcReportPushForm } from './elemoptions';
 
 
 
@@ -125,48 +126,52 @@ export function SampleSubDetailsComp({samsubDetails}){
 
 
 
-export function QcSamDetailsComp() {
+export function QcSamDetailsComp(qcDetails) {
     return(
         <>
             <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
                     <div>Method Writeup</div>
-                    <div>DNA extraction wergrtyhrthrthtrhthtyllowed by ethanohhntglity asswekfhweifbjewr yurgfiuhbfijehfiueh ibiue hfuehfuj iorhniegrity.</div>
+                    <div>{qcDetails.method_writeup}</div>
                 </div>
                 <div className={styles.ProjecIn}>
                     <div>Method Summary</div>
-                    <div>High-throughnghhnghnghngh coverage. Libredgjbjgjhga II kiwkhfgejf ehe bfejrfejf jefeilities.</div>
+                    <div>{qcDetails.method_summary}</div>
+                </div>
+            </div>
+            <div className={styles.GridTwo}>
+                <div className={styles.ProjecIn}>
+                    <div>Concentration measured by</div>
+                    <div>{qcDetails.conc_tech}</div>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <div>Integrity measured by</div>
+                    <div>{qcDetails.integrity_tech}</div>
                 </div>
             </div>
             <div className={styles.ProjecIn}>
                 <div>QC Summary</div>
-                <div>Awkjhfbejif efehifbiebniejonoeijrgnirgnjrokjgnro rnoijhjnrio0jmrpk ri0jrijrpgoikroi0ru oirjkpoijhiohjojkfnhfoijh oighnogh jiofnjnhf ihjifhiujn fnions.</div>
+                <div>{qcDetails.qc_summary}</div>
             </div>
             <div className={styles.ProjecIn}>
                 <div>QC Report</div>
-                <div>
-                    <div style={{
-                        background: '#f9fafb',
-                        padding: '48px',
-                        borderRadius: '8px',
-                        border: '2px dashed #cbd5e1',
-                        textAlign: 'center',
-                        color: '#6b7280',
-                        fontStyle: 'italic',
-                        minHeight: '300px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '16px'
-                    }}>
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                            <path d="M12 3v6h6"/>
-                        </svg>
-                        <div>PDF Report Viewer</div>
-                        <div style={{fontSize: '0.85rem'}}>Quality control reporty</div>
-                    </div>
+
+                <div
+                    style={{
+                    background: "#f9fafb",
+                    padding: "16px",
+                    borderRadius: "8px",
+                    border: "2px dashed #cbd5e1",
+                    minHeight: "400px",
+                    }}
+                >
+                    <iframe
+                    src="/TC-S-BT-EPA-MDL.pdf"   
+                    width="100%"
+                    height="500px"
+                    style={{ border: "none", borderRadius: "6px" }}
+                    title="QC Report PDF"
+                    />
                 </div>
             </div>
 
@@ -191,111 +196,6 @@ export function QcSamDetailsComp() {
                                     <td>167</td>
                                     <td>8.14</td>
                                     <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>SAMBA_734848</td>
-                                    <td>152</td>
-                                    <td>7.92</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_003</td>
-                                    <td>SAMBA_734849</td>
-                                    <td>178</td>
-                                    <td>8.45</td>
-                                    <td>Excellent</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_004</td>
-                                    <td>SAMBA_734850</td>
-                                    <td>145</td>
-                                    <td>7.68</td>
-                                    <td>Good</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_005</td>
-                                    <td>SAMBA_734851</td>
-                                    <td>163</td>
-                                    <td>8.21</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>SAMBA_734848</td>
-                                    <td>152</td>
-                                    <td>7.92</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_003</td>
-                                    <td>SAMBA_734849</td>
-                                    <td>178</td>
-                                    <td>8.45</td>
-                                    <td>Excellent</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_004</td>
-                                    <td>SAMBA_734850</td>
-                                    <td>145</td>
-                                    <td>7.68</td>
-                                    <td>Good</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_005</td>
-                                    <td>SAMBA_734851</td>
-                                    <td>163</td>
-                                    <td>8.21</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>SAMBA_734848</td>
-                                    <td>152</td>
-                                    <td>7.92</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_003</td>
-                                    <td>SAMBA_734849</td>
-                                    <td>178</td>
-                                    <td>8.45</td>
-                                    <td>Excellent</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_004</td>
-                                    <td>SAMBA_734850</td>
-                                    <td>145</td>
-                                    <td>7.68</td>
-                                    <td>Good</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_005</td>
-                                    <td>SAMBA_734851</td>
-                                    <td>163</td>
-                                    <td>8.21</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_002</td>
-                                    <td>SAMBA_734848</td>
-                                    <td>152</td>
-                                    <td>7.92</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_003</td>
-                                    <td>SAMBA_734849</td>
-                                    <td>178</td>
-                                    <td>8.45</td>
-                                    <td>Excellent</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_004</td>
-                                    <td>SAMBA_734850</td>
-                                    <td>145</td>
-                                    <td>7.68</td>
-                                    <td>Good</td>
                                 </tr>
                                 <tr>
                                     <td>Sam_005</td>

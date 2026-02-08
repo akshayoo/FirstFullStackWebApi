@@ -8,17 +8,29 @@ import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp } from './com
 export function ViewComp(){
 
     const [ projectCont, setProjectCont ] = useState(null)
+    const [samsubDetails, setSamsubDetails] = useState({})
+    const [qcDetails, setQcDetails] = useState({})
 
     return(
+        <>
 
-        <div className={styles.View}>
-            <ViewSideBar setProjectCont={setProjectCont}/>
-            <ViewWin projectCont={projectCont}/>
-        </div>
+            <div className={styles.View}>
+                <ViewSideBar setProjectCont={setProjectCont} 
+                setSamsubDetails={setSamsubDetails}/>
+
+
+                <ViewWin projectCont={projectCont} 
+                samsubDetails ={samsubDetails} 
+                setSamsubDetails = {setSamsubDetails}
+                qcDetails = {qcDetails}
+                setQcDetails = {setQcDetails} />
+
+            </div>
+        </>
     );
 }
 
-function ViewSideBar({setProjectCont}){
+function ViewSideBar({setProjectCont, setSamsubDetails}){
 
     const [projectPipeline, setProjectPipeline] = useState([])
 
@@ -54,6 +66,7 @@ function ViewSideBar({setProjectCont}){
             const data = response.data
 
             setProjectCont(data.payload)
+            setSamsubDetails({})
 
         }
         catch {
@@ -94,7 +107,7 @@ function ViewSideBar({setProjectCont}){
 }
 
 
-function ViewWin ({projectCont}){
+function ViewWin ({projectCont, samsubDetails, setSamsubDetails, qcDetails, setQcDetails}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
@@ -103,8 +116,8 @@ function ViewWin ({projectCont}){
                     <div className={styles.ProjectView}>
                         <ViewProjDetails projectCont={projectCont} />
                         <StatusPop projectCont={projectCont} />
-                        <SampleSubDetails projectCont={projectCont} />
-                        <QcSamDetails projectCont={projectCont} />
+                        <SampleSubDetails projectCont={projectCont} samsubDetails ={samsubDetails} setSamsubDetails={setSamsubDetails} />
+                        <QcSamDetails projectCont={projectCont} qcDetails ={qcDetails} setQcDetails = {setQcDetails} />
                         <LibSamDetails projectCont={projectCont} />
                         <BiInfoDetails projectCont={projectCont} />
                         <Reports projectCont={projectCont} />
@@ -204,23 +217,28 @@ function StatusPop({projectCont}){
 }
 
 
-function SampleSubDetails({projectCont}){
+function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
 
-    const [samsubDetails, setSamsubDetails] = useState({})
 
     async function SampleSub(projectId) {
-        const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
-            {"project_id" : projectId}
-        )
 
-        const data = response.data
-        if (data.status === "NoSubmission"){
-            alert(data.payload)
-            return
-        } 
-        else{
-            console.log(data.status)
-            setSamsubDetails(data.payload)
+        try {
+            const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
+                {"project_id" : projectId}
+            )
+
+            const data = response.data
+            if (data.status === "NoSubmission"){
+                alert(data.payload)
+                return
+            } 
+            else{
+                console.log(data.status)
+                setSamsubDetails(data.payload)
+            }
+            }
+        catch{
+            alert("Error contacting the server")
         }
     }
 
@@ -239,13 +257,45 @@ function SampleSubDetails({projectCont}){
 }
 
 
-function QcSamDetails() {
+function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
+
+    async function QcSub(projectId){
+        
+        try{
+
+            const response = await axios.post("http://127.0.0.1:4080/project/qcdetails",
+                {"project_id" : projectId}
+            )
+
+            const data = response.data
+
+            if (data.status === "NoSubmission" ){
+                alert("No QC files found, please upload")
+                return
+            }
+            else{
+                console.log(data.status)
+                setQcDetails(data.payload)
+            }
+
+        }
+
+        catch {
+            alert("Error contacting the server")
+        }
+    }
+
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>QC Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
+                <button className={styles.fieldPop} onClick={() => QcSub(projectCont.project_id)}>&#8693;</button>
             </div>
+            {
+                Object.keys(qcDetails).length > 0 && (
+                    <QcSamDetailsComp qcDetails = {qcDetails} />
+                )
+            }
         </div>
     )
 }
@@ -257,6 +307,7 @@ function LibSamDetails() {
                 <h2 className={styles.sech}>Library QC Details</h2>
                 <button className={styles.fieldPop}>&#8693;</button>
             </div>
+            <LibSamDetailsComp />
         </div>
     )
 }
@@ -283,3 +334,5 @@ function Reports() {
         </div>
     )
 }
+
+

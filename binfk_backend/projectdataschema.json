@@ -85,9 +85,9 @@
     },
 
     "qc": {
-      "qc_summary": "All samples passed",
       "concentration_technology": "Qubit",
       "integrity_technology": "TapeStation",
+      "qc_summary": "All samples passed",
       "qc_report_path": "/files/qc/TIPL_408_qc.pdf",
       "qc_sample_details": [
         {
