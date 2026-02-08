@@ -8,12 +8,13 @@ import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp } from './com
 export function ViewComp(){
 
     const [ projectCont, setProjectCont ] = useState(null)
+    const [samsubDetails, setSamsubDetails] = useState({})
 
     return(
 
         <div className={styles.View}>
             <ViewSideBar setProjectCont={setProjectCont}/>
-            <ViewWin projectCont={projectCont}/>
+            <ViewWin projectCont={projectCont} samsubDetails={samsubDetails} setSamsubDetails = {setSamsubDetails}/>
         </div>
     );
 }
@@ -94,7 +95,7 @@ function ViewSideBar({setProjectCont}){
 }
 
 
-function ViewWin ({projectCont}){
+function ViewWin ({projectCont, samsubDetails, setSamsubDetails}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
@@ -103,7 +104,7 @@ function ViewWin ({projectCont}){
                     <div className={styles.ProjectView}>
                         <ViewProjDetails projectCont={projectCont} />
                         <StatusPop projectCont={projectCont} />
-                        <SampleSubDetails projectCont={projectCont} />
+                        <SampleSubDetails projectCont={projectCont} samsubDetails={samsubDetails} setSamsubDetails={setSamsubDetails} />
                         <QcSamDetails projectCont={projectCont} />
                         <LibSamDetails projectCont={projectCont} />
                         <BiInfoDetails projectCont={projectCont} />
@@ -204,19 +205,32 @@ function StatusPop({projectCont}){
 }
 
 
-function SampleSubDetails({projectCont}){
-
-    const [samsubDetails, setSamsubDetails] = useState({})
+function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
 
     async function SampleSub(projectId) {
-        const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
-            {"project_id" : projectId}
-        )
+        try {
+            const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
+                {"project_id" : projectId}
+            )
 
-        const data = response.data
-        console.log(data.status)
+            const data = response.data
+            if (data.status === "error"){
 
-        setSamsubDetails(data.payload)
+                alert(data.payload)
+                setSamsubDetails({})
+                
+                return
+            } 
+            else{
+                
+                console.log(data.status)
+                setSamsubDetails(data.payload)
+            }
+        }
+        catch(error) {
+            alert("Could not connect to the server")
+            console.log(error)
+        }
     }
 
     return(
