@@ -8,13 +8,12 @@ import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp } from './com
 export function ViewComp(){
 
     const [ projectCont, setProjectCont ] = useState(null)
-    const [samsubDetails, setSamsubDetails] = useState({})
 
     return(
 
         <div className={styles.View}>
             <ViewSideBar setProjectCont={setProjectCont}/>
-            <ViewWin projectCont={projectCont} samsubDetails={samsubDetails} setSamsubDetails = {setSamsubDetails}/>
+            <ViewWin projectCont={projectCont}/>
         </div>
     );
 }
@@ -95,7 +94,7 @@ function ViewSideBar({setProjectCont}){
 }
 
 
-function ViewWin ({projectCont, samsubDetails, setSamsubDetails}){
+function ViewWin ({projectCont}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
@@ -104,7 +103,7 @@ function ViewWin ({projectCont, samsubDetails, setSamsubDetails}){
                     <div className={styles.ProjectView}>
                         <ViewProjDetails projectCont={projectCont} />
                         <StatusPop projectCont={projectCont} />
-                        <SampleSubDetails projectCont={projectCont} samsubDetails={samsubDetails} setSamsubDetails={setSamsubDetails} />
+                        <SampleSubDetails projectCont={projectCont} />
                         <QcSamDetails projectCont={projectCont} />
                         <LibSamDetails projectCont={projectCont} />
                         <BiInfoDetails projectCont={projectCont} />
@@ -176,7 +175,7 @@ function StatusPop({projectCont}){
                 <button className={styles.fieldPop}>&#8693;</button>
             </div>
 
-            <div className={styles.GridTwo}>
+            <div >
                 <div className={styles.TaskProp}>
                     <div>Standard Tasks</div>
                     {projectCont.std_del.map((stdDel) => {
@@ -205,31 +204,23 @@ function StatusPop({projectCont}){
 }
 
 
-function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
+function SampleSubDetails({projectCont}){
+
+    const [samsubDetails, setSamsubDetails] = useState({})
 
     async function SampleSub(projectId) {
-        try {
-            const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
-                {"project_id" : projectId}
-            )
+        const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
+            {"project_id" : projectId}
+        )
 
-            const data = response.data
-            if (data.status === "error"){
-
-                alert(data.payload)
-                setSamsubDetails({})
-                
-                return
-            } 
-            else{
-                
-                console.log(data.status)
-                setSamsubDetails(data.payload)
-            }
-        }
-        catch(error) {
-            alert("Could not connect to the server")
-            console.log(error)
+        const data = response.data
+        if (data.status === "NoSubmission"){
+            alert(data.payload)
+            return
+        } 
+        else{
+            console.log(data.status)
+            setSamsubDetails(data.payload)
         }
     }
 

@@ -149,67 +149,69 @@ class ProjIdSamSub(BaseModel):
     project_id : str
 
 @app.post("/project/samsubdetails")
-async def samsub_pop(payload: ProjIdSamSub):
-    
-    collections = db['tcProjects']
-    project_id = payload.project_id.strip()
-    
-    data = collections.find_one(
-        {"project_id": project_id},
-        {
-            "_id": 0,
-            "form_status.sample_submission": 1,
-            "service_info.service_name": 1,
-            "service_info.sample_number": 1,
-            "sample_submission": 1
-        }
-    )
+async def samsub_pop(payload : ProjIdSamSub):
 
+    collections = db['tcProjects']
+
+    project_id = payload.project_id.strip()
+
+    data = collections.find_one({"project_id" : project_id},
+                                {
+                                    "_id" : 0,
+                                    "form_status.sample_submission": 1,
+                                    "service_info.service_name" : 1,
+                                    "service_info.sample_number" : 1,
+                                    "sample_submission": 1
+                                })
     
-    if data.get("form_status", {}).get("sample_submission") == False:
+    if data.get("form_status").get("sample_submission") == False:
         return {
-            "status": "error",
-            "payload": "No sample submission found, Contact the client"
+            "status" : "NoSubmission",
+            "payload" : "No sample submission form found. Please contact the client"
         }
     
-    def boolhan(value):
-        if value is True:
+    def true_false(bool):
+        if bool is True:
             return "Yes"
-        elif value is False:
+        elif bool is False:
             return "No"
-        return value
+        return bool
     
-    def valueset(val):
-        if val == "" or val is None:
+    def null_val(val):
+        if val == "" or val == " " or val is None:
             return "No data available"
         return val
     
     service_info = data.get("service_info", {})
     sample_sub = data.get("sample_submission", {})
     details = sample_sub.get("details", {})
-    
+
     return {
         "status": "Fetch successful",
         "payload": {
             "service_name": service_info.get("service_name", "No data available"),
             "sample_number": service_info.get("sample_number", "No data available"),
-            "service_technology": valueset(sample_sub.get("service_technology")),
-            "application": valueset(details.get("application")),
-            "replicates": boolhan(details.get("replicates", "No data available")),
-            "extraction_needed": boolhan(details.get("extraction_needed", "No data available")),
-            "total_rna_prep": valueset(details.get("total_rna_prep")),
-            "nucleases": valueset(details.get("nucleases")),
-            "kit_name": valueset(details.get("kit_name")),
-            "qc_accessed": valueset(details.get("qc_accessed")),
-            "bioinformatics_required": boolhan(details.get("bioinformatics_required", "No data available")),
-            "key_objectives": valueset(details.get("key_objectives")),
-            "comparisons": valueset(details.get("comparisons")),
-            "additional_analysis": valueset(details.get("additional_analysis")),
-            "reference_studies": valueset(details.get("reference_studies")),
+            "service_technology": null_val(sample_sub.get("service_technology")),
+            "application": null_val(details.get("application")),
+            
+            "replicates": true_false(details.get("replicates", "No data available")),
+            "extraction_needed": true_false(details.get("extraction_needed", "No data available")),
+            "total_rna_prep": null_val(details.get("total_rna_prep")),
+            "nucleases": true_false(details.get("nucleases")),
+            "kit_name": null_val(details.get("kit_name")),
+            "qc_accessed": null_val(details.get("qc_accessed")),
+            "bioinformatics_required": true_false(details.get("bioinformatics_required", "No data available")),
+            "key_objectives": null_val(details.get("key_objectives")),
+            "comparisons": null_val(details.get("comparisons")),
+            "additional_analysis": null_val(details.get("additional_analysis")),
+            "reference_studies": null_val(details.get("reference_studies")),
             "sample_details": details.get("sample_details", [])
         }
     }
 
+
+
+    
 
 
     

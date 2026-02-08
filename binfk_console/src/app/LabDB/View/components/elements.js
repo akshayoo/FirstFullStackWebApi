@@ -9,7 +9,7 @@ export function SampleSubDetailsComp({samsubDetails}){
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
                     <div>Service Name</div>
-                    <div>{samsubDetails.service_technology}</div>
+                    <div>{samsubDetails.service_name}</div>
                 </div>
                 <div className={styles.ProjecIn} >
                     <div>Technology</div>
@@ -25,7 +25,7 @@ export function SampleSubDetailsComp({samsubDetails}){
                 <div>
                     <div className={styles.ProjecIn}>
                         <div>Number of Samples</div>
-                        <div>3,653</div>
+                        <div>{samsubDetails.sample_number}</div>
                     </div>
                     <div className={styles.ProjecIn}>
                         <div>Replicates Present</div>
@@ -85,7 +85,7 @@ export function SampleSubDetailsComp({samsubDetails}){
                                     <th>Description</th>
                                     <th>Conc.</th>
                                     <th>Notes</th>
-                                    <th>Replicate (Group Name)</th>
+                                    <th>{`Replicate (Group Name)`}</th>
                                 </tr>
                             </thead>
                             <tbody>
