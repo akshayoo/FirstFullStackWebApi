@@ -7,7 +7,7 @@ import pandas as pd
 from datetime import datetime
 
 CLIENT = MongoClient("mongodb://localhost:27017")
-db = CLIENT["tcProjects"]
+db = CLIENT.tcDB
 
 app = FastAPI()
 
@@ -19,7 +19,7 @@ app.add_middleware(
     allow_credentials=True
 )
 
-UPLOAD_DIR = "/REPORTS/"
+UPLOAD_DIR = "../REPORTS"
 
 
 @app.post("/project/qcdataupdate")
@@ -36,18 +36,26 @@ async def qcdata_update(
     collections = db["tcProjects"]
     try: 
         if not project_id:
-
-            return{
-                "status" : "Please refresh the page and try again"
-            }
-        project_path = f"{UPLOAD_DIR}/{project_id}"
+            return{"status" : "Please refresh the page and try again"}
         
-        os.makedirs(project_path, exist_ok= True)
-        qc_path = f"{project_path}/QC"
-        os.makedirs(qc_path, exist_ok= True)
+        if not qc_data.filename.endswith(".csv"):
+            return {"status": "QC data must be a CSV file"}
+        
+        if not qc_report.filename.endswith(".pdf"):
+            return {"ststus" : "QC report must be in pdf format"}
+        
 
-        with open(f"{qc_path}/{qc_report}", 'w') as f:
-            f.write(await qc_report)
+        project_path = f"{UPLOAD_DIR}/{project_id}"
+        qc_path = f"{project_path}/QC"
+
+        os.makedirs(qc_path, exist_ok=True)
+
+        qc_report_path = f"{qc_path}/{qc_report.filename}"
+
+        report_readinby = await qc_report.read()
+
+        with open(qc_report_path, "wb") as f:
+            f.write(report_readinby)
         
         contents = await qc_data.read()
         csv_data = StringIO(contents.decode("utf-8"))
@@ -61,7 +69,7 @@ async def qcdata_update(
             data.columns[4]: "comments"
         })
 
-        records = data.fillna("No value").to_dict(orient=records)
+        records = data.fillna("No value").to_dict(orient="records")
 
         method_document = {
             "writeup" : method_writeup,
@@ -75,7 +83,7 @@ async def qcdata_update(
             "concentration_technology" : concentration_technology,
             "integrity_technology" : integrity_technology,
             "qc_summary" : qc_summary,
-            "qc_report" : f"{qc_path}/{qc_report}",
+            "qc_report" : qc_report_path,
             "qc_sample_details" : records,
             "audit" : {
                 "completed_at" : datetime.now()
@@ -99,7 +107,7 @@ async def qcdata_update(
         }
     except Exception as e:
         return{
-            "status" : e
+            "status" : str(e)
         }
         
 
@@ -111,7 +119,66 @@ async def libqcdata_update(
         library_report : UploadFile = File(...),
         library_data : UploadFile = File(...)
 ):
-    pass
+    collections = db["tcProjects"]
+
+    try:
+
+    
+        if not library_report.filename.endswith(".pdf"):
+            return {"status" : "Library QC report should be a pdf file"}
+        
+        if not library_data.filename.endswith(".csv"):
+            return {"status" : "Library QC data report should be a csv file"}
+        
+        project_path = f"{UPLOAD_DIR}/{project_id}"
+        lib_path = f"{project_path}/LIB"
+
+        os.makedirs(lib_path, exist_ok=True)
+
+        lib_report_path = f"{lib_path}/{library_report.filename}"
+
+        report_readinby = await library_report.read()
+
+        with open(lib_report_path, 'wb') as f:
+            f.write(report_readinby)
+
+        csv_bytes = await library_data.read()
+        csv_data = StringIO(csv_bytes.decode('utf-8'))
+
+        data = pd.read_csv(csv_data)
+        data = data.rename(columns={
+            data.columns[0]: "sample_id",
+            data.columns[1]: "tcues_sample_id",
+            data.columns[2]: "nucleic_acid_conc",
+            data.columns[3]: "comments"
+        })
+
+        records = data.fillna("No Value").to_dict(orient="records")
+
+        lib_document = {
+            "library_method" : library_method,
+            "library_summary" : library_summary,
+            "library_report" : lib_report_path,
+            "qc_sample_details" : records,
+            "audit" : {
+                "completed_at" : datetime.now()
+            }
+        }
+
+        collections.update_one({"project_id" : project_id},
+                            {
+                                "$set" : {
+                                        "library" : lib_document,
+                                        "form_status.library": True,
+                                }
+                            })
+        return{"status" : "Lib QC Updated successfully"}
+    
+    except Exception as e:
+        {"status" : str(e)}
+
+    
+    
 
 @app.post("/project/binfkilldataupdate")
 async def binfdata_update(
@@ -119,7 +186,48 @@ async def binfdata_update(
         bioinformatics_summary : str = Form(...),
         estimated_hours : str = Form(...),
         approximate_hours : str = Form(...),
-        bioinfromatics_report : str = Form(...)
+        bioinformatics_report : UploadFile = File(...)
 ):
-    pass
+    collections = db['tcProjects']
+
+    try:
+        if not bioinformatics_report.filename.endswith(".pdf"):
+            return {"status" : "Library QC report should be a pdf file"}
+        
+        project_path = f"{UPLOAD_DIR}/{project_id}"
+        binfk_path = f"{project_path}/ANALYSIS"
+
+        os.makedirs(binfk_path, exist_ok=True)
+
+        binf_report_path = f"{binfk_path}/{bioinformatics_report.filename}"
+
+        binf_reabytes = await bioinformatics_report.read()
+
+        with open(binf_report_path, "wb") as f:
+            f.write(binf_reabytes)
+
+        binf_document = {
+            "bioinformatics_summary" : bioinformatics_summary,
+            "estimated_hours" : estimated_hours,
+            "approximate_hours" : approximate_hours,
+            "bioinformatics_report" : binf_report_path,
+            "audit" : {
+                "completed_at" : datetime.now()
+            }
+        }
+
+        collections.update_one(
+            {"project_id": project_id},
+            {
+                "$set": {
+                    "bioinformatics": binf_document,
+                    "form_status.bioinformatics": True
+                }
+            }
+        )
+
+        return{"status" : "Lib QC Updated successfully"}
+
+    except Exception as e:
+        return{"status" : str(e)}
 

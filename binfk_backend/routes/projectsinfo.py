@@ -54,23 +54,23 @@ async def projects_comp():
 
         project_completion = true_count/total_elem *100
 
-        get_status =  list_elements[0].get("form_status")
+        get_status =  list_elements[i].get("form_status")
 
         def get_project_status(flags: dict) -> str:
 
-            if flags.get("bioinformatics") == True:
+            if flags.get("bioinformatics"):
                 return "Completed"
 
-            if flags.get("library") == True:
+            if flags.get("library"):
                 return "Bioinformatics Stage"
 
-            if flags.get("qc") == True:
+            if flags.get("qc"):
                 return "Library Stage"
 
-            if flags.get("method") == True:
+            if flags.get("method"):
                 return "In QC Stage"
 
-            if flags.get("sample_submission") == True:
+            if flags.get("sample_submission"):
                 return "Accepted"
 
             return "Initiated"
@@ -206,6 +206,49 @@ async def samsub_pop(payload : ProjIdSamSub):
             "additional_analysis": null_val(details.get("additional_analysis")),
             "reference_studies": null_val(details.get("reference_studies")),
             "sample_details": details.get("sample_details", [])
+        }
+    }
+
+
+@app.post("/project/qcsubdetails")
+async def qc_sub_pop(payload : ProjIdSamSub):
+    collections = db['tcProjects']
+
+    project_id = payload.project_id
+
+
+    data = collections.find_one({"project_id" : project_id},
+                                {
+                                    "_id" : 0,
+                                    "form_status.qc": 1,
+                                    "method" : 1,
+                                    "qc" : 1,
+                                })
+    
+    if data.get("form_status").get("qc") == False:
+        return {
+            "status" : "NoSubmission",
+            "payload" : "No sample submission form found. Please contact the client"
+        }
+    
+    method = data.get("method", {})
+    qc = data.get("qc")
+
+    qc_report_path = qc.get("qc_report", "")
+
+    with open(qc_report_path, "rb") as f:
+        qc_report = f.read()
+
+    return{
+        "status" : "Fetch successfull",
+        "payload" : {
+            "writeup" : method.get("writeup", "No data available"),
+            "method_summary" : method.get("method_summary", "No data available"),
+            "concentration_technology" : qc.get("concentration_technology", "No data available"),
+            "integrity_technology" : qc.get("integrity_technology", "No data available"),
+            "qc_report" : qc_report,
+            "qc_sample_details" : qc.get("qc_sample_details")
+
         }
     }
 

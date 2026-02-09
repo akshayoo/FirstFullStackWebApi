@@ -11,8 +11,8 @@ export function QcReportPushForm({setQcDataForm, projectId}){
         "concentration_technology" : "",
         "integrity_technology" : "",
         "qc_summary" : "",
-        "qc_report" : "",
-        "qc_data" : ""
+        "qc_report" : null,
+        "qc_data" : null
     })
 
     useEffect(() => {
@@ -36,8 +36,7 @@ export function QcReportPushForm({setQcDataForm, projectId}){
         })
 
         const response = await axios.post("http://127.0.0.1:4090/project/qcdataupdate", 
-            fd,
-            { headers: { "Content-Type": "multipart/form-data" } }
+            fd
         )
 
         alert(response.data.status);
@@ -142,13 +141,13 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
         "project_id" : projectId,
         "library_method" : "",
         "library_summary" : "",
-        "library_report" : "",
-        "library_data" : ""
+        "library_report" : null,
+        "library_data" : null
     })
 
     useEffect(() =>{
         setFormData(prev =>({
-            ...prev, preject_id : projectId
+            ...prev, project_id : projectId
         }))
     },[projectId])
 
@@ -159,22 +158,21 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
 
         try {
 
-            const formd = new FormData
+            const formd = new FormData()
 
-            Object.keys(formData).forEach(([key, value]) => {
+            Object.entries(formData).forEach(([key, value]) => {
                 formd.append(key, value)
             })
             
             const response = await axios.post("http://127.0.0.1:4090/project/libqcdataupdate",
-                formd,
-                {headers : {"Content-Type": "multipart/form-data"}}
+                formd
             )
 
             alert(response.data.status)
             setLibQcDataForm(false)
         }
-        catch{
-
+        catch(error){
+            console.log(error)
             alert("Trouble connecting with the server")
         }
         
@@ -246,7 +244,7 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
         "bioinformatics_summary" : "",
         "estimated_hours" : "",
         "approximate_hours" : "",
-        "bioinfromatics_report" : ""
+        "bioinformatics_report" : null
     })
 
     useEffect(() => {
@@ -257,27 +255,27 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
 
     async function updateBinfData() {
 
-        if(!formData.bioinformatics_summary || !formData.estimated_hours || !formData.approximate_hours || !formData.bioinfromatics_report){
+        if(!formData.bioinformatics_summary || !formData.estimated_hours || !formData.approximate_hours || !formData.bioinformatics_report){
             alert("All entries are mandatory, Please fill the missing fields")
             return
         }
 
         try {
-            const binff = new FormData
+            const binff = new FormData()
 
-            Object.keys(formData).forEach(([key, value]) =>{
+            Object.entries(formData).forEach(([key, value]) =>{
                 binff.append(key, value)
             })
 
             const response = await axios.post("http://127.0.0.1:4090/project/binfkilldataupdate",
-                binff,
-                {headers : {"Content-Type" : "multipart/form-data"}}
+                binff
             )
 
             alert(response.data.status)
             setBinfDataForm(false)
         }
-        catch{
+        catch(error){
+            console.log(error)
             alert("Trouble connecting with the server")
         }
     }
@@ -324,7 +322,7 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
                 </div>
                 <div className={styles.formElem}>
                     <label>{`Upload Final Analysis Report(.pdf)`}</label>
-                    <input name="bioinfromatics_report" type='file' accept='.pdf' onChange={handleFileChange}/>
+                    <input name="bioinformatics_report" type='file' accept='.pdf' onChange={handleFileChange}/>
                 </div>
                 <div className={styles.formElem}>
                     <button onClick={updateBinfData} >Submit</button>
