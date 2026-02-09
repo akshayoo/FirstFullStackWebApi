@@ -1,5 +1,5 @@
 import styles from '../ViewComp.module.css'
-import { QcReportPushForm } from './elemoptions';
+import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm } from './elemoptions';
 
 
 
@@ -118,14 +118,6 @@ export function SampleSubDetailsComp({samsubDetails}){
 
 
 
-
-
-
-
-
-
-
-
 export function QcSamDetailsComp(qcDetails) {
     return(
         <>
@@ -209,20 +201,6 @@ export function QcSamDetailsComp(qcDetails) {
                     </div>
                 </div>
             </div>
-            <div className={styles.GridFour}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Template (.csv)`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Upload QC Data`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download QC Report (.pdf)`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
-                </div>
-            </div>
         </>
     );
 }
@@ -274,6 +252,104 @@ export function LibSamDetailsComp() {
                 </div>
                 <div className={styles.ProjecIn}>
                     <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
+                </div>
+            </div>
+        </>
+    );
+}
+
+
+export function BiinfoDetailsComp() {
+    return(
+        <>   
+            <div className={styles.ProjecIn}>
+                <div>Analysis summary</div>
+                <div>iejoe j jeneeijokweno cowejfoifjo fnoiewjfoimweo fiejjfeoijfioe</div>
+            </div>
+            <div className={styles.ProjecIn}>
+                <div>Approximate number of hours spend for the analysss</div>
+                <div>12 hrs</div>
+            </div>
+            <div className={styles.ProjecIn}>
+                <div>Bioinformatics Analysis Report</div>
+                <div>
+                    <div style={{
+                        background: '#f9fafb',
+                        padding: '48px',
+                        borderRadius: '8px',
+                        border: '2px dashed #cbd5e1',
+                        textAlign: 'center',
+                        color: '#6b7280',
+                        fontStyle: 'italic',
+                        minHeight: '300px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '16px'
+                    }}>
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            <path d="M12 3v6h6"/>
+                        </svg>
+                        <div>PDF Report Viewer</div>
+                        <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Upload Analysis Data`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Analysis Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send Analysis Report`}</button>
+                </div>
+            </div>
+        </>
+    );
+}
+
+
+
+export function ReportsComp() {
+    return(
+        <>   
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Final Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send Final Report`}</button>
+                </div>
+            </div>
+            <div className={styles.ProjecIn}>
+                <div>Collated Final Report</div>
+                <div>
+                    <div style={{
+                        background: '#f9fafb',
+                        padding: '48px',
+                        borderRadius: '8px',
+                        border: '2px dashed #cbd5e1',
+                        textAlign: 'center',
+                        color: '#6b7280',
+                        fontStyle: 'italic',
+                        minHeight: '300px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '16px'
+                    }}>
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            <path d="M12 3v6h6"/>
+                        </svg>
+                        <div>PDF Report Viewer</div>
+                        <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
+                    </div>
                 </div>
             </div>
         </>

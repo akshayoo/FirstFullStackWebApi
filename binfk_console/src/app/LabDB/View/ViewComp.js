@@ -3,13 +3,14 @@
 import styles from './ViewComp.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp } from './components/elements';
+import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp, BiinfoDetailsComp, ReportsComp } from './components/elements';
 
 export function ViewComp(){
 
     const [ projectCont, setProjectCont ] = useState(null)
     const [samsubDetails, setSamsubDetails] = useState({})
     const [qcDetails, setQcDetails] = useState({})
+    const [libqcDetails, setLibqcDetails] = useState({})
 
     return(
         <>
@@ -23,7 +24,9 @@ export function ViewComp(){
                 samsubDetails ={samsubDetails} 
                 setSamsubDetails = {setSamsubDetails}
                 qcDetails = {qcDetails}
-                setQcDetails = {setQcDetails} />
+                setQcDetails = {setQcDetails}
+                libqcDetails={libqcDetails}
+                setLibqcDetails={setLibqcDetails} />
 
             </div>
         </>
@@ -107,7 +110,8 @@ function ViewSideBar({setProjectCont, setSamsubDetails}){
 }
 
 
-function ViewWin ({projectCont, samsubDetails, setSamsubDetails, qcDetails, setQcDetails}){
+function ViewWin ({projectCont, samsubDetails, setSamsubDetails, 
+    qcDetails, setQcDetails, libqcDetails, setLibqcDetails}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
@@ -118,7 +122,7 @@ function ViewWin ({projectCont, samsubDetails, setSamsubDetails, qcDetails, setQ
                         <StatusPop projectCont={projectCont} />
                         <SampleSubDetails projectCont={projectCont} samsubDetails ={samsubDetails} setSamsubDetails={setSamsubDetails} />
                         <QcSamDetails projectCont={projectCont} qcDetails ={qcDetails} setQcDetails = {setQcDetails} />
-                        <LibSamDetails projectCont={projectCont} />
+                        <LibSamDetails projectCont={projectCont} libqcDetails={libqcDetails} setLibqcDetails={setLibqcDetails} />
                         <BiInfoDetails projectCont={projectCont} />
                         <Reports projectCont={projectCont} />
                     </div>
@@ -296,24 +300,78 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
                     <QcSamDetailsComp qcDetails = {qcDetails} />
                 )
             }
+            <div className={styles.GridFour}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Template (.csv)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Upload QC Report`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download QC Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
+                </div>
+            </div>
         </div>
     )
 }
 
-function LibSamDetails() {
+function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
+
+    async function LibSub(projectId){
+
+        try{
+
+            const response = await axios.post("http://127.0.0.1:4080/project/qcdetails",
+                {"payload" : projectId}
+            )
+
+            const data = response.data
+
+            if(data.status ===  "NoSubmission"){
+                alert(data.payload)
+                return
+            }
+
+            else{
+                console.log("fetch successfull")
+                setLibqcDetails(payload.data)
+            }
+        }
+
+        catch{
+            alert("server error")
+        }
+    }
+
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Library QC Details</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
+                <button className={styles.fieldPop} onClick={() => LibSub(projectCont.project_id)}>&#8693;</button>
             </div>
-            <LibSamDetailsComp />
+            {
+                Object.keys(libqcDetails).length > 0 && (<LibSamDetailsComp libqcDetails = {libqcDetails} />)
+            }
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Upload Lib QC Data`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Lib QC Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
+                </div>
+            </div>
         </div>
     )
 }
 
 
-function BiInfoDetails() {
+function BiInfoDetails({projectCont}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
@@ -324,7 +382,7 @@ function BiInfoDetails() {
     )
 }
 
-function Reports() {
+function Reports({projectCont}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
