@@ -4,6 +4,7 @@ import styles from './ViewComp.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp, BiinfoDetailsComp, ReportsComp } from './components/elements';
+import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm } from './components/elemoptions';
 
 export function ViewComp(){
 
@@ -26,7 +27,7 @@ export function ViewComp(){
                 qcDetails = {qcDetails}
                 setQcDetails = {setQcDetails}
                 libqcDetails={libqcDetails}
-                setLibqcDetails={setLibqcDetails} />
+                setLibqcDetails={setLibqcDetails}/>
 
             </div>
         </>
@@ -263,6 +264,8 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
 
 function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
 
+    const [qcDataForm, setQcDataForm] = useState(false)
+
     async function QcSub(projectId){
         
         try{
@@ -300,25 +303,23 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
                     <QcSamDetailsComp qcDetails = {qcDetails} />
                 )
             }
-            <div className={styles.GridFour}>
-                <div className={styles.ProjecIn}>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecInOnBtn}>
                     <button className={styles.ProjecInBtn}>{`Download Template (.csv)`}</button>
                 </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Upload QC Report`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download QC Report (.pdf)`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecInBtn} onClick={() => setQcDataForm(true)}>{`Upload QC Report`}</button>
+                    {qcDataForm && <QcReportPushForm projectId={projectCont.project_id} setQcDataForm={setQcDataForm}/>}
                 </div>
             </div>
         </div>
     )
 }
 
+
 function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
+
+    const [ libQcDataFrom , setLibQcDataForm] = useState(false)
 
     async function LibSub(projectId){
 
@@ -356,14 +357,12 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
                 Object.keys(libqcDetails).length > 0 && (<LibSamDetailsComp libqcDetails = {libqcDetails} />)
             }
             <div className={styles.GridThree}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Upload Lib QC Data`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecInBtn}>{`Download Template (.csv)`}</button>
                 </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Lib QC Report (.pdf)`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecInBtn} onClick={() => setLibQcDataForm(true)}>{`Upload Lib QC Data`}</button>
+                    {libQcDataFrom && <LibQcReportPushForm projectId={projectCont.project_id} setLibQcDataForm ={setLibQcDataForm} />}
                 </div>
             </div>
         </div>
@@ -372,11 +371,20 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
 
 function BiInfoDetails({projectCont}) {
+
+    const [ binfDataForm, setBinfDataForm] = useState(false)
+
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Analysis</h2>
                 <button className={styles.fieldPop}>&#8693;</button>
+            </div>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecInBtn} onClick={() => setBinfDataForm(true)}>{`Upload Analysis Data`}</button>
+                    {binfDataForm && <BinfReportPushForm setBinfDataForm={setBinfDataForm} projectId = {projectCont.project_id} />}
+                </div>
             </div>
         </div>
     )

@@ -201,6 +201,14 @@ export function QcSamDetailsComp(qcDetails) {
                     </div>
                 </div>
             </div>
+            <div className={styles.GridTwo}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download QC Report(.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
+                </div>
+            </div>
         </>
     );
 }
@@ -243,12 +251,9 @@ export function LibSamDetailsComp() {
                     </div>
                 </div>
             </div>
-            <div className={styles.GridThree}>
+            <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Upload Lib QC Data`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Lib QC Report (.pdf)`}</button>
+                    <button className={styles.ProjecInBtn}>{`Download Lib QC Report(.pdf)`}</button>
                 </div>
                 <div className={styles.ProjecIn}>
                     <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
@@ -267,7 +272,11 @@ export function BiinfoDetailsComp() {
                 <div>iejoe j jeneeijokweno cowejfoifjo fnoiewjfoimweo fiejjfeoijfioe</div>
             </div>
             <div className={styles.ProjecIn}>
-                <div>Approximate number of hours spend for the analysss</div>
+                <div>Expected number of hours spend for the analysss</div>
+                <div>12 hrs</div>
+            </div>
+            <div className={styles.ProjecIn}>
+                <div>Approximate number of hours spend for the analysss completion</div>
                 <div>12 hrs</div>
             </div>
             <div className={styles.ProjecIn}>
@@ -299,9 +308,6 @@ export function BiinfoDetailsComp() {
             </div>
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Upload Analysis Data`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
                     <button className={styles.ProjecInBtn}>{`Download Analysis Report (.pdf)`}</button>
                 </div>
                 <div className={styles.ProjecIn}>
@@ -317,14 +323,6 @@ export function BiinfoDetailsComp() {
 export function ReportsComp() {
     return(
         <>   
-            <div className={styles.GridThree}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Final Report (.pdf)`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send Final Report`}</button>
-                </div>
-            </div>
             <div className={styles.ProjecIn}>
                 <div>Collated Final Report</div>
                 <div>
@@ -350,6 +348,14 @@ export function ReportsComp() {
                         <div>PDF Report Viewer</div>
                         <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
                     </div>
+                </div>
+            </div>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Download Final Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>{`Send Final Report`}</button>
                 </div>
             </div>
         </>
