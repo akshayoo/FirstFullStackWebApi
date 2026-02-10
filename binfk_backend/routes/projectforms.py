@@ -19,7 +19,7 @@ app.add_middleware(
     allow_credentials=True
 )
 
-UPLOAD_DIR = "../REPORTS"
+UPLOAD_DIR = "/home/ak/Projects/FirstFullStackWebApi/binfk_backend/REPORTS"
 
 
 @app.post("/project/qcdataupdate")
@@ -41,7 +41,7 @@ async def qcdata_update(
         if not qc_data.filename.endswith(".csv"):
             return {"status": "QC data must be a CSV file"}
         
-        if not qc_report.filename.endswith(".pdf"):
+        if not qc_report.filename.lower().endswith(".pdf"):
             return {"ststus" : "QC report must be in pdf format"}
         
 
@@ -124,7 +124,7 @@ async def libqcdata_update(
     try:
 
     
-        if not library_report.filename.endswith(".pdf"):
+        if not library_report.filename.lower().endswith(".pdf"):
             return {"status" : "Library QC report should be a pdf file"}
         
         if not library_data.filename.endswith(".csv"):
@@ -191,7 +191,7 @@ async def binfdata_update(
     collections = db['tcProjects']
 
     try:
-        if not bioinformatics_report.filename.endswith(".pdf"):
+        if not bioinformatics_report.filename.lower().endswith(".pdf"):
             return {"status" : "Library QC report should be a pdf file"}
         
         project_path = f"{UPLOAD_DIR}/{project_id}"

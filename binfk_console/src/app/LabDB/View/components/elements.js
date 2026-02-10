@@ -105,11 +105,11 @@ export function SampleSubDetailsComp({samsubDetails}){
                 </div>
             </div>
             <div className={styles.GridTwo}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Form (.pdf)`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecOnBtn}>{`Download Form (.pdf)`}</button>
                 </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Form (.csv)`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecOnBtn}>{`Download Form (.csv)`}</button>
                 </div>
             </div>
         </>
@@ -117,14 +117,13 @@ export function SampleSubDetailsComp({samsubDetails}){
 }
 
 
-
-export function QcSamDetailsComp(qcDetails) {
+export function QcSamDetailsComp({qcDetails}) {
     return(
         <>
             <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
                     <div>Method Writeup</div>
-                    <div>{qcDetails.method_writeup}</div>
+                    <div>{qcDetails.writeup}</div>
                 </div>
                 <div className={styles.ProjecIn}>
                     <div>Method Summary</div>
@@ -134,11 +133,11 @@ export function QcSamDetailsComp(qcDetails) {
             <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
                     <div>Concentration measured by</div>
-                    <div>{qcDetails.conc_tech}</div>
+                    <div>{qcDetails.concentration_technology}</div>
                 </div>
                 <div className={styles.ProjecIn}>
                     <div>Integrity measured by</div>
-                    <div>{qcDetails.integrity_tech}</div>
+                    <div>{qcDetails.integrity_technology}</div>
                 </div>
             </div>
             <div className={styles.ProjecIn}>
@@ -158,7 +157,7 @@ export function QcSamDetailsComp(qcDetails) {
                     }}
                 >
                     <iframe
-                    src="/TC-S-BT-EPA-MDL.pdf"   
+                    src={`http://localhost:4080${qcDetails.qc_report}`} 
                     width="100%"
                     height="500px"
                     style={{ border: "none", borderRadius: "6px" }}
@@ -176,37 +175,36 @@ export function QcSamDetailsComp(qcDetails) {
                                 <tr>
                                     <th>Sample ID</th>
                                     <th>theraCUES Sample ID</th>
-                                    <th>Qubit RNA Conc. (ng/ul)</th>
+                                    <th>Conc</th>
                                     <th>Integrity Number</th>
                                     <th>Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Sam_001</td>
-                                    <td>SAMBA_734847</td>
-                                    <td>167</td>
-                                    <td>8.14</td>
-                                    <td>Optimal</td>
-                                </tr>
-                                <tr>
-                                    <td>Sam_005</td>
-                                    <td>SAMBA_734851</td>
-                                    <td>163</td>
-                                    <td>8.21</td>
-                                    <td>Optimal</td>
-                                </tr>
+                                {
+                                    qcDetails.qc_sample_details.map((comp, index) => {
+                                        return(
+                                            <tr key={index}>
+                                                <td>{comp["sample_id"]}</td>
+                                                <td>{comp["tcues_sample_id"]}</td>
+                                                <td>{comp["nucleic_acid_conc"]}</td>
+                                                <td>{comp["integrity"]}</td>
+                                                <td>{comp["comments"]}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div className={styles.GridTwo}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download QC Report(.pdf)`}</button>
+                <div className={styles.ProjecInOnBtn }>
+                    <button className={styles.ProjecOnBtn}>{`Download QC Report(.pdf)`}</button>
                 </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send QC Report`}</button>
+                <div className={styles.ProjecInOnBtn }>
+                    <button className={styles.ProjecOnBtn}>{`Send QC Report`}</button>
                 </div>
             </div>
         </>
@@ -217,46 +215,74 @@ export function QcSamDetailsComp(qcDetails) {
 
 
 
-export function LibSamDetailsComp() {
+export function LibSamDetailsComp({libqcDetails}) {
     return(
-        <>   
+        <>  
+            <div className={styles.ProjecIn}>
+                <div>Library QC Method</div>
+                <div>{libqcDetails.library_method}</div>
+            </div> 
             <div className={styles.ProjecIn}>
                 <div>Library QC Summary</div>
-                <div>Library preparation successful with optimal fragment size distribution (300-400bp). Adequate library concentration achieved for sequencing platform. Quality metrics meet all specified thresholds.</div>
+                <div>{libqcDetails.library_summary}</div>
             </div>
             <div className={styles.ProjecIn}>
                 <div>Library QC Report</div>
-                <div>
-                    <div style={{
-                        background: '#f9fafb',
-                        padding: '48px',
-                        borderRadius: '8px',
-                        border: '2px dashed #cbd5e1',
-                        textAlign: 'center',
-                        color: '#6b7280',
-                        fontStyle: 'italic',
-                        minHeight: '300px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '16px'
-                    }}>
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                            <path d="M12 3v6h6"/>
-                        </svg>
-                        <div>PDF Report Viewer</div>
-                        <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
+                <div
+                    style={{
+                    background: "#f9fafb",
+                    padding: "16px",
+                    borderRadius: "8px",
+                    border: "2px dashed #cbd5e1",
+                    minHeight: "400px",
+                    }}
+                >
+                    <iframe
+                    src={`http://localhost:4080${libqcDetails.library_report}`} 
+                    width="100%"
+                    height="500px"
+                    style={{ border: "none", borderRadius: "6px" }}
+                    title="QC Report PDF"
+                    />
+                </div>
+            </div>
+            <div className={styles.ProjecTabView}>
+                <div>QC Table</div>
+                <div className={styles.SamSubTables}>
+                    <div>
+                        <table className={styles.TableCont}>
+                            <thead>
+                                <tr>
+                                    <th>Sample ID</th>
+                                    <th>theraCUES Sample ID</th>
+                                    <th>Conc</th>
+                                    <th>Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    libqcDetails.qc_sample_details.map((comp, index) => {
+                                        return(
+                                            <tr key={index}>
+                                                <td>{comp["sample_id"]}</td>
+                                                <td>{comp["tcues_sample_id"]}</td>
+                                                <td>{comp["nucleic_acid_conc"]}</td>
+                                                <td>{comp["comments"]}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <div className={styles.GridTwo}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Lib QC Report(.pdf)`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecOnBtn}>{`Download Lib QC Report(.pdf)`}</button>
                 </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send Lib QC Report`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecOnBtn}>{`Send Lib QC Report`}</button>
                 </div>
             </div>
         </>
@@ -264,54 +290,51 @@ export function LibSamDetailsComp() {
 }
 
 
-export function BiinfoDetailsComp() {
+export function BiinfoDetailsComp({binfDetails}) {
     return(
         <>   
             <div className={styles.ProjecIn}>
                 <div>Analysis summary</div>
-                <div>iejoe j jeneeijokweno cowejfoifjo fnoiewjfoimweo fiejjfeoijfioe</div>
+                <div>{binfDetails.bioinformatics_summary}</div>
             </div>
-            <div className={styles.ProjecIn}>
-                <div>Expected number of hours spend for the analysss</div>
-                <div>12 hrs</div>
-            </div>
-            <div className={styles.ProjecIn}>
-                <div>Approximate number of hours spend for the analysss completion</div>
-                <div>12 hrs</div>
+            <div className={styles.GridTwo}>
+                <div className={styles.ProjecIn}>
+                    <div>Estimated number of hours to complete the analysis</div>
+                    <div>{binfDetails.estimated_hours}</div>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <div>Approximate number of hours spend for the analysss completion</div>
+                    <div>{binfDetails.approximate_hours}</div>
+                </div>
             </div>
             <div className={styles.ProjecIn}>
                 <div>Bioinformatics Analysis Report</div>
-                <div>
-                    <div style={{
-                        background: '#f9fafb',
-                        padding: '48px',
-                        borderRadius: '8px',
-                        border: '2px dashed #cbd5e1',
-                        textAlign: 'center',
-                        color: '#6b7280',
-                        fontStyle: 'italic',
-                        minHeight: '300px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '16px'
-                    }}>
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                            <path d="M12 3v6h6"/>
-                        </svg>
-                        <div>PDF Report Viewer</div>
-                        <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
-                    </div>
+            <div className={styles.ProjecIn}>
+                <div>Library QC Report</div>
+                <div
+                    style={{
+                    background: "#f9fafb",
+                    padding: "16px",
+                    borderRadius: "8px",
+                    border: "2px dashed #cbd5e1",
+                    minHeight: "400px",
+                    }}
+                >
+                    <iframe
+                    src={`http://localhost:4080${binfDetails.bioinformatics_report}`} 
+                    width="100%"
+                    height="500px"
+                    style={{ border: "none", borderRadius: "6px" }}
+                    />
                 </div>
             </div>
+            </div>
             <div className={styles.GridThree}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Analysis Report (.pdf)`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecOnBtn}>{`Download Analysis Report (.pdf)`}</button>
                 </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send Analysis Report`}</button>
+                <div className={styles.ProjecInOnBtn}>
+                    <button className={styles.ProjecOnBtn}>{`Send Analysis Report`}</button>
                 </div>
             </div>
         </>
@@ -325,29 +348,14 @@ export function ReportsComp() {
         <>   
             <div className={styles.ProjecIn}>
                 <div>Collated Final Report</div>
-                <div>
-                    <div style={{
-                        background: '#f9fafb',
-                        padding: '48px',
-                        borderRadius: '8px',
-                        border: '2px dashed #cbd5e1',
-                        textAlign: 'center',
-                        color: '#6b7280',
-                        fontStyle: 'italic',
-                        minHeight: '300px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '16px'
-                    }}>
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                            <path d="M12 3v6h6"/>
-                        </svg>
-                        <div>PDF Report Viewer</div>
-                        <div style={{fontSize: '0.85rem'}}>Library qc rwport will be here</div>
-                    </div>
+                <div style={{ background: "#f9fafb", padding: "16px", borderRadius: "8px", border: "2px dashed #cbd5e1", minHeight: "400px",}}>
+                    <iframe
+                    src={`http://localhost:4080${binfDetails.bioinformatics_report}`} 
+                    width="100%"
+                    height="500px"
+                    style={{ border: "none", borderRadius: "6px", background: "#f9fafb" }}
+                    title="QC Report PDF"
+                    />
                 </div>
             </div>
             <div className={styles.GridThree}>
@@ -358,6 +366,16 @@ export function ReportsComp() {
                     <button className={styles.ProjecInBtn}>{`Send Final Report`}</button>
                 </div>
             </div>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecIn}>
+                    <div></div>
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button className={styles.ProjecInBtn}>Close project</button>
+                </div>
+            </div>
         </>
     );
 }
+
+  

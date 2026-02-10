@@ -12,6 +12,7 @@ export function ViewComp(){
     const [samsubDetails, setSamsubDetails] = useState({})
     const [qcDetails, setQcDetails] = useState({})
     const [libqcDetails, setLibqcDetails] = useState({})
+    const [binfDetails, setBinfDetails] = useState({})
 
     return(
         <>
@@ -27,7 +28,9 @@ export function ViewComp(){
                 qcDetails = {qcDetails}
                 setQcDetails = {setQcDetails}
                 libqcDetails={libqcDetails}
-                setLibqcDetails={setLibqcDetails}/>
+                setLibqcDetails={setLibqcDetails}
+                binfDetails ={binfDetails}
+                setBinfDetails = {setBinfDetails}/>
 
             </div>
         </>
@@ -112,7 +115,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails}){
 
 
 function ViewWin ({projectCont, samsubDetails, setSamsubDetails, 
-    qcDetails, setQcDetails, libqcDetails, setLibqcDetails}){
+    qcDetails, setQcDetails, libqcDetails, setLibqcDetails, binfDetails, setBinfDetails}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
@@ -124,7 +127,7 @@ function ViewWin ({projectCont, samsubDetails, setSamsubDetails,
                         <SampleSubDetails projectCont={projectCont} samsubDetails ={samsubDetails} setSamsubDetails={setSamsubDetails} />
                         <QcSamDetails projectCont={projectCont} qcDetails ={qcDetails} setQcDetails = {setQcDetails} />
                         <LibSamDetails projectCont={projectCont} libqcDetails={libqcDetails} setLibqcDetails={setLibqcDetails} />
-                        <BiInfoDetails projectCont={projectCont} />
+                        <BiInfoDetails projectCont={projectCont} binfDetails={binfDetails} setBinfDetails={setBinfDetails}/>
                         <Reports projectCont={projectCont} />
                     </div>
                 
@@ -270,7 +273,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
         
         try{
 
-            const response = await axios.post("http://127.0.0.1:4080/project/qcdetails",
+            const response = await axios.post("http://127.0.0.1:4080/project/qcsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -282,12 +285,14 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
             }
             else{
                 console.log(data.status)
+                console.log(data.payload)
                 setQcDetails(data.payload)
             }
 
         }
 
-        catch {
+        catch(error) {
+            console.log(error)
             alert("Error contacting the server")
         }
     }
@@ -325,8 +330,8 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
         try{
 
-            const response = await axios.post("http://127.0.0.1:4080/project/qcdetails",
-                {"payload" : projectId}
+            const response = await axios.post("http://127.0.0.1:4080/project/libqcsubdetails",
+                {"project_id" : projectId}
             )
 
             const data = response.data
@@ -338,12 +343,12 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
             else{
                 console.log("fetch successfull")
-                setLibqcDetails(payload.data)
+                setLibqcDetails(data.payload)
             }
         }
 
         catch{
-            alert("server error")
+            alert("Error contacting the server")
         }
     }
 
@@ -370,16 +375,43 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 }
 
 
-function BiInfoDetails({projectCont}) {
+function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 
     const [ binfDataForm, setBinfDataForm] = useState(false)
+
+    async function BinfSub(projectId) {
+        try{
+            const response = await axios.post("http://127.0.0.1:4080/project/binfsubdetails",
+                {"project_id" : projectId}
+            )
+
+            const data = response.data
+            if(data.status === "NoSubmission"){
+                alert(data.payload)
+                return
+            }
+
+            else{
+                console.log("fetch successfull")
+                setBinfDetails(data.payload)
+            }
+
+        }
+        catch(error){
+            console.log(error)
+            alert("Error contacting the server")
+        }
+    }
 
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Analysis</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
+                <button className={styles.fieldPop} onClick={() => BinfSub(projectCont.project_id)} >&#8693;</button>
             </div>
+            {
+                Object.keys(binfDetails).length > 0 && (<BiinfoDetailsComp binfDetails={binfDetails} />)
+            }
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
                     <button className={styles.ProjecInBtn} onClick={() => setBinfDataForm(true)}>{`Upload Analysis Data`}</button>

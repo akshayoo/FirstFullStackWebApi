@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from pydantic import BaseModel
+import os
+from fastapi.responses import FileResponse
+from urllib.parse import quote
 
 CLIENT = MongoClient("mongodb://localhost:27017")
 db = CLIENT.tcDB
@@ -209,6 +212,20 @@ async def samsub_pop(payload : ProjIdSamSub):
         }
     }
 
+@app.get("/project/reportspop")
+async def reports_pop(fileandpath: str):
+
+    if not os.path.isabs(fileandpath):
+        raise HTTPException(status_code=400, detail="Path must be absolute")
+
+    if not os.path.exists(fileandpath):
+        raise HTTPException(status_code=404, detail="Report not found")
+
+    return FileResponse(
+        path=fileandpath,
+        media_type="application/pdf"
+    )
+
 
 @app.post("/project/qcsubdetails")
 async def qc_sub_pop(payload : ProjIdSamSub):
@@ -228,16 +245,19 @@ async def qc_sub_pop(payload : ProjIdSamSub):
     if data.get("form_status").get("qc") == False:
         return {
             "status" : "NoSubmission",
-            "payload" : "No sample submission form found. Please contact the client"
+            "payload" : "No QC submission found. Please upload to view"
         }
     
     method = data.get("method", {})
-    qc = data.get("qc")
+    qc = data.get("qc", {})
 
-    qc_report_path = qc.get("qc_report", "")
+    qc_report_path = qc.get("qc_report")
 
-    with open(qc_report_path, "rb") as f:
-        qc_report = f.read()
+
+    if qc_report_path:
+        qc_report_url = f"/project/reportspop?fileandpath={quote(qc_report_path)}"
+    else:
+        qc_report_url = None
 
     return{
         "status" : "Fetch successfull",
@@ -246,15 +266,89 @@ async def qc_sub_pop(payload : ProjIdSamSub):
             "method_summary" : method.get("method_summary", "No data available"),
             "concentration_technology" : qc.get("concentration_technology", "No data available"),
             "integrity_technology" : qc.get("integrity_technology", "No data available"),
-            "qc_report" : qc_report,
+            "qc_summary" : qc.get("qc_summary", "No data available"),
+            "qc_report" : qc_report_url,
             "qc_sample_details" : qc.get("qc_sample_details")
 
         }
     }
 
 
+@app.post("/project/libqcsubdetails")
+async def libqc_sub_pop(payload : ProjIdSamSub):
 
+    collections  = db["tcProjects"]
+
+    project_id = payload.project_id
+
+    data = collections.find_one({"project_id" : project_id},
+                                {
+                                    "_id" : 0,
+                                    "form_status.library": 1,
+                                    "library" : 1
+                                })
     
-
-
+    if data.get("form_status", {}).get("library") == False:
+        return{
+            "status" : "NoSubmission",
+            "payload" : "No Library QC submission found. Please upload one"
+        }
     
+    library = data.get("library", {})
+
+    library_report = library.get("library_report")
+
+    if library_report:
+        lib_report_url = f"/project/reportspop?fileandpath={quote(library_report)}"
+    else:
+        lib_report_url = None
+
+    return{
+        "status" : "Fetch successfull",
+        "payload" : {
+            "library_method" : library.get("library_method", "No data available"),
+            "library_summary" : library.get("library_summary", "No data available"),
+            "library_report" : lib_report_url,
+            "qc_sample_details" : library.get("qc_sample_details", {}),
+
+        }
+    }
+
+@app.post("/project/binfsubdetails")
+async def binf_sub_pop(payload : ProjIdSamSub):
+
+    collections = db["tcProjects"]
+
+    project_id = payload.project_id
+
+    data = collections.find_one({"project_id" : project_id},
+                            {
+                                "_id" : 0,
+                                "form_status.bioinformatics": 1,
+                                "bioinformatics" : 1
+                            })
+    
+    if data.get("form_status", {}).get("bioinformatics") == False:
+        return{
+            "status" : "NoSubmission",
+            "payload" : "No Analysis submissions found. Please upload one"
+        }
+
+    bioinformatics = data.get("bioinformatics", {})
+
+    binf_report = bioinformatics.get("bioinformatics_report")
+
+    if binf_report:
+        binf_url = f"/project/reportspop?fileandpath={quote(binf_report)}"
+    else:
+        binf_url = None
+
+    return{
+        "status" :  "fetch successfull",
+        "payload" : {
+            "bioinformatics_summary" : bioinformatics.get("bioinformatics_summary", "No data available"),
+            "estimated_hours" : bioinformatics.get("estimated_hours", "No data available"),
+            "approximate_hours" : bioinformatics.get("approximate_hours", "No data available"),
+            "bioinformatics_report" : binf_url
+        }
+    }
