@@ -41,6 +41,7 @@
             background-color: #ffffff;
             margin: 0;
             font-family: Arial, sans-serif;
+
         }
 
         .header-comp {
@@ -69,7 +70,7 @@
         .header-comp2 {
             margin: 5px;
             height: 25px;
-            background-color: #0e4a66;
+            background-color: #004730;
         }
 
         .header-comp2 h3 {
@@ -100,6 +101,7 @@
             border: 1px solid #ffffff;
             background-color: #e0e0e0;
             text-align: center;
+            color: rgb(53, 53, 53);
         }
 
         .overview-head {
@@ -108,7 +110,7 @@
         }
 
         .overview-head h3 {
-            color: #0e4a66;
+            color: #004730;
             font-size: 16px;
             margin: 10px 0;
         }
@@ -122,13 +124,12 @@
 
         .grid-comp-tr-in {
             padding: 5px;
-            border: 1px dashed #0e4a66;
+            border: 1px dashed #004730;
             border-radius: 5px;
         }
 
         .grid-comp-tr-in > div:first-child {
-            background-color: #0e4a66;
-            color: #ffffff;
+            background-color: #004730;
             border-radius: 4px;
             padding: 8px;
             text-align: center;
@@ -137,7 +138,7 @@
 
         .grid-comp-tr-in > div:last-child {
             border-top: 1px dotted gray;
-            color: #0e4a66;
+            color: #004730;
             padding: 8px;
             text-align: center;
         }
@@ -155,7 +156,7 @@
         }
 
         .styled-table thead tr {
-            background-color: #0e4a66;
+            background-color: #004730;
             color: #ffffff;
             text-align: left;
         }
@@ -176,16 +177,16 @@
         }
 
         .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #0e4a66;
+            border-bottom: 2px solid #004730
         }
 
         div {
-            color: #303030;
+            color: #ffffff;
             font-size: 14px;
         }
 
         h3 {
-            color: #0e4a66;
+            color: #004730;
             font-size: 16px;
         }
 
@@ -197,7 +198,7 @@
             margin: 10px 0;
             padding: 10px;
             background-color: #f3f3f3;
-            border-left: 3px solid #0e4a66;
+            border-left: 3px solid #004730;
         }
 
         .footer-comp-tab-c {
@@ -222,7 +223,7 @@
             </div>
         </div>
         <div class="header-comp2">
-            <h3>QC REPORT</h3>
+            <h3>SAMPLE SUBMISSION REPORT</h3>
         </div>
         
         <div class="general-cont">
@@ -247,15 +248,19 @@
                     <div>{{ lab_dept }}</div>
                 </div>
                 <div class="grid-inside-comp">
-                    <div>QC Report Date</div>
-                    <div>{{ date }}</div>
+                    <div>Email</div>
+                    <div>{{ email }}</div>
+                </div>
+                <div class="grid-inside-comp">
+                    <div>Phone</div>
+                    <div>{{ phone }}</div>
                 </div>
             </div>
         </div>
 
         <div class="general-cont">
             <div class="overview-head">
-                <h3>PROJECT OVERVIEW</h3>
+                <h3>SUBMISSION</h3>
             </div>
             <div class="grid-comp-tr">
                 <div class="grid-comp-tr-in">
@@ -263,7 +268,7 @@
                     <div>{{ service_name }}</div>
                 </div>
                 <div class="grid-comp-tr-in">
-                    <div>Sample Type</div>
+                    <div>Service Technology</div>
                     <div>{{ sample_type }}</div>
                 </div>
                 <div class="grid-comp-tr-in">
@@ -273,70 +278,54 @@
             </div>
             <div class="grid-comp-tr">
                 <div class="grid-comp-tr-in">
-                    <div>Extraction</div>
+                    <div>Extraction needed</div>
                     <div>{{ extraction_needed }}</div>
+                </div>
+                <div class="grid-comp-tr-in">
+                    <div>Replicates</div>
+                    <div>{{ replicates }}</div>
                 </div>
                 <div class="grid-comp-tr-in">
                     <div>Number of samples</div>
                     <div>{{ sample_number }}</div>
                 </div>
+            </div>
+            <div class="grid-comp-tr">
+                <div></div>
                 <div class="grid-comp-tr-in">
-                    <div>Platform</div>
-                    <div>{{ platform_int }} and {{ platform_conc }}</div>
+                    <div>Analysis required</div>
+                    <div>{{ extraction_needed }}</div>
                 </div>
+                <div></div>
             </div>
         </div>
 
         <div class="general-cont">
             <div class="overview-head">
-                <h3>QC DETAILS</h3>
+                <h3>SAMPLE DETAILS</h3>
             </div>
             <table class="styled-table">
                 <thead>
                     <tr>
                         <th>Sample ID</th>
-                        <th>theraCUES Sample ID</th>
-                        <th>Qubit RNA Conc. (ng/ul)</th>
-                        <th>Integrity Number</th>
-                        <th>Comments</th>
+                        <th>Description</th>
+                        <th>Conc.</th>
+                        <th>notes</th>
+                        <th>Replicates (Group Name)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in qc_same_details %}
+                    {% for row in sample_sub_details %}
                     <tr>
                         <td>{{ row.sample_id }}</td>
-                        <td>{{ row.tcues_sample_id }}</td>
-                        <td>{{ "%.2f"|format(row.nucleic_acid_conc) }}</td>
-                        <td>{{ row.integrity }}</td>
-                        <td>{{ row.comments }}</td>
+                        <td>{{ row.description }}</td>
+                        <td>{{ "%.2f"|format(row.concentration) }}</td>
+                        <td>{{ row.notes }}</td>
+                        <td>{{ row.replicate_group }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-
-        <div class="general-cont">
-            <div class="footer-comp">
-                <h3>Comments</h3>
-            </div>
-            <div class="footer-comp-tab">
-                <p>All samples were quantitated by {{ platform_conc }} and integrity check done on {{ platform_int }}. Kindly review the report.</p>
-                <p>QC Summary: {{qc_summary}}</p>
-            </div>
-        </div>
-
-        <div class="general-cont">
-            <div class="footer-comp">
-                <h3>For Queries</h3>
-            </div>
-            <div class="footer-comp-tab-c">
-                <div>Kindly Contact:</div>
-                <div>Project Management Team</div>
-                <div>TheraCUES Innovations Pvt. Ltd.</div>
-                <div>Bangalore - 560 092</div>
-                <div>Phone: +91 80 4866 1874</div>
-                <div>Email- projectmgt@theracues.com</div>
-            </div>
         </div>
     </div>
 </body>

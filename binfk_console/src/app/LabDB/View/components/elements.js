@@ -1,9 +1,41 @@
 import styles from '../ViewComp.module.css'
-import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm } from './elemoptions';
+import axios from 'axios';
+import { useState } from 'react';
+import { SentQcReport, SentLibReport, SentBioinfoReport, SentOverallReport } from './elementsent';
 
 
 
-export function SampleSubDetailsComp({samsubDetails}){
+export function SampleSubDetailsComp({samsubDetails, projectId}){
+
+    async function samsubFetch(projectId) {
+
+        if(!projectId){
+            alert("Please restart the page and try again")
+            return
+        }
+
+        try{
+            const response = await axios.post("http://127.0.0.1:5000/reports/samplesubreportpdf",
+                {"project_id" : projectId},
+                {responseType : "blob"}
+            )
+
+            const blob = new Blob([response.data], {type : "application/pdf"})
+
+            const url = window.URL.createObjectURL(blob)
+
+            window.open(url, "_blank")
+
+            setTimeout(() => {
+                window.URL.revokeObjectURL(url), 1000
+            })
+        }
+        catch{
+            alert("Cannot connect to the server")
+        }
+    }
+
+
     return(
 
         <>
@@ -104,12 +136,9 @@ export function SampleSubDetailsComp({samsubDetails}){
                     </div>
                 </div>
             </div>
-            <div className={styles.GridTwo}>
+            <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecOnBtn}>{`Download Form (.pdf)`}</button>
-                </div>
-                <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecOnBtn}>{`Download Form (.csv)`}</button>
+                    <button className={styles.ProjecOnBtn} onClick={() => samsubFetch(projectId)}>{`Download Form`}</button>
                 </div>
             </div>
         </>
@@ -117,7 +146,37 @@ export function SampleSubDetailsComp({samsubDetails}){
 }
 
 
-export function QcSamDetailsComp({qcDetails}) {
+export function QcSamDetailsComp({qcDetails, projectId}) {
+
+    const [qcEmailTemp, setQcEmailTemp] = useState(false)
+
+    async function qcReportsFetch(projectId){
+
+        if(!projectId){
+            alert("Please refresh the page and try again"); 
+            return
+        }
+
+        try{
+            const response = await axios.post("http://127.0.0.1:5000/reports/genqcreportpdf",
+                {"project_id" : projectId},
+                {responseType : "blob"}
+            )
+
+            const blob = new Blob([response.data], {type: "application/pdf"})
+            const url = window.URL.createObjectURL(blob)
+
+            window.open(url, "_blank")
+            
+            setTimeout(() => {
+                window.URL.revokeObjectURL(url), 1000
+            })
+        }
+        catch{
+            alert("could not reach the servers")
+        }
+    }
+
     return(
         <>
             <div className={styles.GridTwo}>
@@ -199,12 +258,13 @@ export function QcSamDetailsComp({qcDetails}) {
                     </div>
                 </div>
             </div>
-            <div className={styles.GridTwo}>
+            <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn }>
-                    <button className={styles.ProjecOnBtn}>{`Download QC Report(.pdf)`}</button>
+                    <button className={styles.ProjecOnBtn} onClick={()=>qcReportsFetch(projectId)}>{`Download QC Report`}</button>
                 </div>
                 <div className={styles.ProjecInOnBtn }>
-                    <button className={styles.ProjecOnBtn}>{`Send QC Report`}</button>
+                    <button className={styles.ProjecOnBtn} onClick={() =>setQcEmailTemp(true)} >{`Send QC Report`}</button>
+                    {qcEmailTemp && <SentQcReport setQcEmailTemp = {setQcEmailTemp} />}
                 </div>
             </div>
         </>
@@ -213,9 +273,39 @@ export function QcSamDetailsComp({qcDetails}) {
 
 
 
+export function LibSamDetailsComp({libqcDetails, projectId}) {
+
+    const [libqcEmailTemp, setLibqcEmailTemp] = useState(false)
+
+    async function libqcReportsFetch(projectId){
+
+        if(!projectId){
+            alert("Reload the window and try again")
+            return
+        }
+
+        try{
+            const response = await axios.post("http://127.0.0.1:5000/reports/genlibqcreportpdf",
+                {"project_id" : projectId},
+                {responseType : "blob"}
+            )
+
+            const blob = new Blob([response.data], {type: "application/pdf"})
+
+            const url = window.URL.createObjectURL(blob)
+            window.open(url, "_blank")
+
+            setTimeout(() =>{
+                window.URL.revokeObjectURL(url, 1000)
+            })
+        }
+        catch{
+            alert("Error contacting the server")
+        }
+
+    }
 
 
-export function LibSamDetailsComp({libqcDetails}) {
     return(
         <>  
             <div className={styles.ProjecIn}>
@@ -277,13 +367,14 @@ export function LibSamDetailsComp({libqcDetails}) {
                     </div>
                 </div>
             </div>
-            <div className={styles.GridTwo}>
+            <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecOnBtn}>{`Download Lib QC Report(.pdf)`}</button>
+                    <button className={styles.ProjecOnBtn} onClick={() => libqcReportsFetch(projectId)}>{`Download Lib QC Report`}</button>
                 </div>
                 <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecOnBtn}>{`Send Lib QC Report`}</button>
+                    <button className={styles.ProjecOnBtn} onClick={()=>setLibqcEmailTemp(true)}>{`Send Lib QC Report`}</button>
                 </div>
+                {libqcEmailTemp && <SentLibReport setLibqcEmailTemp={setLibqcEmailTemp} />}
             </div>
         </>
     );
@@ -330,9 +421,6 @@ export function BiinfoDetailsComp({binfDetails}) {
             </div>
             </div>
             <div className={styles.GridThree}>
-                <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecOnBtn}>{`Download Analysis Report (.pdf)`}</button>
-                </div>
                 <div className={styles.ProjecInOnBtn}>
                     <button className={styles.ProjecOnBtn}>{`Send Analysis Report`}</button>
                 </div>

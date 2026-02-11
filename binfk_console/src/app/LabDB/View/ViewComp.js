@@ -258,7 +258,7 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
             </div>
             {
                 Object.keys(samsubDetails).length > 0 && (
-                <SampleSubDetailsComp samsubDetails={samsubDetails} />)
+                <SampleSubDetailsComp samsubDetails={samsubDetails} projectId={projectCont.project_id}/>)
             }
         </div>
     )
@@ -305,7 +305,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
             </div>
             {
                 Object.keys(qcDetails).length > 0 && (
-                    <QcSamDetailsComp qcDetails = {qcDetails} />
+                    <QcSamDetailsComp qcDetails = {qcDetails} projectId = {projectCont.project_id} />
                 )
             }
             <div className={styles.GridThree}>
@@ -359,7 +359,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
                 <button className={styles.fieldPop} onClick={() => LibSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
-                Object.keys(libqcDetails).length > 0 && (<LibSamDetailsComp libqcDetails = {libqcDetails} />)
+                Object.keys(libqcDetails).length > 0 && (<LibSamDetailsComp libqcDetails = {libqcDetails} projectId={projectCont.project_id} />)
             }
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>

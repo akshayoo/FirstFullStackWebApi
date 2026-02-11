@@ -69,7 +69,7 @@
         .header-comp2 {
             margin: 5px;
             height: 25px;
-            background-color: #0e4a66;
+            background-color: #36165a;
         }
 
         .header-comp2 h3 {
@@ -108,7 +108,7 @@
         }
 
         .overview-head h3 {
-            color: #0e4a66;
+            color: #36165a;
             font-size: 16px;
             margin: 10px 0;
         }
@@ -122,12 +122,12 @@
 
         .grid-comp-tr-in {
             padding: 5px;
-            border: 1px dashed #0e4a66;
+            border: 1px dashed #36165a;
             border-radius: 5px;
         }
 
         .grid-comp-tr-in > div:first-child {
-            background-color: #0e4a66;
+            background-color: #36165a;
             color: #ffffff;
             border-radius: 4px;
             padding: 8px;
@@ -137,7 +137,7 @@
 
         .grid-comp-tr-in > div:last-child {
             border-top: 1px dotted gray;
-            color: #0e4a66;
+            color: #36165a;
             padding: 8px;
             text-align: center;
         }
@@ -155,7 +155,7 @@
         }
 
         .styled-table thead tr {
-            background-color: #0e4a66;
+            background-color: #36165a;
             color: #ffffff;
             text-align: left;
         }
@@ -176,7 +176,7 @@
         }
 
         .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #0e4a66;
+            border-bottom: 2px solid #36165a;
         }
 
         div {
@@ -185,7 +185,7 @@
         }
 
         h3 {
-            color: #0e4a66;
+            color: #36165a;
             font-size: 16px;
         }
 
@@ -197,7 +197,7 @@
             margin: 10px 0;
             padding: 10px;
             background-color: #f3f3f3;
-            border-left: 3px solid #0e4a66;
+            border-left: 3px solid #36165a;
         }
 
         .footer-comp-tab-c {
@@ -222,7 +222,7 @@
             </div>
         </div>
         <div class="header-comp2">
-            <h3>QC REPORT</h3>
+            <h3>LIBRARY QC REPORT</h3>
         </div>
         
         <div class="general-cont">
@@ -289,15 +289,14 @@
 
         <div class="general-cont">
             <div class="overview-head">
-                <h3>QC DETAILS</h3>
+                <h3>LIBRARY QC DETAILS</h3>
             </div>
             <table class="styled-table">
                 <thead>
                     <tr>
                         <th>Sample ID</th>
                         <th>theraCUES Sample ID</th>
-                        <th>Qubit RNA Conc. (ng/ul)</th>
-                        <th>Integrity Number</th>
+                        <th>Conc.</th>
                         <th>Comments</th>
                     </tr>
                 </thead>
@@ -307,7 +306,6 @@
                         <td>{{ row.sample_id }}</td>
                         <td>{{ row.tcues_sample_id }}</td>
                         <td>{{ "%.2f"|format(row.nucleic_acid_conc) }}</td>
-                        <td>{{ row.integrity }}</td>
                         <td>{{ row.comments }}</td>
                     </tr>
                     {% endfor %}
@@ -320,8 +318,8 @@
                 <h3>Comments</h3>
             </div>
             <div class="footer-comp-tab">
-                <p>All samples were quantitated by {{ platform_conc }} and integrity check done on {{ platform_int }}. Kindly review the report.</p>
-                <p>QC Summary: {{qc_summary}}</p>
+                <p>All samples were quantitated on {{platform_conc}} and integrity check done on {{ platform_int }}. Kindly review the report.</p>
+                <p>Library QC Summary: {{qc_summary}}</p>
             </div>
         </div>
 
