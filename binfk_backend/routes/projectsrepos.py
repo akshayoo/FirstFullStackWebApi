@@ -18,25 +18,20 @@ app.add_middleware(
     allow_credentials = True
 )
 
-class projectId(BaseModel):
-    project_id : str
 
-@app.post("/reports/genqcreportpdf")
-async def gen_qcreport(payload : projectId):
+def qc_temp_bytes(project_id : str):
 
     collections = db["tcProjects"]
-    
-    project_id = payload.project_id.strip()
 
     data = collections.find_one({"project_id" : project_id },
-                                {
-                                    "_id" : 0,
-                                    "project_info" : 1,
-                                    "service_info" : 1,
-                                    "qc" : 1,
-                                    "sample_submission.service_technology" : 1,
-                                    "sample_submission.details.application" : 1
-                                })
+                            {
+                                "_id" : 0,
+                                "project_info" : 1,
+                                "service_info" : 1,
+                                "qc" : 1,
+                                "sample_submission.service_technology" : 1,
+                                "sample_submission.details.application" : 1
+                            })
 
     project_info = data.get("project_info", {})
     service_info= data.get("service_info", {})
@@ -78,23 +73,14 @@ async def gen_qcreport(payload : projectId):
         qc_summary = qc_summary
     )
 
-    qc_bytes = HTML(string=html_content).write_pdf()
+    inbytes = HTML(string=html_content).write_pdf()
 
-    return Response(
-        content=qc_bytes,
-        media_type="application/pdf",
-        headers={"Content-Disposition": f"attachment; filename=qc_report_{project_id}.pdf"}
-    )
-    
+    return inbytes
 
 
-
-@app.post("/reports/genlibqcreportpdf")
-async def lib_qcgen(payload : projectId):
+def lib_qc_bytes(project_id : str):
 
     collections = db["tcProjects"]
-
-    project_id = payload.project_id
 
     data = collections.find_one({"project_id" : project_id},
                                 {
@@ -147,7 +133,38 @@ async def lib_qcgen(payload : projectId):
         qc_summary = libqc_summary     
     )
 
-    libqc_bytes = HTML(string=html_content).write_pdf()
+    inbytes = HTML(string=html_content).write_pdf()
+
+
+
+
+
+
+class projectId(BaseModel):
+    project_id : str
+
+@app.post("/reports/genqcreportpdf")
+async def gen_qcreport(payload : projectId):
+    
+    project_id = payload.project_id.strip()
+
+    qc_bytes = qc_temp_bytes(project_id= project_id)
+
+    return Response(
+        content=qc_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=qc_report_{project_id}.pdf"}
+    )
+    
+
+
+
+@app.post("/reports/genlibqcreportpdf")
+async def lib_qcgen(payload : projectId):
+
+    project_id = payload.project_id
+
+    libqc_bytes = lib_qc_bytes(project_id= project_id)
 
     return Response(
         content= libqc_bytes,
@@ -192,7 +209,7 @@ async def samsub_gen(payload : projectId):
     bin_req  = "YES" if ss_info.get("bioinformatics_required") == True else "NO"
 
 
-    sample_sub_details = ss_info.get("sample_details", [])
+    sample_sub_details = ss_info.get("details").get("sample_details", [])
 
     env = Environment(loader= FileSystemLoader("../templates"))
     template = env.get_template("samsubtemplate.html")
@@ -224,6 +241,22 @@ async def samsub_gen(payload : projectId):
         media_type= "application/pdf",
         headers={"Content-Disposition": f"attachment; filename=libqc_report_{project_id}.pdf"}
     )
+
+
+
+class EmailCont(BaseModel):
+    project_id : str
+    section : str
+    email_cc : str
+    mail_subject : str
+    mail_content : str
+
+@app.post("/reports/sendemail")
+async def send_mail(payload : EmailCont):
+    
+    return {
+        "status" : "HIIIIIIII"
+    }
 
 
 

@@ -1,11 +1,12 @@
 import styles from '../ViewComp.module.css'
 import axios from 'axios';
 import { useState } from 'react';
-import { SentQcReport, SentLibReport, SentBioinfoReport, SentOverallReport } from './elementsent';
+import { EmailReports } from './elementsent';
 
 
 
 export function SampleSubDetailsComp({samsubDetails, projectId}){
+
 
     async function samsubFetch(projectId) {
 
@@ -264,7 +265,7 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
                 </div>
                 <div className={styles.ProjecInOnBtn }>
                     <button className={styles.ProjecOnBtn} onClick={() =>setQcEmailTemp(true)} >{`Send QC Report`}</button>
-                    {qcEmailTemp && <SentQcReport setQcEmailTemp = {setQcEmailTemp} />}
+                    {qcEmailTemp && <EmailReports projectId={projectId} sec={"qc"} flow={"QC"} EmailTemp = {setQcEmailTemp} />}
                 </div>
             </div>
         </>
@@ -374,14 +375,17 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
                 <div className={styles.ProjecInOnBtn}>
                     <button className={styles.ProjecOnBtn} onClick={()=>setLibqcEmailTemp(true)}>{`Send Lib QC Report`}</button>
                 </div>
-                {libqcEmailTemp && <SentLibReport setLibqcEmailTemp={setLibqcEmailTemp} />}
+                {libqcEmailTemp && <EmailReports projectId={projectId} sec={"library"} flow={"Library QC"} EmailTemp={setLibqcEmailTemp} />}
             </div>
         </>
     );
 }
 
 
-export function BiinfoDetailsComp({binfDetails}) {
+export function BiinfoDetailsComp({binfDetails, projectId}) {
+
+    const [bioinfoEmailTemp, setBioinfoEmailTemp] = useState(false)
+
     return(
         <>   
             <div className={styles.ProjecIn}>
@@ -422,7 +426,8 @@ export function BiinfoDetailsComp({binfDetails}) {
             </div>
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecOnBtn}>{`Send Analysis Report`}</button>
+                    <button className={styles.ProjecOnBtn} onClick={()=>setBioinfoEmailTemp(true)}>{`Send Analysis Report`}</button>
+                    {bioinfoEmailTemp && <EmailReports projectId={projectId} sec="bioinformatics" flow={Bioinformatics} EmailTemp={setBioinfoEmailTemp} />}
                 </div>
             </div>
         </>
@@ -432,6 +437,9 @@ export function BiinfoDetailsComp({binfDetails}) {
 
 
 export function ReportsComp() {
+
+    const [finreportEmailTemp, setfinreportEmailTemp] = useState(false)
+
     return(
         <>   
             <div className={styles.ProjecIn}>
@@ -456,7 +464,8 @@ export function ReportsComp() {
             </div>
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
-                    <div></div>
+                    <button className={styles.ProjecOnBtn} onClick={()=>setfinreportEmailTemp(true)}>{`Send Analysis Report`}</button>
+                    {finreportEmailTemp && <EmailReports projectId={projectId} sec="finalreport" flow={"Collated Report"} EmailTemp={setfinreportEmailTemp} />}
                 </div>
                 <div className={styles.ProjecIn}>
                     <button className={styles.ProjecInBtn}>Close project</button>

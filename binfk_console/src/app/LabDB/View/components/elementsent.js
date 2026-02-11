@@ -1,34 +1,70 @@
 import styles from '../ViewComp.module.css'
 import axios from 'axios'
+import { forbidden } from 'next/navigation'
 import { useState } from 'react'
 
-export function SentQcReport({setQcEmailTemp}) {
+export function EmailReports({projectId, sec, flow, EmailTemp}) {
+
+    const [formData, setFormData] = useState({
+        "project_id" : projectId,
+        "section" : sec,
+        "email_cc" : "",
+        "mail_subject" : "",
+        "mail_content" : ""
+    })
+
+    async function sendEmail() {
+        if(!formData.mail_subject || !formData.mail_content){
+            alert("Missing Mail Subject or Content")
+            return
+        }
+        console.log(formData)
+        try{
+            const response = await axios.post('http://127.0.0.1:5000/reports/sendemail',
+                formData
+            )
+            const data = response.data
+            alert(data.status)
+            EmailTemp(flase)
+        }
+        catch{
+            alert("Error connecting with the server")
+        }
+    }
+
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setFormData(prev => ({
+            ...prev, [name] : value
+        }))
+    }
+
     return(
         <div className={styles.modalOverlay}>
             <div className={styles.modalBox}>
 
             <div className={styles.modalHeader}>
-                <h3>Send QC Report</h3>
-                <button onClick={() => setQcEmailTemp(false)} >X</button>
+                <h3>Send {flow} Report</h3>
+                <button onClick={() => EmailTemp(false)} >X</button>
             </div>
 
             <div className={styles.modalBody}>
                 <div className={styles.GridTwo}>
                     <div className={styles.formElem}>
                         <label>Add CC</label>
-                        <textarea name="method_summary" rows ='2' placeholder="Separate mail Id's by a ','" />
+                        <textarea onChange={handleChange} name="email_cc" rows ='2' placeholder="Separate mail Id's by a ','" />
                     </div>
                 </div>
                 <div className={styles.formElemel}>
                     <label>Enter Subject</label>
-                    <textarea name="mail_subject" rows = '2' placeholder="Email Subject"/>
+                    <textarea onChange={handleChange} name="mail_subject" rows = '2' placeholder="Email Subject"/>
                 </div>
                 <div className={styles.formElemel}>
                     <label>Enter mail content</label>
-                    <textarea name="mail_subject" rows = '8' placeholder="Email body"/>
+                    <textarea onChange={handleChange} name="mail_content" rows = '8' placeholder="Email body"/>
                 </div>
                 <div className={styles.formElem}>
-                    <button>SEND</button>
+                    <button onClick={sendEmail}>SEND</button>
                 </div>
             </div>
 
@@ -38,108 +74,3 @@ export function SentQcReport({setQcEmailTemp}) {
 }
 
 
-export function SentLibReport({setLibqcEmailTemp}) {
-    return(
-        <div className={styles.modalOverlay}>
-            <div className={styles.modalBox}>
-
-            <div className={styles.modalHeader}>
-                <h3>Send Library QC Report</h3>
-                <button onClick={setLibqcEmailTemp(false)} >X</button>
-            </div>
-
-            <div className={styles.modalBody}>
-                <div className={styles.GridTwo}>
-                    <div className={styles.formElem}>
-                        <label>Add CC</label>
-                        <textarea name="method_summary" rows ='2' placeholder="Separate mail Id's by a ','" />
-                    </div>
-                </div>
-                <div className={styles.formElemel}>
-                    <label>Enter Subject</label>
-                    <textarea name="mail_subject" rows = '2' placeholder="Email Subject"/>
-                </div>
-                <div className={styles.formElemel}>
-                    <label>Enter mail content</label>
-                    <textarea name="mail_subject" rows = '8' placeholder="Email body"/>
-                </div>
-                <div className={styles.formElem}>
-                    <button>SEND</button>
-                </div>
-            </div>
-
-            </div>
-        </div>
-    )
-}
-
-
-export function SentBioinfoReport(){
-    return(
-        <div className={styles.modalOverlay}>
-            <div className={styles.modalBox}>
-
-            <div className={styles.modalHeader}>
-                <h3>Send Analysis Report</h3>
-                <button>X</button>
-            </div>
-
-            <div className={styles.modalBody}>
-                <div className={styles.GridTwo}>
-                    <div className={styles.formElem}>
-                        <label>Add CC</label>
-                        <textarea name="method_summary" rows ='2' placeholder="Separate mail Id's by a ','" />
-                    </div>
-                </div>
-                <div className={styles.formElemel}>
-                    <label>Enter Subject</label>
-                    <textarea name="mail_subject" rows = '2' placeholder="Email Subject"/>
-                </div>
-                <div className={styles.formElemel}>
-                    <label>Enter mail content</label>
-                    <textarea name="mail_subject" rows = '8' placeholder="Email body"/>
-                </div>
-                <div className={styles.formElem}>
-                    <button>SEND</button>
-                </div>
-            </div>
-
-            </div>
-        </div>
-    )
-}
-
-export function SentOverallReport() {
-    return(
-        <div className={styles.modalOverlay}>
-            <div className={styles.modalBox}>
-
-            <div className={styles.modalHeader}>
-                <h3>Send Overall Project Report Report</h3>
-                <button>X</button>
-            </div>
-
-            <div className={styles.modalBody}>
-                <div className={styles.GridTwo}>
-                    <div className={styles.formElem}>
-                        <label>Add CC</label>
-                        <textarea name="method_summary" rows ='2' placeholder="Separate mail Id's by a ','" />
-                    </div>
-                </div>
-                <div className={styles.formElemel}>
-                    <label>Enter Subject</label>
-                    <textarea name="mail_subject" rows = '2' placeholder="Email Subject"/>
-                </div>
-                <div className={styles.formElemel}>
-                    <label>Enter mail content</label>
-                    <textarea name="mail_subject" rows = '8' placeholder="Email body"/>
-                </div>
-                <div className={styles.formElem}>
-                    <button>SEND</button>
-                </div>
-            </div>
-
-            </div>
-        </div>
-    )
-}
