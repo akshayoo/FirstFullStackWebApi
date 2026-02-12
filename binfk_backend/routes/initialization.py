@@ -278,7 +278,11 @@ async def form_fetch_mail(payload: ProjectSubmission):
                                         white-space:pre-wrap;
                                         font-size:13px;
                                     ">
-                                        {payload.standard_deliverables}
+                                    <ul>
+                                        {% for points in payload.standard_deliverables%}
+                                        <li>{points}</li>
+                                        {%endfor%}
+                                    </ul>
                                     </div>
                                     <div style="
                                         background:#f9fafb;
@@ -288,7 +292,11 @@ async def form_fetch_mail(payload: ProjectSubmission):
                                         white-space:pre-wrap;
                                         font-size:13px;
                                     ">
-                                        {payload.added_deliverables}
+                                    <ul>
+                                        {% for points in payload.added_deliverables}
+                                        <li>{points}</li>
+                                        {%endfor%}
+                                    </ul>
                                     </div>
 
                                     <p>

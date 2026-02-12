@@ -68,7 +68,7 @@ export function NgSForm({projectId}) {
             const uploadData = new FormData()
             uploadData.append("file" , file)
 
-            const response = await axios.post("http://127.0.0.1:4060/ssub/samsub/tableupload",
+            const response = await axios.post("http://127.0.0.1:6050/intake/tablepopulate",
                 uploadData
             )
             const data = response.data  
@@ -79,8 +79,9 @@ export function NgSForm({projectId}) {
 
         }
 
-        catch {
-            alert("There was an error communicating with the server")
+        catch(error) {
+            console.log(error)
+            alert("Error uploading the table")
         }
     }
 
@@ -96,7 +97,7 @@ export function NgSForm({projectId}) {
         console.log(payload)
 
         try{
-            const response =  await axios.post("http://127.0.0.1:4060/ssub/projdet/ngsform", payload)
+            const response =  await axios.post("http://127.0.0.1:6050/intake/ngsform", payload)
 
             const data = response.data
 
@@ -104,8 +105,9 @@ export function NgSForm({projectId}) {
 
             window.location.reload()
         }
-        catch {
-            alert("Server error")
+        catch(error) {
+            console.log(error)
+            alert("Error submitting the form")
         }
 
     }

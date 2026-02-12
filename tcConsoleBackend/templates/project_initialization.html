@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .email-container {
+            padding: 20px;
+        }
+
+        .email-wrapper {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .email-header {
+            padding: 20px 30px;
+            background: #1f2937;
+            color: #ffffff;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .email-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .email-header p {
+            margin: 5px 0 0;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        .email-body {
+            padding: 30px;
+            color: #111827;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .details-table td {
+            padding: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .details-table tr:nth-child(odd) {
+            background: #f9fafb;
+        }
+
+        .deliverables-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .deliverables-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .email-footer {
+            padding: 15px 30px;
+            background: #f3f4f6;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <table width="100%" cellpadding="0" cellspacing="0" class="email-container">
+        <tr>
+            <td align="center">
+
+                <table width="600" cellpadding="0" cellspacing="0" class="email-wrapper">
+                    <tr>
+                        <td class="email-header">
+                            <h2>Project Created Successfully</h2>
+                            <p>
+                                Project ID: <strong>{{ project_id }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="email-body">
+                            <p>
+                                Hi <strong>{{ pi_name }}</strong>,
+                            </p>
+
+                            <p>
+                                Thank you for submitting your project. Below are the details of your submission:
+                            </p>
+
+                            <table class="details-table">
+
+                                <tr>
+                                    <td><strong>Offering Type</strong></td>
+                                    <td>{{ offering_type }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Service Name</strong></td>
+                                    <td>{{ service_name }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Platform</strong></td>
+                                    <td>{{ platform }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Sample Type</strong></td>
+                                    <td>{{ sample_type }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Number of Samples</strong></td>
+                                    <td>{{ sam_number }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Duplicates Present</strong></td>
+                                    <td>{{ duplicates }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Extraction Needed</strong></td>
+                                    <td>{{ extraction }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Project Token: Use the token to access the sample submission form</strong></td>
+                                    <td>{{ project_token }}</td>
+                                </tr>
+
+                            </table>
+
+                            <p style="margin-top: 20px;">
+                                <strong>Project Standard and Added Deliverables:</strong>
+                            </p>
+
+                            <div class="deliverables-box">
+                                <div>Standard Deliverables</div>
+                                {% for points in standard_deliverables %}
+                                <p>{{ points }}</p>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="deliverables-box">
+                                <div>Added Deliverables</div>
+                                {% for points in added_deliverables %}
+                                <p>{{ points }}</p>
+                                {% endfor %}
+
+                            </div>
+
+                            <p>
+                                Best regards,<br>
+                                <strong>Theracues Project Team</strong>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="email-footer">
+                            This is an automated email. Please do not reply.
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

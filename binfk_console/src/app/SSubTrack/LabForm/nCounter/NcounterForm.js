@@ -63,7 +63,7 @@ export function NcounterForm({projectId}) {
             const uploadData = new FormData()
             uploadData.append("file" , file)
 
-            const response = await axios.post("http://127.0.0.1:4060/ssub/samsub/tableupload",
+            const response = await axios.post("http://127.0.0.1:6050/intake/tablepopulate",
                 uploadData
             )
             const data = response.data  
@@ -74,8 +74,9 @@ export function NcounterForm({projectId}) {
 
         }
 
-        catch {
-            alert("There was an error communicating with the server")
+        catch(error) {
+            alert("Error uploading the table")
+            console.log(error)
         }
     }
 
@@ -89,7 +90,7 @@ export function NcounterForm({projectId}) {
         const payload = {...formData, table: tablePopulate}
 
         try{
-            const response = await axios.post("http://127.0.0.1:4060/ssub/projdet/ncounter", payload)
+            const response = await axios.post("http://127.0.0.1:6050/intake/ncounterform", payload)
 
             const data = response.data
 
@@ -97,8 +98,9 @@ export function NcounterForm({projectId}) {
 
             window.location.reload()
         }
-        catch {
-
+        catch(error) {
+            console.log(error)
+            alert("Error submitting the form")
         }
     }
 

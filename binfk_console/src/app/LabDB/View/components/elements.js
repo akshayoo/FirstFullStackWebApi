@@ -16,7 +16,7 @@ export function SampleSubDetailsComp({samsubDetails, projectId}){
         }
 
         try{
-            const response = await axios.post("http://127.0.0.1:5000/reports/samplesubreportpdf",
+            const response = await axios.post("http://127.0.0.1:6050/reports/samplesubreportpdf",
                 {"project_id" : projectId},
                 {responseType : "blob"}
             )
@@ -159,7 +159,7 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
         }
 
         try{
-            const response = await axios.post("http://127.0.0.1:5000/reports/genqcreportpdf",
+            const response = await axios.post("http://127.0.0.1:6050/reports/genqcreportpdf",
                 {"project_id" : projectId},
                 {responseType : "blob"}
             )
@@ -217,7 +217,7 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
                     }}
                 >
                     <iframe
-                    src={`http://localhost:4080${qcDetails.qc_report}`} 
+                    src={`http://localhost:6050${qcDetails.qc_report}`} 
                     width="100%"
                     height="500px"
                     style={{ border: "none", borderRadius: "6px" }}
@@ -286,7 +286,7 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
         }
 
         try{
-            const response = await axios.post("http://127.0.0.1:5000/reports/genlibqcreportpdf",
+            const response = await axios.post("http://127.0.0.1:6050/reports/genlibqcreportpdf",
                 {"project_id" : projectId},
                 {responseType : "blob"}
             )
@@ -329,7 +329,7 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
                     }}
                 >
                     <iframe
-                    src={`http://localhost:4080${libqcDetails.library_report}`} 
+                    src={`http://localhost:6050${libqcDetails.library_report}`} 
                     width="100%"
                     height="500px"
                     style={{ border: "none", borderRadius: "6px" }}
@@ -416,7 +416,7 @@ export function BiinfoDetailsComp({binfDetails, projectId}) {
                     }}
                 >
                     <iframe
-                    src={`http://localhost:4080${binfDetails.bioinformatics_report}`} 
+                    src={`http://localhost:6050${binfDetails.bioinformatics_report}`} 
                     width="100%"
                     height="500px"
                     style={{ border: "none", borderRadius: "6px" }}
@@ -446,7 +446,7 @@ export function ReportsComp() {
                 <div>Collated Final Report</div>
                 <div style={{ background: "#f9fafb", padding: "16px", borderRadius: "8px", border: "2px dashed #cbd5e1", minHeight: "400px",}}>
                     <iframe
-                    src={`http://localhost:4080${binfDetails.bioinformatics_report}`} 
+                    src={`http://localhost:6050${binfDetails.bioinformatics_report}`} 
                     width="100%"
                     height="500px"
                     style={{ border: "none", borderRadius: "6px", background: "#f9fafb" }}

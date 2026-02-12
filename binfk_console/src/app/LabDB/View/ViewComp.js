@@ -44,7 +44,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails}){
     useEffect(() => {
         async function ProjectsPipeline() {
             try{
-                const response = await axios.get("http://127.0.0.1:4080/project/projects")
+                const response = await axios.get("http://127.0.0.1:6050/project/projects")
                 const data = await response.data
                 console.log(data.status)
 
@@ -64,7 +64,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails}){
         if(!projectStatus) return
 
         try{
-            const response = await axios.post("http://127.0.0.1:4080/project/projectcomp",
+            const response = await axios.post("http://127.0.0.1:6050/project/projectcomp",
                 {
                     "project_id" : projectId,
                     "project_status" : projectStatus 
@@ -231,7 +231,7 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
     async function SampleSub(projectId) {
 
         try {
-            const response = await axios.post("http://127.0.0.1:4080/project/samsubdetails",
+            const response = await axios.post("http://127.0.0.1:6050/project/samsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -273,7 +273,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
         
         try{
 
-            const response = await axios.post("http://127.0.0.1:4080/project/qcsubdetails",
+            const response = await axios.post("http://127.0.0.1:6050/project/qcsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -330,7 +330,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
         try{
 
-            const response = await axios.post("http://127.0.0.1:4080/project/libqcsubdetails",
+            const response = await axios.post("http://127.0.0.1:6050/project/libqcsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -381,7 +381,7 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 
     async function BinfSub(projectId) {
         try{
-            const response = await axios.post("http://127.0.0.1:4080/project/binfsubdetails",
+            const response = await axios.post("http://127.0.0.1:6050/project/binfsubdetails",
                 {"project_id" : projectId}
             )
 

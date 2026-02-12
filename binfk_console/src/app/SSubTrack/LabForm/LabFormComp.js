@@ -32,7 +32,7 @@ export function LabFormComp() {
         }
 
         try {
-            const response =  await axios.post("http://127.0.0.1:4050/ssub/samsub/projidsearch",
+            const response =  await axios.post("http://127.0.0.1:6050/intake/initialinfo",
                 {"project_token" : searchCont}
             )
 
@@ -55,7 +55,10 @@ export function LabFormComp() {
         }
 
         catch(error) {
-            alert(`There was an error loading the data ${error}`)
+            console.log(error)
+            alert(`Not a valid token: Error loading the data`)
+            window.location.reload()
+            return
         }
     }
 
@@ -123,6 +126,10 @@ function SideWin({handleSearch, searchCont, projectSearch, searchValue}){
                     <div className={styles.SideInnerComp}>
                         <div>Technology</div>
                         <div>{searchValue.technology}</div>
+                    </div> 
+                    <div className={styles.SideInnerComp}>
+                        <div>Number of Samples</div>
+                        <div>{searchValue.sample_number}</div>
                     </div> 
                 </div>
             </div>

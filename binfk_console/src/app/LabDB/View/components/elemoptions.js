@@ -35,7 +35,7 @@ export function QcReportPushForm({setQcDataForm, projectId}){
             fd.append(key, value);
         })
 
-        const response = await axios.post("http://127.0.0.1:4090/project/qcdataupdate", 
+        const response = await axios.post("http://127.0.0.1:6050/project/qcdataupdate", 
             fd
         )
 
@@ -164,7 +164,7 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
                 formd.append(key, value)
             })
             
-            const response = await axios.post("http://127.0.0.1:4090/project/libqcdataupdate",
+            const response = await axios.post("http://127.0.0.1:6050/project/libqcdataupdate",
                 formd
             )
 
@@ -267,7 +267,7 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
                 binff.append(key, value)
             })
 
-            const response = await axios.post("http://127.0.0.1:4090/project/binfkilldataupdate",
+            const response = await axios.post("http://127.0.0.1:6050/project/binfkilldataupdate",
                 binff
             )
 

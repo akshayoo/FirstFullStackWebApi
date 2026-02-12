@@ -13,7 +13,7 @@ export function CatalogComp(){
   useEffect(() =>{
     async function fieldsData(){
       try{
-        const response = await axios.get("http://127.0.0.1:4070/items/catalog/pulldata")
+        const response = await axios.get("http://127.0.0.1:6050/items/catalog")
         setCatalogData(response.data)
       }
       catch{

@@ -20,12 +20,12 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
         }
         console.log(formData)
         try{
-            const response = await axios.post('http://127.0.0.1:5000/reports/sendemail',
+            const response = await axios.post('http://127.0.0.1:6050/reports/sendemail',
                 formData
             )
             const data = response.data
             alert(data.status)
-            EmailTemp(flase)
+            EmailTemp(false)
         }
         catch{
             alert("Error connecting with the server")

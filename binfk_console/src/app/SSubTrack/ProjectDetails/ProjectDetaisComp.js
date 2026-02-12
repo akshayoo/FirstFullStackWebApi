@@ -33,11 +33,11 @@ export function ProjectDetailsComp() {
     useEffect(() =>{
         async function DataLoad(){
             try{
-                const response = await axios.get("http://127.0.0.1:4040/ssub/projdet/fillinfo")
+                const response = await axios.get("http://127.0.0.1:6050/initialization/popservices")
                 setServicesClass(response.data)
             }
             catch(error){
-                console.log("API Error:" + error)
+                console.log(error)
             }
         }
         DataLoad()
@@ -116,6 +116,7 @@ export function ProjectDetailsComp() {
     }
     
     const SendProjectInfo = async () => {
+
         if (!validateForm()) return Promise.reject("Invalid Form")
 
         const addedDeliverablesArray = projectDesc
@@ -129,18 +130,22 @@ export function ProjectDetailsComp() {
         }
 
         try {
-            const response = await axios.post(
-            "http://127.0.0.1:4040/ssub/projdet/submit",
-            payload,
-            { headers: { "Content-Type": "application/json" } }
+            const response = await axios.post("http://127.0.0.1:6050/initialization/startproject",
+                payload,
+                { headers: { "Content-Type": "application/json" } }
             )
 
             const s_data = response.data
+
             alert(`Project ${s_data.project_id} submitted successfully`)
+
+
             window.location.reload()
 
             return response  
+
         } catch (error) {
+
             console.error(error)
             alert("Submission failed")
             throw error        
