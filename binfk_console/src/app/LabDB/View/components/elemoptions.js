@@ -27,26 +27,26 @@ export function QcReportPushForm({setQcDataForm, projectId}){
             !formData.integrity_technology || !formData.qc_summary || !formData.qc_report || !formData.qc_data)
             {alert("All entries are mandatory, Please fill the missing fields"); return}
 
-    try {
+        try {
 
-        const fd = new FormData();
+            const fd = new FormData();
 
-        Object.entries(formData).forEach(([key,value])=>{
-            fd.append(key, value);
-        })
+            Object.entries(formData).forEach(([key,value])=>{
+                fd.append(key, value);
+            })
 
-        const response = await axios.post("http://127.0.0.1:6050/project/qcdataupdate", 
-            fd
-        )
+            const response = await axios.post("http://127.0.0.1:6050/project/qcdataupdate", 
+                fd
+            )
 
-        alert(response.data.status);
-        setQcDataForm(false);
+            alert(response.data.status);
+            setQcDataForm(false);
 
-    }
-    catch (err){
-        console.error(err);
-        alert("Trouble connecting with the server");
-    }
+        }
+        catch (err){
+            console.error(err);
+            alert("QC report can't be updated");
+        }
     }
 
     const handleChange = (e) => {
@@ -173,7 +173,7 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
         }
         catch(error){
             console.log(error)
-            alert("Trouble connecting with the server")
+            alert("Library QC report can't be updated")
         }
         
     }
@@ -276,7 +276,7 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
         }
         catch(error){
             console.log(error)
-            alert("Trouble connecting with the server")
+            alert("Alaysis report can't be updated")
         }
     }
 

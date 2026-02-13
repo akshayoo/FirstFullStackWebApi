@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Form, UploadFile, File
 from utils.dbfunc import collections_load
+from fastapi import HTTPException
+from schemas.schema import ProjId
 import os
 from io import StringIO
 import pandas as pd
@@ -7,8 +9,8 @@ from datetime import datetime
 
 router = APIRouter(prefix= "/project")
 
-UPLOAD_DIR = "/REPORTS"
-
+UPLOAD_DIR = "REPORTS"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/qcdataupdate")
 async def qcdata_update(
@@ -22,7 +24,18 @@ async def qcdata_update(
         qc_data: UploadFile = File(...)
 ):
     collections = collections_load("tcProjects")
+
+    data = collections.find_one({"project_id" : project_id.strip()},
+                                {
+                                    "_id" : 0,
+                                    "project_status.sample_submission": 1
+                                })
+
     try: 
+
+        if data.get("project_status").get("sample_submission") == False:
+            return{"status" : "Sample submission details not found. Please contact the client to update one"}
+
         if not project_id:
             return{"status" : "Please refresh the page and try again"}
         
@@ -30,7 +43,7 @@ async def qcdata_update(
             return {"status": "QC data must be a CSV file"}
         
         if not qc_report.filename.lower().endswith(".pdf"):
-            return {"ststus" : "QC report must be in pdf format"}
+            return {"status" : "QC report must be in pdf format"}
         
 
         project_path = f"{UPLOAD_DIR}/{project_id}"
@@ -91,12 +104,14 @@ async def qcdata_update(
         )
 
         return {
-            "status" : "QC Details Updated"
+            "status" : "QC details updated"
         }
     except Exception as e:
-        return{
-            "status" : str(e)
-        }
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Failed to update qc report"
+        )
         
 
 @router.post("/libqcdataupdate")
@@ -160,10 +175,14 @@ async def libqcdata_update(
                                         "project_status.library": True,
                                 }
                             })
-        return{"status" : "Lib QC Updated successfully"}
+        return{"status" : "Lib QC details updated"}
     
     except Exception as e:
-        {"status" : str(e)}
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Failed to update qc report"
+        )
 
     
     
@@ -214,8 +233,55 @@ async def binfdata_update(
             }
         )
 
-        return{"status" : "Lib QC Updated successfully"}
+        return{"status" : "Analysis details updated"}
 
     except Exception as e:
-        return{"status" : str(e)}
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Failed to update qc report"
+        )
+    
+    
+@router.post("/closeproject")
+def close_project(payload: ProjId):
+
+    project_id = payload.project_id
+
+    try: 
+        collection = collections_load("tcProjects")
+
+        data = collection.find_one(
+            {"project_id": project_id},
+            {"_id": 0, "project_status": 1}
+        )
+
+        status = data.get("project_status", {})
+
+        if not status.get("qc") or not status.get("library") or not status.get("bioinformatics"):
+            return {"status": "Cannot be closed at this stage"}
+
+        if not status.get("closed"):
+
+            collection.update_one(
+                {"project_id": project_id},
+
+                {
+                    "$set": {"project_status.closed": True}
+                }
+            )
+            return {"status": "Project closed"}
+
+        return {"status": "Project already closed"}
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code=500,
+            detail="Project status error"
+        )
+
+
+
+    
 

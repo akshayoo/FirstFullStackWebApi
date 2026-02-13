@@ -51,6 +51,9 @@ async def projects_comp():
 
         def get_project_status(flags: dict) -> str:
 
+            if flags.get("closed"):
+                return "Closed"
+
             if flags.get("bioinformatics"):
                 return "Completed"
 
@@ -196,14 +199,15 @@ async def samsub_pop(payload : ProjId):
 @router.get("/reportspop")
 async def reports_pop(fileandpath: str):
 
-    if not os.path.isabs(fileandpath):
-        raise HTTPException(status_code=400, detail="Path must be absolute")
+    current_dir = os.getcwd()
 
-    if not os.path.exists(fileandpath):
+    file_path = os.path.join(current_dir, fileandpath)
+
+    if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Report not found")
 
     return FileResponse(
-        path=fileandpath,
+        path=file_path,
         media_type="application/pdf"
     )
 
@@ -215,45 +219,51 @@ async def qc_sub_pop(payload : ProjId):
 
     project_id = payload.project_id
 
+    try:
+        data = collections.find_one({"project_id" : project_id},
+                                    {
+                                        "_id" : 0,
+                                        "project_status.qc": 1,
+                                        "method" : 1,
+                                        "qc" : 1,
+                                    })
+        
+        if data.get("project_status").get("qc") == False:
+            return {
+                "status" : "NoSubmission",
+                "payload" : "No QC submission found. Please upload to view"
+            }
+        
+        method = data.get("method", {})
+        qc = data.get("qc", {})
 
-    data = collections.find_one({"project_id" : project_id},
-                                {
-                                    "_id" : 0,
-                                    "project_status.qc": 1,
-                                    "method" : 1,
-                                    "qc" : 1,
-                                })
-    
-    if data.get("project_status").get("qc") == False:
-        return {
-            "status" : "NoSubmission",
-            "payload" : "No QC submission found. Please upload to view"
+        qc_report_path = qc.get("qc_report")
+
+
+        if qc_report_path:
+            qc_report_url = f"/project/reportspop?fileandpath={quote(qc_report_path)}"
+        else:
+            qc_report_url = None
+
+        return{
+            "status" : "Fetch successfull",
+            "payload" : {
+                "writeup" : method.get("writeup", "No data available"),
+                "method_summary" : method.get("method_summary", "No data available"),
+                "concentration_technology" : qc.get("concentration_technology", "No data available"),
+                "integrity_technology" : qc.get("integrity_technology", "No data available"),
+                "qc_summary" : qc.get("qc_summary", "No data available"),
+                "qc_report" : qc_report_url,
+                "qc_sample_details" : qc.get("qc_sample_details")
+
+            }
         }
-    
-    method = data.get("method", {})
-    qc = data.get("qc", {})
-
-    qc_report_path = qc.get("qc_report")
-
-
-    if qc_report_path:
-        qc_report_url = f"/project/reportspop?fileandpath={quote(qc_report_path)}"
-    else:
-        qc_report_url = None
-
-    return{
-        "status" : "Fetch successfull",
-        "payload" : {
-            "writeup" : method.get("writeup", "No data available"),
-            "method_summary" : method.get("method_summary", "No data available"),
-            "concentration_technology" : qc.get("concentration_technology", "No data available"),
-            "integrity_technology" : qc.get("integrity_technology", "No data available"),
-            "qc_summary" : qc.get("qc_summary", "No data available"),
-            "qc_report" : qc_report_url,
-            "qc_sample_details" : qc.get("qc_sample_details")
-
-        }
-    }
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Unable to fetch qc details"
+        )
 
 
 @router.post("/libqcsubdetails")
@@ -263,38 +273,46 @@ async def libqc_sub_pop(payload : ProjId):
 
     project_id = payload.project_id
 
-    data = collections.find_one({"project_id" : project_id},
-                                {
-                                    "_id" : 0,
-                                    "project_status.library": 1,
-                                    "library" : 1
-                                })
-    
-    if data.get("project_status", {}).get("library") == False:
+    try:
+
+        data = collections.find_one({"project_id" : project_id},
+                                    {
+                                        "_id" : 0,
+                                        "project_status.library": 1,
+                                        "library" : 1
+                                    })
+        
+        if data.get("project_status", {}).get("library") == False:
+            return{
+                "status" : "NoSubmission",
+                "payload" : "No Library QC submission found. Please upload one"
+            }
+        
+        library = data.get("library", {})
+
+        library_report = library.get("library_report")
+
+        if library_report:
+            lib_report_url = f"/project/reportspop?fileandpath={quote(library_report)}"
+        else:
+            lib_report_url = None
+
         return{
-            "status" : "NoSubmission",
-            "payload" : "No Library QC submission found. Please upload one"
+            "status" : "Fetch successfull",
+            "payload" : {
+                "library_method" : library.get("library_method", "No data available"),
+                "library_summary" : library.get("library_summary", "No data available"),
+                "library_report" : lib_report_url,
+                "qc_sample_details" : library.get("qc_sample_details", {}),
+
+            }
         }
-    
-    library = data.get("library", {})
-
-    library_report = library.get("library_report")
-
-    if library_report:
-        lib_report_url = f"/project/reportspop?fileandpath={quote(library_report)}"
-    else:
-        lib_report_url = None
-
-    return{
-        "status" : "Fetch successfull",
-        "payload" : {
-            "library_method" : library.get("library_method", "No data available"),
-            "library_summary" : library.get("library_summary", "No data available"),
-            "library_report" : lib_report_url,
-            "qc_sample_details" : library.get("qc_sample_details", {}),
-
-        }
-    }
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Unable to fetch lib qc details"
+        )
 
 @router.post("/binfsubdetails")
 async def binf_sub_pop(payload : ProjId):
@@ -303,34 +321,43 @@ async def binf_sub_pop(payload : ProjId):
 
     project_id = payload.project_id
 
-    data = collections.find_one({"project_id" : project_id},
-                            {
-                                "_id" : 0,
-                                "project_status.bioinformatics": 1,
-                                "bioinformatics" : 1
-                            })
-    
-    if data.get("project_status", {}).get("bioinformatics") == False:
+    try:
+
+        data = collections.find_one({"project_id" : project_id},
+                                {
+                                    "_id" : 0,
+                                    "project_status.bioinformatics": 1,
+                                    "bioinformatics" : 1
+                                })
+        
+        if data.get("project_status", {}).get("bioinformatics") == False:
+            return{
+                "status" : "NoSubmission",
+                "payload" : "No Analysis submissions found. Please upload one"
+            }
+
+        bioinformatics = data.get("bioinformatics", {})
+
+        binf_report = bioinformatics.get("bioinformatics_report")
+
+        if binf_report:
+            binf_url = f"/project/reportspop?fileandpath={quote(binf_report)}"
+        else:
+            binf_url = None
+
         return{
-            "status" : "NoSubmission",
-            "payload" : "No Analysis submissions found. Please upload one"
+            "status" :  "fetch successfull",
+            "payload" : {
+                "bioinformatics_summary" : bioinformatics.get("bioinformatics_summary", "No data available"),
+                "estimated_hours" : bioinformatics.get("estimated_hours", "No data available"),
+                "approximate_hours" : bioinformatics.get("approximate_hours", "No data available"),
+                "bioinformatics_report" : binf_url
+            }
         }
-
-    bioinformatics = data.get("bioinformatics", {})
-
-    binf_report = bioinformatics.get("bioinformatics_report")
-
-    if binf_report:
-        binf_url = f"/project/reportspop?fileandpath={quote(binf_report)}"
-    else:
-        binf_url = None
-
-    return{
-        "status" :  "fetch successfull",
-        "payload" : {
-            "bioinformatics_summary" : bioinformatics.get("bioinformatics_summary", "No data available"),
-            "estimated_hours" : bioinformatics.get("estimated_hours", "No data available"),
-            "approximate_hours" : bioinformatics.get("approximate_hours", "No data available"),
-            "bioinformatics_report" : binf_url
-        }
-    }
+    
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Unable to fetch analysi details"
+        )

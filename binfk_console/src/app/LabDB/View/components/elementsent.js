@@ -3,7 +3,9 @@ import axios from 'axios'
 import { forbidden } from 'next/navigation'
 import { useState } from 'react'
 
+
 export function EmailReports({projectId, sec, flow, EmailTemp}) {
+
 
     const [formData, setFormData] = useState({
         "project_id" : projectId,
@@ -13,12 +15,15 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
         "mail_content" : ""
     })
 
+
     async function sendEmail() {
+ 
         if(!formData.mail_subject || !formData.mail_content){
+            console.log("Validation failed - missing subject or content")
             alert("Missing Mail Subject or Content")
             return
         }
-        console.log(formData)
+        
         try{
             const response = await axios.post('http://127.0.0.1:6050/reports/sendemail',
                 formData
@@ -27,8 +32,9 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
             alert(data.status)
             EmailTemp(false)
         }
-        catch{
-            alert("Error connecting with the server")
+        catch(error){
+            console.log(error)
+            alert("Error sending mail")
         }
     }
 
@@ -72,5 +78,4 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
         </div>
     )
 }
-
 

@@ -3,8 +3,10 @@
 import styles from './ViewComp.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp, BiinfoDetailsComp, ReportsComp } from './components/elements';
+import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp, BiinfoDetailsComp } from './components/elements';
 import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm } from './components/elemoptions';
+import { EmailReports } from './components/elementsent';
+import { responseCookiesToRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 export function ViewComp(){
 
@@ -188,6 +190,32 @@ function ViewProjDetails({projectCont}) {
 
 
 function StatusPop({projectCont}){
+
+    async function UpdateCompleted(projectId, e){
+
+        const getValue = e.target.getValue
+        console.log(e)
+
+        try {
+            const response = await axios.post("http://127.0.0.1:6050/project/taskstatusupdate",
+                {
+                    "project_id" : projectId,
+                    "task" : getValue
+                }
+            )
+
+            const data = response.data
+
+            alert(data.status)
+        }
+
+        catch(err) {
+            console.log(err)
+            alert("Trouble updating task update")
+        }
+
+    }
+
     return(
 
         <div className={styles.ProjectComp}>
@@ -203,7 +231,7 @@ function StatusPop({projectCont}){
                         return(
                             <div key={stdDel.label} className={styles.TaskComp}>
                                 <div>{stdDel.label}</div>
-                                <button className={styles.FalseBtn}>&#10004;</button>
+                                <button onClick={() => UpdateCompleted(projectCont.project_id, e)} className={styles.TrueBtn}>&#10004;</button>
                             </div>
                         );
                     })}
@@ -214,7 +242,7 @@ function StatusPop({projectCont}){
                         return(
                             <div key={addDel.label} className={styles.TaskComp}>
                                 <div>{addDel.label}</div>
-                                <button className={styles.TrueBtn}>&#10004;</button>
+                                <button onClick={() => UpdateCompleted(projectCont.project_id, e)} className={styles.TrueBtn} disabled>&#10004;</button>
                             </div>
                         );
                     })}             
@@ -253,7 +281,7 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Sample Submission Details</h2>
+                <h2 className={styles.sech}>Sample Submission Details | {`${projectCont.project_id}`}</h2>
                 <button className={styles.fieldPop} onClick={() => SampleSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
@@ -300,7 +328,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>QC Details</h2>
+                <h2 className={styles.sech}>QC Details | {`${projectCont.project_id}`}</h2>
                 <button className={styles.fieldPop} onClick={() => QcSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
@@ -355,7 +383,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Library QC Details</h2>
+                <h2 className={styles.sech}>Library QC Details | {`${projectCont.project_id}`}</h2>
                 <button className={styles.fieldPop} onClick={() => LibSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
@@ -406,11 +434,11 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Analysis</h2>
+                <h2 className={styles.sech}>Analysis Details | {`${projectCont.project_id}`}</h2>
                 <button className={styles.fieldPop} onClick={() => BinfSub(projectCont.project_id)} >&#8693;</button>
             </div>
             {
-                Object.keys(binfDetails).length > 0 && (<BiinfoDetailsComp binfDetails={binfDetails} />)
+                Object.keys(binfDetails).length > 0 && (<BiinfoDetailsComp binfDetails={binfDetails} projectId={projectCont.project_id} />)
             }
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
@@ -423,13 +451,73 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 }
 
 function Reports({projectCont}) {
+
+    const [finreportEmailTemp, setfinreportEmailTemp] = useState(false)
+
+    async function downlFinalRep(projectId) {
+        try{
+
+            const response = await axios.post("http://127.0.0.1:6050/reports/genfinreportpdf",
+                {"project_id" : projectId},
+                {responseType : "blob"}
+            )
+
+            const blob = new Blob([response.data], {type : "application/pdf"})
+            const url = window.URL.createObjectURL(blob)
+
+            window.open(url, "_blank")
+
+            setTimeout(() => {
+                window.URL.revokeObjectURL(url)
+            })
+
+        }
+        catch(error){
+
+            console.log(error)
+            alert("Downloading failed")
+
+        }
+    }
+
+    async function closeProject(projectId){
+        try{
+            
+            alert("You are going to perform a sensitive action. Do you wnat to continue")
+            
+            const response = await axios.post("http://127.0.0.1:6050/project/closeproject",
+                {"project_id" : projectId}
+            )
+
+            const data = response.data
+            alert(data.status)
+        }
+        catch(error){
+            console.log(error)
+            alert("Faliled to close project")
+        }
+
+    }
+
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Reports</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
+                <h2 className={styles.sech}>Reports | {`${projectCont.project_id}`}</h2>
+            </div>
+            <div className={styles.GridThree}>
+                <div className={styles.ProjecInOnBtn}>
+                    <button onClick={() => downlFinalRep(projectCont.project_id)} className={styles.ProjecInBtn}>{`Download Final Report (.pdf)`}</button>
+                </div>
+                <div className={styles.ProjecInOnBtn}>
+                    <button onClick={()=>setfinreportEmailTemp(true)} className={styles.ProjecInBtn}>{`Send Final Report`}</button>
+                    {finreportEmailTemp && <EmailReports projectId={projectCont.project_id} sec="finalreport" flow={"Final Project Report"} EmailTemp={setfinreportEmailTemp} />}
+                </div>
+                <div className={styles.ProjecIn}>
+                    <button onClick={() => closeProject(projectCont.project_id)}>{`Close Project`}</button>
+                </div>
             </div>
         </div>
+        
     )
 }
 

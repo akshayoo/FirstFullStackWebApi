@@ -76,6 +76,6 @@ class NcounterForm(BaseModel):
 class EmailCont(BaseModel):
     project_id : str
     section : str
-    email_cc : str
+    email_cc : Optional[str] = None
     mail_subject : str
     mail_content : str

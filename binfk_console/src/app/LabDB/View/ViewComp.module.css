@@ -310,6 +310,22 @@
     border-radius: 5px;
 }
 
+.ProjecIn button{
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(49, 49, 49);
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.ProjecIn button:hover{
+    background-color: rgb(95, 95, 95);
+    transform: translateX(1px);
+}
+
 .GridThree{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -366,17 +382,60 @@
 }
 
 .TrueBtn {
-    align-items: flex-end;
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     font-size: 14px;
-    border: 4px solid rgb(0, 170, 255);
-    color: rgb(0, 44, 85);
+    font-weight: 600;
+
+    border-radius: 50%;
+    border: 2px solid #bdbdbd;
+
     background-color: white;
-    border-radius: 100%;
-    margin-top: 1px;
-    margin-bottom: 1px;
+    color: #414141;
+
     margin-left: auto;
-    margin-right: 5px;
+    margin-right: 6px;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
 }
+
+.TrueBtn:hover {
+    background-color: #00cfd1;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 207, 209, 0.3);
+    transform: translateY(-0.5px);
+}
+
+.TrueBtn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 207, 209, 0.3);
+}
+
+.TrueBtn:disabled {
+    border: 2px solid #00dbdf;
+    color: #ffffff;
+    background-color: #00b6b9;
+
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.TrueBtn:disabled:hover {
+    background-color: #f5f5f5;
+    color: #b5b5b5;
+    box-shadow: none;
+    transform: none;
+}
+
+
 
 .FalseBtn{
     align-items: flex-end;

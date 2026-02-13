@@ -173,8 +173,9 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
                 window.URL.revokeObjectURL(url), 1000
             })
         }
-        catch{
-            alert("could not reach the servers")
+        catch(error){
+            console.log(error)
+            alert("Error downloading report")
         }
     }
 
@@ -301,7 +302,8 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
             })
         }
         catch{
-            alert("Error contacting the server")
+            console.log(error)
+            alert("Error downloading report")
         }
 
     }
@@ -338,7 +340,7 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
                 </div>
             </div>
             <div className={styles.ProjecTabView}>
-                <div>QC Table</div>
+                <div>Library QC Table</div>
                 <div className={styles.SamSubTables}>
                     <div>
                         <table className={styles.TableCont}>
@@ -427,7 +429,7 @@ export function BiinfoDetailsComp({binfDetails, projectId}) {
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
                     <button className={styles.ProjecOnBtn} onClick={()=>setBioinfoEmailTemp(true)}>{`Send Analysis Report`}</button>
-                    {bioinfoEmailTemp && <EmailReports projectId={projectId} sec="bioinformatics" flow={Bioinformatics} EmailTemp={setBioinfoEmailTemp} />}
+                    {bioinfoEmailTemp && <EmailReports projectId={projectId} sec={"analysis"} flow={"Analysis"} EmailTemp={setBioinfoEmailTemp} />}
                 </div>
             </div>
         </>
