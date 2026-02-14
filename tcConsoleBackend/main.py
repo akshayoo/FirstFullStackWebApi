@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import initialization, intake, samsubmission, catalog, projectsinfo, projectforms, projectsrepos
+from routers import auth, initialization, intake, samsubmission, catalog, projectsinfo, projectforms, projectsrepos
 
 app = FastAPI(title= "theraConsole", version= "V.0.0.1")
 
@@ -12,6 +12,7 @@ app.add_middleware(
     allow_methods=["*"]  
  )
 
+app.include_router(auth.router)
 app.include_router(initialization.router)
 app.include_router(intake.router)
 app.include_router(samsubmission.router)

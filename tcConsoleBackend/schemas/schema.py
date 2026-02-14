@@ -85,3 +85,12 @@ class TaskUpdate(BaseModel):
     project_id : str
     task : int
     sec : str
+
+class AuthLogin(BaseModel):
+    username : str
+    password : str
+
+class AuthSignup(BaseModel):
+    username : str
+    password : str
+    password_re : str
