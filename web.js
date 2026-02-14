@@ -14,6 +14,7 @@ export function ViewComp(){
     const [qcDetails, setQcDetails] = useState({})
     const [libqcDetails, setLibqcDetails] = useState({})
     const [binfDetails, setBinfDetails] = useState({})
+    const [ resetKey, setResetKey ] = useState(0)
 
     return(
         <>
@@ -22,26 +23,34 @@ export function ViewComp(){
                 <ViewSideBar setProjectCont={setProjectCont} 
                 setSamsubDetails={setSamsubDetails}
                 setQcDetails={setQcDetails}
-                setLibqcDetails = {setLibqcDetails}
-                setBinfDetails ={setBinfDetails}/>
+                setLibqcDetails={setLibqcDetails}
+                setBinfDetails={setBinfDetails}
+                setResetKey={setResetKey} />
 
 
                 <ViewWin projectCont={projectCont} 
                 samsubDetails ={samsubDetails} 
+                setProjectCont={setProjectCont}
                 setSamsubDetails = {setSamsubDetails}
                 qcDetails = {qcDetails}
                 setQcDetails = {setQcDetails}
                 libqcDetails={libqcDetails}
                 setLibqcDetails={setLibqcDetails}
                 binfDetails ={binfDetails}
-                setBinfDetails = {setBinfDetails}/>
+                setBinfDetails = {setBinfDetails}
+                resetKey={resetKey}/>
 
             </div>
         </>
     );
 }
 
-function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDetails, setBinfDetails}){
+function ViewSideBar({  setProjectCont,
+  setSamsubDetails,
+  setQcDetails,
+  setLibqcDetails,
+  setBinfDetails,
+  setResetKey}){
 
     const [projectPipeline, setProjectPipeline] = useState([])
 
@@ -81,6 +90,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
             setQcDetails({})
             setLibqcDetails({})
             setBinfDetails({})
+            
 
         }
         catch {
@@ -121,20 +131,22 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
 }
 
 
-function ViewWin ({projectCont, samsubDetails, setSamsubDetails, 
-    qcDetails, setQcDetails, libqcDetails, setLibqcDetails, binfDetails, setBinfDetails}){
+function ViewWin ({  projectCont, setProjectCont, samsubDetails, setSamsubDetails, qcDetails, setQcDetails, libqcDetails, 
+    setLibqcDetails, binfDetails, setBinfDetails, resetKey}){
+
     return(
+
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
                 {projectCont && 
                 
                     <div className={styles.ProjectView}>
                         <ViewProjDetails projectCont={projectCont} />
-                        <StatusPop projectCont={projectCont} />
-                        <SampleSubDetails projectCont={projectCont} samsubDetails ={samsubDetails} setSamsubDetails={setSamsubDetails} />
-                        <QcSamDetails projectCont={projectCont} qcDetails ={qcDetails} setQcDetails = {setQcDetails} />
-                        <LibSamDetails projectCont={projectCont} libqcDetails={libqcDetails} setLibqcDetails={setLibqcDetails} />
-                        <BiInfoDetails projectCont={projectCont} binfDetails={binfDetails} setBinfDetails={setBinfDetails}/>
+                        <StatusPop projectCont={projectCont} setProjectCont={setProjectCont} key={resetKey + "status"} />
+                        <SampleSubDetails projectCont={projectCont} samsubDetails ={samsubDetails} setSamsubDetails={setSamsubDetails} key={resetKey + "sam"} />
+                        <QcSamDetails projectCont={projectCont} qcDetails ={qcDetails} setQcDetails = {setQcDetails} key={resetKey + "qc"} />
+                        <LibSamDetails projectCont={projectCont} libqcDetails={libqcDetails} setLibqcDetails={setLibqcDetails} key={resetKey + "lib"} />
+                        <BiInfoDetails projectCont={projectCont} binfDetails={binfDetails} setBinfDetails={setBinfDetails} key={resetKey + "binf"}/>
                         <Reports projectCont={projectCont} />
                     </div>
                 
@@ -539,5 +551,6 @@ function Reports({projectCont}) {
         
     )
 }
+
 
 

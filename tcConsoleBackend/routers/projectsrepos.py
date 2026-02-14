@@ -130,7 +130,7 @@ async def samsub_gen(payload : ProjId):
 
         sample_sub_details = ss_info.get("details").get("sample_details", [])
 
-        env = Environment(loader= FileSystemLoader("../templates"))
+        env = Environment(loader= FileSystemLoader("./templates"))
         template = env.get_template("samsubtemplate.html")
 
         html_content = template.render(

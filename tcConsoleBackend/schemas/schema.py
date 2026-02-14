@@ -79,3 +79,9 @@ class EmailCont(BaseModel):
     email_cc : Optional[str] = None
     mail_subject : str
     mail_content : str
+
+
+class TaskUpdate(BaseModel):
+    project_id : str
+    task : int
+    sec : str

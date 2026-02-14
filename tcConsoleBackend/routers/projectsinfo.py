@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from utils.dbfunc import collections_load
-from schemas.schema import ProjIdStatus, ProjId
+from schemas.schema import ProjIdStatus, ProjId, TaskUpdate
 import os
 from fastapi.responses import FileResponse
 from urllib.parse import quote
+from datetime import datetime 
 
 
 router = APIRouter(prefix="/project")
@@ -43,9 +44,9 @@ async def projects_comp():
 
         for add in add_comp:
             if add["completed"] is True:
-                true_count + 1
+                true_count += 1
 
-        project_completion = true_count/total_elem *100
+        project_completion = round(true_count/total_elem *100)
 
         get_status =  list_elements[i].get("project_status")
 
@@ -360,4 +361,39 @@ async def binf_sub_pop(payload : ProjId):
         raise HTTPException(
             status_code= 500,
             detail= "Unable to fetch analysi details"
+        )
+
+
+
+@router.post("/taskstatusupdate")
+def task_update(payload : TaskUpdate):
+
+    collection = collections_load("tcProjects")
+
+    project_id = payload.project_id
+    task_num = payload.task
+    sec  = payload.sec.strip()
+
+    try:
+
+        del_sec = "standard_deliverables" if sec == "std" else "added_deliverables"
+            
+        collection.update_one({"project_id" : project_id},
+                            {
+                                "$set" : {
+                                    f"project_details.{del_sec}.$[elem].completed" : True,
+                                    f"project_details.{del_sec}.$[elem].completed_at" : datetime.now()
+                                },
+                                
+                            }, array_filters=[{"elem.task_number": task_num}])
+        
+        return{
+            "status" : "Task updated successfully"
+        }
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Failed to update task"
         )

@@ -73,17 +73,19 @@ async def form_fetch_mail(payload: ProjectSubmission):
     std_del_list = []
     added_del_list = []
 
-    for std_deliverables in payload.standard_deliverables:
+    for i, std_deliverables in enumerate(payload.standard_deliverables):
         std_dict = {
             "label" : std_deliverables,
+            "task_number" : i,
             "completed" : False,
             "completed_at" : None
         }
         std_del_list.append(std_dict)
     
-    for added_deliverables in payload.added_deliverables:
+    for i, added_deliverables in enumerate(payload.added_deliverables):
         add_dict = {
             "label" : added_deliverables,
+            "task_number" : i,
             "completed" : False,
             "completed_at" : None
         }
