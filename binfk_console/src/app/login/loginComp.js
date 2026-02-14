@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; 
 import axios from 'axios';
 import styles from './loginComp.module.css'
 import Image from "next/image"
@@ -8,27 +9,41 @@ import Link from 'next/link';
 
 export function LoginComp() {
 
+    const router = useRouter();
+
     const [formData, setFormData] = useState({
         "username" : "",
         "password" : ""
     })
 
-    async function signIn(e) {
-
+async function signIn(e) {
+    
          e.preventDefault()
 
         if(!formData.username || !formData.password){
             alert("fields_missing")
             return
         }
-        try{
-
-            const response = await axios.post("http://127.0.0.1:6050/auth/login",
-                formData
+        try {
+            const response = await axios.post(
+                "http://127.0.0.1:6050/auth/login",
+                formData,
+                { withCredentials: true }
             )
 
             console.log(response.data)
+            
+            if (response.data.status === "success") {
 
+                document.cookie = `auth_token=${response.data.token}; path=/; max-age=${90*60*60}`;
+                router.push('/')
+                router.refresh()
+                router.push('/')  
+                router.refresh()  
+            } 
+            else {
+                alert(response.data.status)
+            }
         }
         catch(error) {
             console.log(error);

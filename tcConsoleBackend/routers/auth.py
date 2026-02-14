@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from schemas.schema import AuthLogin, AuthSignup
 from utils.dbfunc import collections_load
-from utils.cache import to_hash
+from utils.cache import to_hash, varify_hash
+from utils.jwt_utils import create_access_token
 from datetime import datetime
 
 
@@ -9,7 +10,7 @@ from datetime import datetime
 router = APIRouter(prefix="/auth")
 
 @router.post("/login")
-async def login(payload : AuthLogin):
+async def login(payload : AuthLogin, response : Response):
 
     collection = collections_load("tcAuth")
 
@@ -18,34 +19,39 @@ async def login(payload : AuthLogin):
 
     try:
 
-        data = collection.find_one({"username" : username},
+        data = collection.find_one({"user_email" : username},
                             {
-                                "password" : 1
+                                "_id" : 0,
+                                "name" : 1,
+                                "user_id" : 1,
+                                "password_hash" : 1,
+                                "role" : 1,
+                                "is_active" : 1
                             })
         
-        password_db = data.get("password")
+        if not data : return {"status" : "User not found, please sign up"}
+        
+        if data.get("is_active") == False : return {"status" : "Not an active user contact admin"}
 
-        if password == password_db:
+        if not varify_hash(password, data.get("password_hash")):return {"status": "Invalid credentials"}
 
-            user_data = collection.find_one({"username" : username},
-                                            {
-                                            "name" : 1,
-                                            "user_id" : 1,
-                                            "role" : "admin",
-                                            "is_active" : 1
-                                            })
-            
-            if data.get("is_active") == False:
-                return{
-                    "auth" : "Not a user"
-                }
-            else:
-                return{
-                    "auth" : "success",
-                    "name" : user_data.get("name"),
-                    "user_id" : user_data.get("user_id"),
-                    "role" : user_data.get("role")
-                }
+        token = create_access_token({
+            "name" : data.get("name"),
+            "user_id" : data.get("user_id"),
+            "role" : data.get("role")
+        })
+
+        response.set_cookie(
+            key="auth_token",
+            value=token,
+            httponly=True,
+            samesite="lax",
+            secure=False,
+            max_age=60*60*8
+        )
+
+        return {"status": "success", "token" : token}
+
     
     except Exception as e:
         print(str(e))

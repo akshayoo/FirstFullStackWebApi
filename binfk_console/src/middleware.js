@@ -12,7 +12,7 @@ import { NextResponse } from "next/server";
         }
 
         if (token && pathname === "/login") { 
-            return NextResponse.redirect(new URL("/", request.url));
+           return NextResponse.redirect(new URL("/", request.url));
         }
 
         return NextResponse.next();

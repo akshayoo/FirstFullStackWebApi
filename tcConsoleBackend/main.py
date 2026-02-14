@@ -6,7 +6,7 @@ app = FastAPI(title= "theraConsole", version= "V.0.0.1")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],      
+    allow_origins=["http://localhost:3000"],      
     allow_credentials=True, 
     allow_headers=["*"],      
     allow_methods=["*"]  
