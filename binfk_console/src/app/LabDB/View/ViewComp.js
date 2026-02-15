@@ -48,9 +48,12 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
     useEffect(() => {
         async function ProjectsPipeline() {
             try{
-                const response = await axios.get("http://localhost:6050/project/projects")
+                const response = await axios.get("http://localhost:6050/project/projects",
+                    {withCredentials : true}
+                )
                 const data = await response.data
-                console.log(data.status)
+
+                console.log(data.message)
 
                 setProjectPipeline(data.payload)
 
@@ -62,19 +65,28 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
         ProjectsPipeline()
     }, [])
 
+
     const ProjectPop = async(projectId, projectStatus) => {
 
         if(!projectId) return
         if(!projectStatus) return
 
         try{
+
             const response = await axios.post("http://localhost:6050/project/projectcomp",
                 {
                     "project_id" : projectId,
                     "project_status" : projectStatus 
-                }
+                }, {withCredentials : true}
             )   
             const data = response.data
+
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            console.log(data.message)
 
             setProjectCont(data.payload)
             setSamsubDetails({})
@@ -83,12 +95,18 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
             setBinfDetails({})
 
         }
-        catch {
-            alert("Could not connect to the server")
+        catch(error) {
+
+            console.log(error)
+            alert("Error fetching project details")
+
         }
     }
 
+
+
     return(
+
         <div className={styles.SideB}>
             <h2>Projects</h2>
             <div className={styles.RecEnt}>
@@ -194,13 +212,14 @@ function ViewProjDetails({projectCont}) {
 }
 
 
-function StatusPop({projectCont, setProjectCont}){
+function StatusPop({projectCont}){
 
     async function updateTaskstage(sec, projectId, task){
 
         try {
 
-            alert("You are about to mark this task completed")
+            const confirmAction = window.confirm("Mark this task as completed?");
+            if(!confirmAction) return;
 
             const response = await axios.post("http://localhost:6050/project/taskstatusupdate",
                 {
@@ -211,13 +230,19 @@ function StatusPop({projectCont, setProjectCont}){
             )
 
             const data = response.data
+
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            alert(data.message)
             
-            alert(data.status)
         }
 
         catch(err) {
             console.log(err)
-            alert("Trouble updating task update")
+            alert("Updating task failed")
         }
 
     }
@@ -265,29 +290,32 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
     async function SampleSub(projectId) {
 
         try {
+
             const response = await axios.post("http://localhost:6050/project/samsubdetails",
-                {"project_id" : projectId}
+                {"project_id" : projectId}, {withCredentials : true}
             )
 
             const data = response.data
-            if (data.status === "NoSubmission"){
-                alert(data.payload)
+
+            if (!data.status){
+                alert(data.message)
                 return
             } 
-            else{
-                console.log(data.status)
-                setSamsubDetails(data.payload)
-            }
-            }
-        catch{
-            alert("Error contacting the server")
+
+            console.log(data.message)
+            setSamsubDetails(data.payload)
+
+        }
+        catch(error){
+            console.log(error)
+            alert("Error fetching sample submission details")
         }
     }
 
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Sample Submission Details | {`${projectCont.project_id}`}</h2>
+                <h2 className={styles.sech}>Sample Submission Details</h2>
                 <button className={styles.fieldPop} onClick={() => SampleSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
@@ -308,33 +336,31 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
         try{
 
             const response = await axios.post("http://localhost:6050/project/qcsubdetails",
-                {"project_id" : projectId}
+                {"project_id" : projectId}, {withCredentials : true}
             )
 
             const data = response.data
 
-            if (data.status === "NoSubmission" ){
-                alert("No QC files found, please upload")
+            if (!data.status){
+                alert(data.message)
                 return
             }
-            else{
-                console.log(data.status)
-                console.log(data.payload)
-                setQcDetails(data.payload)
-            }
+            
+            console.log(data.message)
+            setQcDetails(data.payload)
 
         }
 
         catch(error) {
             console.log(error)
-            alert("Error contacting the server")
+            alert("Error fetching QC details")
         }
     }
 
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>QC Details | {`${projectCont.project_id}`}</h2>
+                <h2 className={styles.sech}>QC Details</h2>
                 <button className={styles.fieldPop} onClick={() => QcSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
@@ -365,31 +391,31 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
         try{
 
             const response = await axios.post("http://localhost:6050/project/libqcsubdetails",
-                {"project_id" : projectId}
+                {"project_id" : projectId}, {withCredentials :true}
             )
 
             const data = response.data
 
-            if(data.status ===  "NoSubmission"){
-                alert(data.payload)
+            if(!data.status){
+                alert(data.message)
                 return
             }
 
-            else{
-                console.log("fetch successfull")
-                setLibqcDetails(data.payload)
-            }
+            console.log(data.message)
+            setLibqcDetails(data.payload)
+
         }
 
-        catch{
-            alert("Error contacting the server")
-        }
+        catch(err){
+            console.log(err)
+            alert("Error fetching library QC details")
+        } 
     }
 
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Library QC Details | {`${projectCont.project_id}`}</h2>
+                <h2 className={styles.sech}>Library QC Details</h2>
                 <button className={styles.fieldPop} onClick={() => LibSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
@@ -416,24 +442,24 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
     async function BinfSub(projectId) {
         try{
             const response = await axios.post("http://localhost:6050/project/binfsubdetails",
-                {"project_id" : projectId}
+                {"project_id" : projectId},
+                {withCredentials : true}
             )
 
             const data = response.data
-            if(data.status === "NoSubmission"){
-                alert(data.payload)
+            if(!data.status){
+                alert(data.message)
                 return
             }
 
-            else{
-                console.log("fetch successfull")
-                setBinfDetails(data.payload)
-            }
+            console.log(data.message)
+            setBinfDetails(data.payload)
+
 
         }
         catch(error){
             console.log(error)
-            alert("Error contacting the server")
+            alert("Error fetching bioinformatics details")
         }
     }
 
@@ -465,7 +491,7 @@ function Reports({projectCont}) {
 
             const response = await axios.post("http://localhost:6050/reports/genfinreportpdf",
                 {"project_id" : projectId},
-                {responseType : "blob"}
+                {responseType : "blob", withCredentials : true}
             )
 
             const blob = new Blob([response.data], {type : "application/pdf"})
@@ -492,7 +518,8 @@ function Reports({projectCont}) {
             alert("You are going to perform a sensitive action. Do you wnat to continue")
             
             const response = await axios.post("http://localhost:6050/project/closeproject",
-                {"project_id" : projectId}
+                {"project_id" : projectId},
+                {withCredentials : true}
             )
 
             const data = response.data

@@ -13,63 +13,75 @@ router =  APIRouter(prefix= "/initialization")
 
 
 @router.get("/popservices")
-async def prilim_info():
+async def prilim_info( _ : dict = Depends(parse_token)):
 
-    collection = collections_load(collection = "tcStdDeliverables")
+    try:
 
-    categories = collection.find({}, {"category": 1, "_id": 0})
+        collection = collections_load(collection = "tcStdDeliverables")
 
-    category_services = {}  
+        categories = collection.find({}, {"category": 1, "_id": 0})
 
-    for cat in categories:
-        category = cat["category"]
+        category_services = {}  
 
-        items = collection.find(
-            {"category": category},
-            {
-                "services.service_name" : 1,
-                "_id" : 0,
-                "services.applications": 1,
-                "services.supported_sample_types" : 1,
-                "services.instrumentation" : 1,
-                "services.process_map" : 1,
-                "services.standard_deliverables" : 1
-            }
-        )
+        for cat in categories:
+            category = cat["category"]
 
-        service_list = []
-
-        for doc in items:
-
-            for service in doc.get("services", []):
-                service_name = service.get("service_name")
-                application = service.get("applications")
-                supported_sample_types = service.get("supported_sample_types")
-                instrumentation = service.get("instrumentation")
-                process_map = service.get("process_map")
-                standard_deliverables = service.get("standard_deliverables")
-
-                serv = {
-                    "service_name" : service_name,
-                    "applications" : application,
-                    "supported_sample_types" : supported_sample_types,
-                    "instrumentation" : instrumentation,
-                    "process_map" : process_map,
-                    "standard_deliverables" : standard_deliverables
+            items = collection.find(
+                {"category": category},
+                {
+                    "services.service_name" : 1,
+                    "_id" : 0,
+                    "services.applications": 1,
+                    "services.supported_sample_types" : 1,
+                    "services.instrumentation" : 1,
+                    "services.process_map" : 1,
+                    "services.standard_deliverables" : 1
                 }
+            )
 
-                service_list.append(serv)
+            service_list = []
 
-        category_services[category] = service_list
+            for doc in items:
+
+                for service in doc.get("services", []):
+                    service_name = service.get("service_name")
+                    application = service.get("applications")
+                    supported_sample_types = service.get("supported_sample_types")
+                    instrumentation = service.get("instrumentation")
+                    process_map = service.get("process_map")
+                    standard_deliverables = service.get("standard_deliverables")
+
+                    serv = {
+                        "service_name" : service_name,
+                        "applications" : application,
+                        "supported_sample_types" : supported_sample_types,
+                        "instrumentation" : instrumentation,
+                        "process_map" : process_map,
+                        "standard_deliverables" : standard_deliverables
+                    }
+
+                    service_list.append(serv)
+
+            category_services[category] = service_list
+        
+        return category_services
     
-    return category_services
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500, detail= "Not found"
+        )
 
 
 
 @router.post("/startproject")
-async def form_fetch_mail(payload: ProjectSubmission, user_info : dict = Depends(parse_token)):
+async def form_fetch_mail(payload: ProjectSubmission, usertok : dict = Depends(parse_token)):
 
-    if user_info["role"] == "projects" : return {"status" : "User not allowed"}
+    if usertok["role"] == "projects" : 
+        return {
+            "status" : False,
+            "message" : "User not allowed"
+        }
 
     collection = collections_load(collection = "tcProjects") 
 
@@ -81,7 +93,10 @@ async def form_fetch_mail(payload: ProjectSubmission, user_info : dict = Depends
             "label" : std_deliverables,
             "task_number" : i,
             "completed" : False,
-            "completed_at" : None
+            "completed_at" : None,
+            "updated_user" : None,
+            "user_id" : None,
+            "username" : None
         }
         std_del_list.append(std_dict)
     
@@ -90,7 +105,10 @@ async def form_fetch_mail(payload: ProjectSubmission, user_info : dict = Depends
             "label" : added_deliverables,
             "task_number" : i,
             "completed" : False,
-            "completed_at" : None
+            "completed_at" : None,
+            "updated_user" : None,
+            "user_id" : None,
+            "username" : None
         }
         added_del_list.append(add_dict)
 
@@ -132,10 +150,10 @@ async def form_fetch_mail(payload: ProjectSubmission, user_info : dict = Depends
         },
         "audit": {
             "created_at": datetime.now(),
-            "created_user" : user_info["name"],
-            "user_id" : user_info["user_id"],
-            "created_username" : user_info["username"],
-            "role" : user_info["role"]
+            "created_user" : usertok["name"],
+            "user_id" : usertok["user_id"],
+            "username" : usertok["username"],
+            "role" : usertok["role"]
         }
     }
 
@@ -168,7 +186,8 @@ async def form_fetch_mail(payload: ProjectSubmission, user_info : dict = Depends
                                     mail_html= html_cont)
 
         return {
-            "status": f"Project added and {email_status}"
+            "status" : True,
+            "message": f"Project added and {email_status}"
         }
 
     except Exception as e:

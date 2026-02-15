@@ -15,13 +15,6 @@ export function QcReportPushForm({setQcDataForm, projectId}){
         "qc_data" : null
     })
 
-    useEffect(() => {
-        setFormData(prev => ({
-            ...prev,
-            project_id: projectId
-        }));
-        }, [projectId]);
-
     async function updateQcData(){
         if(!formData.method_writeup || !formData.method_summary || !formData.concentration_technology ||  
             !formData.integrity_technology || !formData.qc_summary || !formData.qc_report || !formData.qc_data)
@@ -35,11 +28,19 @@ export function QcReportPushForm({setQcDataForm, projectId}){
                 fd.append(key, value);
             })
 
-            const response = await axios.post("http://127.0.0.1:6050/project/qcdataupdate", 
-                fd
+            const response = await axios.post("http://localhost:6050/project/qcdataupdate", 
+                fd,
+                {withCredentials : true}
             )
 
-            alert(response.data.status);
+            const data = response.data
+
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            alert(data.message)
             setQcDataForm(false);
 
         }
@@ -145,11 +146,6 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
         "library_data" : null
     })
 
-    useEffect(() =>{
-        setFormData(prev =>({
-            ...prev, project_id : projectId
-        }))
-    },[projectId])
 
     async function updateLibQcData() {
         
@@ -164,11 +160,19 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
                 formd.append(key, value)
             })
             
-            const response = await axios.post("http://127.0.0.1:6050/project/libqcdataupdate",
-                formd
+            const response = await axios.post("http://localhost:6050/project/libqcdataupdate",
+                formd,
+                {withCredentials : true}
             )
 
-            alert(response.data.status)
+            const data = response.data
+
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            alert(data.message)
             setLibQcDataForm(false)
         }
         catch(error){
@@ -247,12 +251,6 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
         "bioinformatics_report" : null
     })
 
-    useEffect(() => {
-        setFormData(prev => ({
-            ...prev, project_id : projectId
-        }))
-    },[projectId])
-
     async function updateBinfData() {
 
         if(!formData.bioinformatics_summary || !formData.estimated_hours || !formData.approximate_hours || !formData.bioinformatics_report){
@@ -267,16 +265,26 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
                 binff.append(key, value)
             })
 
-            const response = await axios.post("http://127.0.0.1:6050/project/binfkilldataupdate",
-                binff
+            const response = await axios.post("http://localhost:6050/project/binfkilldataupdate",
+                binff,
+                {withCredentials : true}
             )
+            
+            const data = response.data
 
-            alert(response.data.status)
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            alert(data.message)
+
             setBinfDataForm(false)
+
         }
         catch(error){
             console.log(error)
-            alert("Alaysis report can't be updated")
+            alert("Analysis report can't be updated")
         }
     }
 

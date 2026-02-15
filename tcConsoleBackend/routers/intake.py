@@ -33,7 +33,12 @@ async def proj_details(payload : ProjToken):
             data.append(doc)
 
 
-        if data == []:  return{"status" : "No Project found, Check project ID or Initialize again"}
+        if data == []:  
+            return{
+                "status" : False, 
+                "message": "No Project found, Check project ID or Initialize again"
+            }
+
         project_id = data[0].get("project_id")
         pi_name = data[0].get("project_info", {}).get("pi_name", "")
         email =  data[0].get("project_info", {}).get("email", "")
@@ -53,7 +58,8 @@ async def proj_details(payload : ProjToken):
                 technology = "NGS"
 
         return {
-            "status" : "Data fetch Successfull",
+            "status" : True,
+            "message" : "Data fetched",
             "payload" : {
                 "project_id" : project_id,
                 "pi_name" : pi_name,

@@ -25,8 +25,9 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
         }
         
         try{
-            const response = await axios.post('http://127.0.0.1:6050/reports/sendemail',
-                formData
+            const response = await axios.post('http://localhost:6050/reports/sendemail',
+                formData,
+                {withCredentials : true}
             )
             const data = response.data
             alert(data.status)

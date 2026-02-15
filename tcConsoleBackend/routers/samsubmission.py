@@ -17,6 +17,10 @@ async def populate_form(file: UploadFile = File(...)):
         csv_data = StringIO(contents.decode("utf-8"))
 
         data = pd.read_csv(csv_data)
+
+        if len(data.columns) < 5:
+            return {"status": False, "message": "Please use the template provided and upload the data"}
+        
         data = data.rename(columns={
             data.columns[0]: "sample_id",
             data.columns[1]: "description",
@@ -28,7 +32,8 @@ async def populate_form(file: UploadFile = File(...)):
         records = data.fillna("No Value").to_dict(orient="records")
 
         return {
-            "status": "Parsed successfully",
+            "status" : True,
+            "message": "Parsed successfully",
             "submission": records
         }
 
@@ -59,7 +64,7 @@ async def ngs_form(payload : NgsForm):
                 "total_rna_prep": "Not applicable",
                 "nucleases": nuclease,
                 "kit_name": kit_name,
-                "qc_accessed": qc_assesed,
+                "qc_assessed": qc_assesed,
                 "bioinformatics_required": True if payload.bioinformatics_needed == "Yes" else False,
                 "key_objectives": payload.key_objectives,
                 "comparisons": payload.differential_comparisons,
@@ -111,7 +116,8 @@ async def ngs_form(payload : NgsForm):
         )
 
         return {
-            "status" : f"Sample submission form recieved and {mail_status}"
+            "status" : True,
+            "message" : f"Sample submission form recieved"
         }
     
     except Exception as e:
@@ -140,7 +146,7 @@ async def ncounter_form(payload: NcounterForm):
                 "total_rna_prep": payload.rna_prep,
                 "nucleases": True if payload.dnase_treated == "Yes" else False,
                 "kit_name": payload.rna_kit_name,
-                "qc_accessed": payload.rna_assessment,
+                "qc_assessed": payload.rna_assessment,
                 "bioinformatics_required": True if payload.bioinformatics_needed == "Yes" else False,
                 "key_objectives": payload.key_objectives,
                 "comparisons": payload.differential_comparisons,
@@ -190,7 +196,8 @@ async def ncounter_form(payload: NcounterForm):
         )
 
         return {
-            "status" : f"Sample submission form recieved {mail_status}"
+            "status" : True,
+             "message" :  f"Sample submission form recieved"
         }
     
 

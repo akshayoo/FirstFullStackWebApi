@@ -22,7 +22,7 @@ def decode_token(token: str) -> dict:
 
         payload = jwt.decode(token, SECRET_KEY, algorithms= ALGORITHM)
 
-        required_info = ["name", "user_id", "role"]
+        required_info = ["name", "user_id", "role", "username"]
 
         for info in required_info:
             if info not in payload:

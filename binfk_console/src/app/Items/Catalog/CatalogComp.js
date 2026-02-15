@@ -11,9 +11,12 @@ export function CatalogComp(){
   const [selectedService, setSelectedService] = useState(null)
 
   useEffect(() =>{
+    
     async function fieldsData(){
+
       try{
-        const response = await axios.get("http://127.0.0.1:6050/items/catalog")
+        const response = await axios.get("http://localhost:6050/items/catalog", {withCredentials : true})
+        console.log(response.data)
         setCatalogData(response.data)
       }
       catch{

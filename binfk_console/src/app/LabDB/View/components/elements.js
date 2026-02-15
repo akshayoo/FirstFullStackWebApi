@@ -16,10 +16,15 @@ export function SampleSubDetailsComp({samsubDetails, projectId}){
         }
 
         try{
-            const response = await axios.post("http://127.0.0.1:6050/reports/samplesubreportpdf",
+            const response = await axios.post("http://localhost:6050/reports/samplesubreportpdf",
                 {"project_id" : projectId},
-                {responseType : "blob"}
+                {responseType : "blob", withCredentials : true}
             )
+
+            if(!response.data.status){
+                alert(response.data.message)
+                return
+            }
 
             const blob = new Blob([response.data], {type : "application/pdf"})
 
@@ -159,10 +164,15 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
         }
 
         try{
-            const response = await axios.post("http://127.0.0.1:6050/reports/genqcreportpdf",
+            const response = await axios.post("http://localhost:6050/reports/genqcreportpdf",
                 {"project_id" : projectId},
-                {responseType : "blob"}
+                {responseType : "blob", withCredentials : true}
             )
+
+            if(!response.data.status){
+                alert(response.data.message)
+                return
+            }
 
             const blob = new Blob([response.data], {type: "application/pdf"})
             const url = window.URL.createObjectURL(blob)
@@ -287,9 +297,9 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
         }
 
         try{
-            const response = await axios.post("http://127.0.0.1:6050/reports/genlibqcreportpdf",
+            const response = await axios.post("http://localhost:6050/reports/genlibqcreportpdf",
                 {"project_id" : projectId},
-                {responseType : "blob"}
+                {responseType : "blob", withCredentials : true}
             )
 
             const blob = new Blob([response.data], {type: "application/pdf"})
@@ -437,44 +447,5 @@ export function BiinfoDetailsComp({binfDetails, projectId}) {
 }
 
 
-
-export function ReportsComp() {
-
-    const [finreportEmailTemp, setfinreportEmailTemp] = useState(false)
-
-    return(
-        <>   
-            <div className={styles.ProjecIn}>
-                <div>Collated Final Report</div>
-                <div style={{ background: "#f9fafb", padding: "16px", borderRadius: "8px", border: "2px dashed #cbd5e1", minHeight: "400px",}}>
-                    <iframe
-                    src={`http://localhost:6050${binfDetails.bioinformatics_report}`} 
-                    width="100%"
-                    height="500px"
-                    style={{ border: "none", borderRadius: "6px", background: "#f9fafb" }}
-                    title="QC Report PDF"
-                    />
-                </div>
-            </div>
-            <div className={styles.GridThree}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Download Final Report (.pdf)`}</button>
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>{`Send Final Report`}</button>
-                </div>
-            </div>
-            <div className={styles.GridThree}>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecOnBtn} onClick={()=>setfinreportEmailTemp(true)}>{`Send Analysis Report`}</button>
-                    {finreportEmailTemp && <EmailReports projectId={projectId} sec="finalreport" flow={"Collated Report"} EmailTemp={setfinreportEmailTemp} />}
-                </div>
-                <div className={styles.ProjecIn}>
-                    <button className={styles.ProjecInBtn}>Close project</button>
-                </div>
-            </div>
-        </>
-    );
-}
 
   

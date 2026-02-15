@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Form, UploadFile, File
+from fastapi import APIRouter, Form, UploadFile, File, Depends
 from utils.dbfunc import collections_load
 from fastapi import HTTPException
 from schemas.schema import ProjId
+from utils.jwt_utils import parse_token
 import os
 from io import StringIO
 import pandas as pd
@@ -21,8 +22,17 @@ async def qcdata_update(
         integrity_technology: str = Form(...),
         qc_summary: str = Form(...),
         qc_report: UploadFile = File(...),
-        qc_data: UploadFile = File(...)
+        qc_data: UploadFile = File(...),
+
+        usertok : dict = Depends(parse_token)
 ):
+    
+    if usertok["role"] == "bd" or usertok["role"] == "analysis":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
+
     collections = collections_load("tcProjects")
 
     data = collections.find_one({"project_id" : project_id.strip()},
@@ -31,19 +41,37 @@ async def qcdata_update(
                                     "project_status.sample_submission": 1
                                 })
 
-    try: 
+    try:
 
-        if data.get("project_status").get("sample_submission") == False:
-            return{"status" : "Sample submission details not found. Please contact the client to update one"}
+        if not data: 
+            return{
+                "status" : False,
+                'message' : "Unable to process request please try after sometime"
+            }
+
+        if not data.get("project_status",{}).get("sample_submission"):
+            return{
+                "status" : False,
+                "message" : "Sample submission details not found. Please contact the client to update one"
+            }
 
         if not project_id:
-            return{"status" : "Please refresh the page and try again"}
+            return{
+                "status" : False,
+                "message" : "Please refresh the page and try again"
+            }
         
-        if not qc_data.filename.endswith(".csv"):
-            return {"status": "QC data must be a CSV file"}
+        if not qc_data.filename.lower().endswith(".csv"):
+            return {
+                "status": False,
+                "message" :  "QC data must be a CSV file"
+            }
         
         if not qc_report.filename.lower().endswith(".pdf"):
-            return {"status" : "QC report must be in pdf format"}
+            return {
+                "status" : False,
+                "message"  : "QC report must be in pdf format"
+            }
         
 
         project_path = f"{UPLOAD_DIR}/{project_id}"
@@ -62,6 +90,13 @@ async def qcdata_update(
         csv_data = StringIO(contents.decode("utf-8"))
 
         data = pd.read_csv(csv_data)
+
+        if len(data.columns) < 5:
+            return{
+                "status" : False,
+                "message" : "Please use the template to upload the data again"
+            }
+
         data = data.rename(columns={
             data.columns[0]: "sample_id",
             data.columns[1]: "tcues_sample_id",
@@ -76,7 +111,10 @@ async def qcdata_update(
             "writeup" : method_writeup,
             "method_summary" : method_summary,
             "audit" : {
-                "completed_at" : datetime.now()
+                "completed_at" : datetime.now(),
+                "updated_user"  : usertok["name"],
+                "user_id" : usertok["user_id"],
+                "username" : usertok["username"]
             }
         }
 
@@ -87,7 +125,10 @@ async def qcdata_update(
             "qc_report" : qc_report_path,
             "qc_sample_details" : records,
             "audit" : {
-                "completed_at" : datetime.now()
+                "completed_at" : datetime.now(),
+                "updated_user"  : usertok["name"],
+                "user_id" : usertok["user_id"],
+                "username" : usertok["username"]
             }
         }
 
@@ -104,7 +145,8 @@ async def qcdata_update(
         )
 
         return {
-            "status" : "QC details updated"
+            "status" : True,
+            "message" : "QC details updated"
         }
     except Exception as e:
         print(str(e))
@@ -114,24 +156,56 @@ async def qcdata_update(
         )
         
 
+
+
+
+
 @router.post("/libqcdataupdate")
 async def libqcdata_update(
         project_id : str = Form(...),
         library_method : str = Form(...),
         library_summary : str = Form(...),
         library_report : UploadFile = File(...),
-        library_data : UploadFile = File(...)
+        library_data : UploadFile = File(...),
+
+        usertok : dict = Depends(parse_token)
 ):
+    
+    if usertok["role"] == "bd" or usertok["role"] == "analysis":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
     collections = collections_load("tcProjects")
+    
+    data = collections.find_one({"project_id" : project_id.strip()},
+                            {
+                                "_id" : 0,
+                                "project_status.sample_submission": 1
+                            })
+
 
     try:
 
+        if not data: 
+            return{
+                "status" : False,
+                'message' : "Unable to process request please try after sometime"
+            }
+
+        if not data.get("project_status",{}).get("sample_submission"):
+            return{
+                "status" : False,
+                "message" : "Sample submission details not found. Please contact the client to update one"
+            }
     
         if not library_report.filename.lower().endswith(".pdf"):
-            return {"status" : "Library QC report should be a pdf file"}
+            return {"status" : False,
+                    "message" : "Library QC report should be a pdf file"}
         
-        if not library_data.filename.endswith(".csv"):
-            return {"status" : "Library QC data report should be a csv file"}
+        if not library_data.filename.lower().endswith(".csv"):
+            return {"status" : False,
+                    "message" : "Library QC data report should be a csv file"}
         
         project_path = f"{UPLOAD_DIR}/{project_id}"
         lib_path = f"{project_path}/LIB"
@@ -149,6 +223,13 @@ async def libqcdata_update(
         csv_data = StringIO(csv_bytes.decode('utf-8'))
 
         data = pd.read_csv(csv_data)
+
+        if len(data.columns) < 4:
+            return{
+                "status" : False,
+                "message" : "Please use the template to upload the data again"
+            }
+
         data = data.rename(columns={
             data.columns[0]: "sample_id",
             data.columns[1]: "tcues_sample_id",
@@ -164,7 +245,10 @@ async def libqcdata_update(
             "library_report" : lib_report_path,
             "qc_sample_details" : records,
             "audit" : {
-                "completed_at" : datetime.now()
+                "completed_at" : datetime.now(),
+                "updated_user"  : usertok["name"],
+                "user_id" : usertok["user_id"],
+                "username" : usertok["username"]
             }
         }
 
@@ -175,7 +259,8 @@ async def libqcdata_update(
                                         "project_status.library": True,
                                 }
                             })
-        return{"status" : "Lib QC details updated"}
+        return{"status" : True,
+               "message" : "Lib QC details updated"}
     
     except Exception as e:
         print(str(e))
@@ -193,13 +278,46 @@ async def binfdata_update(
         bioinformatics_summary : str = Form(...),
         estimated_hours : str = Form(...),
         approximate_hours : str = Form(...),
-        bioinformatics_report : UploadFile = File(...)
+        bioinformatics_report : UploadFile = File(...),
+
+        usertok : dict = Depends(parse_token)
 ):
+    
+    if usertok["role"] == "bd" or usertok["role"] == "projects" :
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
+
+
     collections = collections_load("tcProjects")
 
+    data = collections.find_one({"project_id" : project_id.strip()},
+                            {
+                                "_id" : 0,
+                                "project_status.sample_submission": 1
+                            })
+
     try:
+
+
+        if not data: 
+            return{
+                "status" : False,
+                'message' : "Unable to process request please try after sometime"
+            }
+
+        if not data.get("project_status",{}).get("sample_submission"):
+            return{
+                "status" : False,
+                "message" : "Sample submission details not found. Please contact the client to update one"
+            }
+        
         if not bioinformatics_report.filename.lower().endswith(".pdf"):
-            return {"status" : "Library QC report should be a pdf file"}
+            return {
+                "status" : False,
+                "message" : "Bioinformatics report should be a pdf file"
+            }
         
         project_path = f"{UPLOAD_DIR}/{project_id}"
         binfk_path = f"{project_path}/ANALYSIS"
@@ -219,7 +337,10 @@ async def binfdata_update(
             "approximate_hours" : approximate_hours,
             "bioinformatics_report" : binf_report_path,
             "audit" : {
-                "completed_at" : datetime.now()
+                "completed_at" : datetime.now(),
+                "updated_user"  : usertok["name"],
+                "user_id" : usertok["user_id"],
+                "username" : usertok["username"]
             }
         }
 
@@ -233,14 +354,19 @@ async def binfdata_update(
             }
         )
 
-        return{"status" : "Analysis details updated"}
+        return {
+            "status": True,
+            "message": "Analysis details updated"
+        }
 
     except Exception as e:
         print(str(e))
         raise HTTPException(
             status_code= 500,
-            detail= "Failed to update qc report"
+            detail= "Failed to update analysis report"
         )
+    
+
     
     
 @router.post("/closeproject")

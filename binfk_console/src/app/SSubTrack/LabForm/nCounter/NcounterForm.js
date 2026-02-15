@@ -50,6 +50,7 @@ export function NcounterForm({projectId}) {
         setFile(selFile)
     }
 
+
     
     async function fileUpload(){
 
@@ -64,21 +65,33 @@ export function NcounterForm({projectId}) {
             uploadData.append("file" , file)
 
             const response = await axios.post("http://127.0.0.1:6050/intake/tablepopulate",
-                uploadData
+                uploadData, {withCredentials : true}
             )
             const data = response.data  
+
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            console.log(data.message)
             
             const formPop = data.submission
 
             setTablePopulate(formPop)
+            setFile(null)
 
         }
 
         catch(error) {
-            alert("Error uploading the table")
             console.log(error)
+            alert("Error uploading the table")
         }
     }
+
+
+
+
 
     async function sendNcounterForm() {
         if(!formData.application || !formData.replicates || 
@@ -90,11 +103,13 @@ export function NcounterForm({projectId}) {
         const payload = {...formData, table: tablePopulate}
 
         try{
-            const response = await axios.post("http://127.0.0.1:6050/intake/ncounterform", payload)
+            const response = await axios.post("http://127.0.0.1:6050/intake/ncounterform", payload, 
+                {withCredentials : true}
+            )
 
             const data = response.data
 
-            alert(data.status)
+            alert(data.message)
 
             window.location.reload()
         }
@@ -103,6 +118,8 @@ export function NcounterForm({projectId}) {
             alert("Error submitting the form")
         }
     }
+
+    
 
     return(
         <div className={styles.MainFormPage}>

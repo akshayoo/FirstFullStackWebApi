@@ -10,196 +10,244 @@ from datetime import datetime
 
 router = APIRouter(prefix="/project")
 
+
 @router.get("/projects")
-async def projects_comp():
+async def projects_comp( _ : dict = Depends(parse_token)):
 
-    collections = collections_load("tcProjects")
+    try: 
 
-    data = collections.find({}, 
-                            {"_id": 0,
-                            "project_id" : 1,
-                            "project_details.standard_deliverables.completed" : 1,
-                            "project_details.added_deliverables.completed" : 1,
-                            "project_status" : 1
-                            })
+        collections = collections_load("tcProjects")
 
-    list_elements = []
+        data = collections.find({}, 
+                                {"_id": 0,
+                                "project_id" : 1,
+                                "project_details.standard_deliverables.completed" : 1,
+                                "project_details.added_deliverables.completed" : 1,
+                                "project_status" : 1
+                                })
 
-    payload = []
+        list_elements = []
 
-    for doc in data:
-        list_elements.append(doc)
+        payload = []
 
-    for i in range(len(list_elements)):
-        project_id = list_elements[i].get("project_id", "")
-        std_comp =  list_elements[i].get("project_details").get("standard_deliverables", [])
-        add_comp = list_elements[i].get("project_details").get("added_deliverables", [])
+        for doc in data:
+            list_elements.append(doc)
 
-        total_elem = len(std_comp) + len(add_comp)
+        for i in range(len(list_elements)):
+            project_id = list_elements[i].get("project_id", "")
+            std_comp =  list_elements[i].get("project_details").get("standard_deliverables", [])
+            add_comp = list_elements[i].get("project_details").get("added_deliverables", [])
 
-        true_count = 0
+            total_elem = len(std_comp) + len(add_comp)
 
-        for std in std_comp:
-            if std["completed"] is True:
-                true_count += 1
+            true_count = 0
 
-        for add in add_comp:
-            if add["completed"] is True:
-                true_count += 1
+            for std in std_comp:
+                if std["completed"] is True:
+                    true_count += 1
 
-        project_completion = round(true_count/total_elem *100)
+            for add in add_comp:
+                if add["completed"] is True:
+                    true_count += 1
 
-        get_status =  list_elements[i].get("project_status")
+            project_completion = round(true_count/total_elem *100)
 
-        def get_project_status(flags: dict) -> str:
+            get_status =  list_elements[i].get("project_status")
 
-            if flags.get("closed"):
-                return "Closed"
+            def get_project_status(flags: dict) -> str:
 
-            if flags.get("bioinformatics"):
-                return "Completed"
+                if flags.get("closed"):
+                    return "Closed"
 
-            if flags.get("library"):
-                return "Bioinformatics Stage"
+                if flags.get("bioinformatics"):
+                    return "Completed"
 
-            if flags.get("qc"):
-                return "Library Stage"
+                if flags.get("library"):
+                    return "Bioinformatics Stage"
 
-            if flags.get("method"):
-                return "In QC Stage"
+                if flags.get("qc"):
+                    return "Library Stage"
 
-            if flags.get("sample_submission"):
-                return "Accepted"
+                if flags.get("method"):
+                    return "In QC Stage"
 
-            return "Initiated"
+                if flags.get("sample_submission"):
+                    return "Accepted"
 
-        status = get_project_status(get_status)
+                return "Initiated"
 
-        project = {
-            "project_id" : project_id,
-            "percent" : project_completion,
-            "status" : status
+            status = get_project_status(get_status)
+
+            project = {
+                "project_id" : project_id,
+                "percent" : project_completion,
+                "status" : status
+            }
+
+            payload.append(project)
+        
+        return{
+            "status" : True,
+            "message" : "Data fetched",
+            "payload" : payload
         }
-
-        payload.append(project)
     
-    return{
-        "status" : "Fetch successfull",
-        "payload" : payload
-    }
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Could not fetch projects"
+        )
+    
+
+
+
 
 
 @router.post("/projectcomp")
-async def projectcomp_pop(payload: ProjIdStatus):
+async def projectcomp_pop(payload: ProjIdStatus, _ : dict = Depends(parse_token)):
 
-    collections = collections_load("tcProjects")
+    try:
 
-    project_id = payload.project_id.strip()
-    
-    data = collections.find_one({"project_id" : project_id}, {"_id" : 0,
-                                               "project_info.pi_name" : 1,
-                                               "project_info.email" : 1,
-                                               "project_info.phone": 1,
-                                               "project_info.institution" : 1,
-                                               "project_info.lab_dept" : 1,
-                                               "service_info.offering_type" : 1,
-                                               "service_info.platform" : 1,
-                                               "project_details.standard_deliverables" : 1,
-                                               "project_details.added_deliverables" : 1})
-    
-    if not data:pass
-    
-    pi_name = data["project_info"]["pi_name"]
-    email = data["project_info"]["email"]
-    phone = data["project_info"]["phone"]
-    institution = data["project_info"]["institution"]
-    lab_dept =  data["project_info"]["lab_dept"]
-    offering_type = data["service_info"]["offering_type"]
-    platform = data["service_info"]["platform"]
-    std_del = data["project_details"]["standard_deliverables"]
-    add_del = data["project_details"]["added_deliverables"]
+        collections = collections_load("tcProjects")
 
-    return {
-        "status" : "Fetch Successfull",
-        "payload" : {
-            "project_id" : project_id,
-            "project_status" : payload.project_status,
-            "pi_name" : pi_name, 
-            "email" : email, 
-            "phone" : phone,
-            "institution" : institution,
-            "lab_dept" : lab_dept,
-            "offering_type" : offering_type,
-            "platform" : platform,
-            "std_del" : std_del,
-            "add_del" : add_del 
+        project_id = payload.project_id.strip()
+        
+        data = collections.find_one({"project_id" : project_id}, {"_id" : 0,
+                                                "project_info.pi_name" : 1,
+                                                "project_info.email" : 1,
+                                                "project_info.phone": 1,
+                                                "project_info.institution" : 1,
+                                                "project_info.lab_dept" : 1,
+                                                "service_info.offering_type" : 1,
+                                                "service_info.platform" : 1,
+                                                "project_details.standard_deliverables" : 1,
+                                                "project_details.added_deliverables" : 1})
+        
+        if not data:
+            return {
+                "status": False,
+                "message": "Project not found"
+            }
+        
+        pi_name = data["project_info"]["pi_name"]
+        email = data["project_info"]["email"]
+        phone = data["project_info"]["phone"]
+        institution = data["project_info"]["institution"]
+        lab_dept =  data["project_info"]["lab_dept"]
+        offering_type = data["service_info"]["offering_type"]
+        platform = data["service_info"]["platform"]
+        std_del = data["project_details"]["standard_deliverables"]
+        add_del = data["project_details"]["added_deliverables"]
+
+        return {
+            "status" : True,
+            "message" : "Data fetched",
+            "payload" : {
+                "project_id" : project_id,
+                "project_status" : payload.project_status,
+                "pi_name" : pi_name, 
+                "email" : email, 
+                "phone" : phone,
+                "institution" : institution,
+                "lab_dept" : lab_dept,
+                "offering_type" : offering_type,
+                "platform" : platform,
+                "std_del" : std_del,
+                "add_del" : add_del 
+            }
         }
-    }
+    
+    except Exception as e:
+        print(str(e))
+        HTTPException(
+            status_code=500,
+            detail= "Failed to fetch project details"
+        )
+
+
+
+
 
 
 @router.post("/samsubdetails")
-async def samsub_pop(payload : ProjId):
+async def samsub_pop(payload : ProjId, _ : dict = Depends(parse_token)):
 
     collections = collections_load("tcProjects")
 
     project_id = payload.project_id.strip()
 
-    data = collections.find_one({"project_id" : project_id},
-                                {
-                                    "_id" : 0,
-                                    "project_status.sample_submission": 1,
-                                    "service_info.service_name" : 1,
-                                    "service_info.sample_number" : 1,
-                                    "sample_submission": 1
-                                })
-    
-    if data.get("project_status").get("sample_submission") == False:
-        return {
-            "status" : "NoSubmission",
-            "payload" : "No sample submission form found. Please contact the client"
-        }
-    
-    def true_false(bool):
-        if bool is True:
-            return "Yes"
-        elif bool is False:
-            return "No"
-        return bool
-    
-    def null_val(val):
-        if val == "" or val == " " or val is None:
-            return "No data available"
-        return val
-    
-    service_info = data.get("service_info", {})
-    sample_sub = data.get("sample_submission", {})
-    details = sample_sub.get("details", {})
+    try:
 
-    return {
-        "status": "Fetch successful",
-        "payload": {
-            "service_name": service_info.get("service_name", "No data available"),
-            "sample_number": service_info.get("sample_number", "No data available"),
-            "service_technology": null_val(sample_sub.get("service_technology")),
-            "application": null_val(details.get("application")),
-            
-            "replicates": true_false(details.get("replicates", "No data available")),
-            "extraction_needed": true_false(details.get("extraction_needed", "No data available")),
-            "total_rna_prep": null_val(details.get("total_rna_prep")),
-            "nucleases": true_false(details.get("nucleases")),
-            "kit_name": null_val(details.get("kit_name")),
-            "qc_accessed": null_val(details.get("qc_accessed")),
-            "bioinformatics_required": true_false(details.get("bioinformatics_required", "No data available")),
-            "key_objectives": null_val(details.get("key_objectives")),
-            "comparisons": null_val(details.get("comparisons")),
-            "additional_analysis": null_val(details.get("additional_analysis")),
-            "reference_studies": null_val(details.get("reference_studies")),
-            "sample_details": details.get("sample_details", [])
+        data = collections.find_one({"project_id" : project_id},
+                                    {
+                                        "_id" : 0,
+                                        "project_status.sample_submission": 1,
+                                        "service_info.service_name" : 1,
+                                        "service_info.sample_number" : 1,
+                                        "sample_submission": 1
+                                    })
+        
+        if data.get("project_status").get("sample_submission") == False:
+            return {
+                "status" : False,
+                "message" : "No sample submission form found. Please contact the client"
+            }
+        
+        def true_false(bool):
+            if bool is True:
+                return "Yes"
+            elif bool is False:
+                return "No"
+            return bool
+        
+        def null_val(val):
+            if val == "" or val == " " or val is None:
+                return "No data available"
+            return val
+        
+        service_info = data.get("service_info", {})
+        sample_sub = data.get("sample_submission", {})
+        details = sample_sub.get("details", {})
+
+        return {
+            "status": True,
+            "message" : "Data fetched",
+            "payload": {
+                "service_name": service_info.get("service_name", "No data available"),
+                "sample_number": service_info.get("sample_number", "No data available"),
+                "service_technology": null_val(sample_sub.get("service_technology")),
+                "application": null_val(details.get("application")),
+                
+                "replicates": true_false(details.get("replicates", "No data available")),
+                "extraction_needed": true_false(details.get("extraction_needed", "No data available")),
+                "total_rna_prep": null_val(details.get("total_rna_prep")),
+                "nucleases": true_false(details.get("nucleases")),
+                "kit_name": null_val(details.get("kit_name")),
+                "qc_accessed": null_val(details.get("qc_accessed")),
+                "bioinformatics_required": true_false(details.get("bioinformatics_required", "No data available")),
+                "key_objectives": null_val(details.get("key_objectives")),
+                "comparisons": null_val(details.get("comparisons")),
+                "additional_analysis": null_val(details.get("additional_analysis")),
+                "reference_studies": null_val(details.get("reference_studies")),
+                "sample_details": details.get("sample_details", [])
+            }
         }
-    }
+    
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Sample submission details fetch failed"
+        )
+
+
+
+
+
 
 @router.get("/reportspop")
-async def reports_pop(fileandpath: str):
+async def reports_pop(fileandpath: str, _ : dict = Depends(parse_token)):
 
     current_dir = os.getcwd()
 
@@ -214,14 +262,19 @@ async def reports_pop(fileandpath: str):
     )
 
 
+
+
+
+
+
 @router.post("/qcsubdetails")
-async def qc_sub_pop(payload : ProjId):
+async def qc_sub_pop(payload : ProjId, _ : dict = Depends(parse_token)):
     
     collections = collections_load("tcProjects")
-
     project_id = payload.project_id
 
     try:
+
         data = collections.find_one({"project_id" : project_id},
                                     {
                                         "_id" : 0,
@@ -230,10 +283,16 @@ async def qc_sub_pop(payload : ProjId):
                                         "qc" : 1,
                                     })
         
+        if not data:
+            return{
+                "status" : False,
+                "message" : "No QC submission found. Please upload to view"
+            }
+        
         if data.get("project_status").get("qc") == False:
             return {
-                "status" : "NoSubmission",
-                "payload" : "No QC submission found. Please upload to view"
+                "status" : False,
+                "message" : "No QC submission found. Please upload to view"
             }
         
         method = data.get("method", {})
@@ -248,7 +307,8 @@ async def qc_sub_pop(payload : ProjId):
             qc_report_url = None
 
         return{
-            "status" : "Fetch successfull",
+            "status" : True,
+            "message" : "Data fetched",
             "payload" : {
                 "writeup" : method.get("writeup", "No data available"),
                 "method_summary" : method.get("method_summary", "No data available"),
@@ -264,12 +324,15 @@ async def qc_sub_pop(payload : ProjId):
         print(str(e))
         raise HTTPException(
             status_code= 500,
-            detail= "Unable to fetch qc details"
+            detail= "QC details fetch failed"
         )
 
 
+
+
+
 @router.post("/libqcsubdetails")
-async def libqc_sub_pop(payload : ProjId):
+async def libqc_sub_pop(payload : ProjId, _ : dict = Depends(parse_token)):
 
     collections = collections_load("tcProjects")
 
@@ -284,10 +347,16 @@ async def libqc_sub_pop(payload : ProjId):
                                         "library" : 1
                                     })
         
-        if data.get("project_status", {}).get("library") == False:
+        if not data:
             return{
-                "status" : "NoSubmission",
-                "payload" : "No Library QC submission found. Please upload one"
+                "status" : False,
+                "message" : "No Library QC submission found. Please upload one"
+            }
+        
+        if not data.get("project_status", {}).get("library"):
+            return{
+                "status" : False,
+                "message" : "No Library QC submission found. Please upload one"
             }
         
         library = data.get("library", {})
@@ -300,7 +369,8 @@ async def libqc_sub_pop(payload : ProjId):
             lib_report_url = None
 
         return{
-            "status" : "Fetch successfull",
+            "status" : True,
+            "message" : "Data fetched",
             "payload" : {
                 "library_method" : library.get("library_method", "No data available"),
                 "library_summary" : library.get("library_summary", "No data available"),
@@ -313,11 +383,15 @@ async def libqc_sub_pop(payload : ProjId):
         print(str(e))
         raise HTTPException(
             status_code= 500,
-            detail= "Unable to fetch lib qc details"
+            detail= "Lib QC details fetch failed"
         )
+    
+
+
+
 
 @router.post("/binfsubdetails")
-async def binf_sub_pop(payload : ProjId):
+async def binf_sub_pop(payload : ProjId, _ : dict = Depends(parse_token)):
 
     collections = collections_load("tcProjects")
 
@@ -332,10 +406,16 @@ async def binf_sub_pop(payload : ProjId):
                                     "bioinformatics" : 1
                                 })
         
+        if not data:
+            return{
+                "status" : False,
+                "message" : "No Analysis submissions found. Please upload one"
+            }
+        
         if data.get("project_status", {}).get("bioinformatics") == False:
             return{
-                "status" : "NoSubmission",
-                "payload" : "No Analysis submissions found. Please upload one"
+                "status" : False,
+                "message" : "No Analysis submissions found. Please upload one"
             }
 
         bioinformatics = data.get("bioinformatics", {})
@@ -348,7 +428,8 @@ async def binf_sub_pop(payload : ProjId):
             binf_url = None
 
         return{
-            "status" :  "fetch successfull",
+            "status" :  True,
+            "message" : "Data fetched",
             "payload" : {
                 "bioinformatics_summary" : bioinformatics.get("bioinformatics_summary", "No data available"),
                 "estimated_hours" : bioinformatics.get("estimated_hours", "No data available"),
@@ -361,15 +442,22 @@ async def binf_sub_pop(payload : ProjId):
         print(str(e))
         raise HTTPException(
             status_code= 500,
-            detail= "Unable to fetch analysi details"
+            detail= "Unable to fetch analysis details"
         )
+    
+
+
 
 
 
 @router.post("/taskstatusupdate")
-def task_update(payload : TaskUpdate, user_info : dict = Depends(parse_token)):
+def task_update(payload : TaskUpdate, usertok : dict = Depends(parse_token)):
 
-    if user_info["role"] == "bd": return{"status" : "User not allowed"}
+    if usertok["role"] == "bd": 
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
 
     collection = collections_load("tcProjects")
 
@@ -385,13 +473,17 @@ def task_update(payload : TaskUpdate, user_info : dict = Depends(parse_token)):
                             {
                                 "$set" : {
                                     f"project_details.{del_sec}.$[elem].completed" : True,
-                                    f"project_details.{del_sec}.$[elem].completed_at" : datetime.now()
+                                    f"project_details.{del_sec}.$[elem].completed_at" : datetime.now(),
+                                    f"project_details.{del_sec}.$[elem].updated_user" : usertok["name"],
+                                    f"project_details.{del_sec}.$[elem].user_id" : usertok["user_id"],
+                                    f"project_details.{del_sec}.$[elem].user_name" : usertok["username"]
                                 },
                                 
                             }, array_filters=[{"elem.task_number": task_num}])
         
         return{
-            "status" : "Task updated successfully"
+            "status" : True,
+            "message" : "Task completion updated"
         }
 
     except Exception as e:

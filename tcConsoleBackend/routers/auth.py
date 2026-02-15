@@ -38,7 +38,8 @@ async def login(payload : AuthLogin, response : Response):
         token = create_access_token({
             "name" : data.get("name"),
             "user_id" : data.get("user_id"),
-            "role" : data.get("role")
+            "role" : data.get("role"),
+            "username" : username
         })
 
         response.set_cookie(

@@ -33,7 +33,7 @@ export function ProjectDetailsComp() {
     useEffect(() =>{
         async function DataLoad(){
             try{
-                const response = await axios.get("http://localhost:6050/initialization/popservices")
+                const response = await axios.get("http://localhost:6050/initialization/popservices", {withCredentials : true})
                 setServicesClass(response.data)
             }
             catch(error){
@@ -136,19 +136,22 @@ export function ProjectDetailsComp() {
                     headers: { "Content-Type": "application/json" } }
             )
 
-            const s_data = response.data
+            const data = response.data
 
-            alert(s_data.status)
+            if(!data.status){
+                alert(data.message)
+                window.location.reload()
+                return
+            }
 
+            alert(data.message)
             window.location.reload()
-
-            return response  
+            
 
         } catch (error) {
 
             console.error(error)
-            alert("Submission failed")
-            throw error     
+            alert("Submission failed")     
         }
     }
     

@@ -1,6 +1,9 @@
+"use client"
+
 import Link from 'next/link'
 import Image from "next/image"
 import styles from "./NavBar.module.css"
+import { useState } from 'react';
 
 function Logo() {
     return (
@@ -66,11 +69,50 @@ function NavBtns() {
     );
 }
 
+function UserProfile() {
+
+    const [open, setOpen] = useState(false)
+
+    return(
+        <>
+            <button 
+                className={styles.UserButton}
+                onClick={() => setOpen(true)}
+            >
+                Hi, Gopalakrishna Ramaswamy &#128100;
+            </button>
+
+            {open && <div 
+                className={styles.overlay}
+                onClick={() => setOpen(false)}
+            />}
+
+            <div className={`${styles.sidePanel} ${open ? styles.open : ""}`}>
+                <div className={styles.panelHeader}>
+                    <h3>User Profile</h3>
+                    <button onClick={() => setOpen(false)}>✕</button>
+                </div>
+
+                <div className={styles.panelBody}>
+                    <p><b>Name:</b> Gopalakrishna Ramaswamy</p>
+                    <p><b>Email:</b> user@theracues.com</p>
+                    <p><b>Role:</b> Scientist</p>
+                </div>
+
+                <div className={styles.panelFooter}>
+                    <button className={styles.logoutBtn}>Logout</button>
+                </div>
+            </div>
+        </>
+    )
+}
+
 export function NavBar() {
     return (
         <nav className= {styles.navBar}>
             <Logo />
             <NavBtns />
+            <UserProfile />
         </nav>
     )
 }

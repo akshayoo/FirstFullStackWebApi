@@ -69,13 +69,21 @@ export function NgSForm({projectId}) {
             uploadData.append("file" , file)
 
             const response = await axios.post("http://127.0.0.1:6050/intake/tablepopulate",
-                uploadData
+                uploadData, {withCredentials : true}
             )
             const data = response.data  
+
+            if(!data.status){
+                alert(data.message)
+                return
+            }
+
+            console.log(data.message)
             
             const formPop = data.submission
 
             setTablePopulate(formPop)
+            setFile(null)
 
         }
 
@@ -84,6 +92,9 @@ export function NgSForm({projectId}) {
             alert("Error uploading the table")
         }
     }
+
+
+
 
     async function submitNGSForm() {
 
@@ -97,11 +108,13 @@ export function NgSForm({projectId}) {
         console.log(payload)
 
         try{
-            const response =  await axios.post("http://127.0.0.1:6050/intake/ngsform", payload)
+            const response =  await axios.post("http://127.0.0.1:6050/intake/ngsform", payload,
+                {withCredentials : true}
+            )
 
             const data = response.data
 
-            alert(data.status)
+            alert(data.message)
 
             window.location.reload()
         }
@@ -111,6 +124,9 @@ export function NgSForm({projectId}) {
         }
 
     }
+
+
+
     
 
     return(

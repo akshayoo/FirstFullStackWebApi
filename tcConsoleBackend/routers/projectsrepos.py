@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Response, HTTPException
+from fastapi import APIRouter, Response, HTTPException, Depends
 from utils.confgmail import email_config
 from utils.dbfunc import collections_load, qc_temp_bytes, lib_qc_bytes,  fin_report_collate
 from schemas.schema import ProjId, EmailCont
+from utils.jwt_utils import parse_token
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 import os
@@ -13,7 +14,13 @@ router = APIRouter(prefix= "/reports")
 
 
 @router.post("/genqcreportpdf")
-async def gen_qcreport(payload : ProjId):
+async def gen_qcreport(payload : ProjId, usertok : dict = Depends(parse_token)):
+
+    if usertok["role"] == "bd":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
     
     project_id = payload.project_id.strip()
 
@@ -36,7 +43,13 @@ async def gen_qcreport(payload : ProjId):
 
 
 @router.post("/genlibqcreportpdf")
-async def lib_qcgen(payload : ProjId):
+async def lib_qcgen(payload : ProjId, usertok : dict = Depends(parse_token)):
+
+    if usertok["role"] == "bd":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
 
     project_id = payload.project_id
 
@@ -57,7 +70,13 @@ async def lib_qcgen(payload : ProjId):
     
 
 @router.post("/genfinreportpdf")
-async def fin_report_gen(payload : ProjId):
+async def fin_report_gen(payload : ProjId, usertok : dict = Depends(parse_token)):
+
+    if usertok["role"] == "bd":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
 
     project_id = payload.project_id
 
@@ -92,7 +111,14 @@ async def fin_report_gen(payload : ProjId):
 
 
 @router.post("/samplesubreportpdf")
-async def samsub_gen(payload : ProjId):
+
+async def samsub_gen(payload : ProjId, usertok : dict = Depends(parse_token)):
+
+    if usertok["role"] == "bd":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        } 
 
     collections = collections_load("tcProjects")
 
@@ -172,7 +198,7 @@ async def samsub_gen(payload : ProjId):
 
 
 @router.post("/sendemail")
-async def send_mail(payload: EmailCont):
+async def send_mail(payload: EmailCont, usertok : dict = Depends(parse_token)):
     
     project_id = payload.project_id
     section = payload.section.strip()
@@ -204,96 +230,145 @@ async def send_mail(payload: EmailCont):
         else:
             cc_mails = []
 
-
-
-
-
         if section == "analysis":
 
-            header = "theraCUES Bioinformatics Report"
-            filename = f"{project_id}_Analysis_Report.pdf"
-            report_path = data["bioinformatics"]["bioinformatics_report"]
+            if usertok["role"] == "bd" or usertok["role"] == "projects":
+                return{
+                    "status" : False,
+                    "message" : "No permission"
+                }
+            
+            try:
 
-            if not os.path.exists(report_path):
-                return {"status": "Report not found"}
+                header = "theraCUES Bioinformatics Report"
+                filename = f"{project_id}_Analysis_Report.pdf"
+                report_path = data["bioinformatics"]["bioinformatics_report"]
 
-            with open(report_path, "rb") as f:
-                binf_report = f.read()
+                if not os.path.exists(report_path):
+                    return {"status": "Report not found"}
 
-            env = Environment(loader=FileSystemLoader("./templates"), autoescape=True)
-            template = env.get_template("reportsmailtemplate.html")
+                with open(report_path, "rb") as f:
+                    binf_report = f.read()
 
-            mail_html = template.render(
-                header=header,
-                mail_body=content
-            )
+                env = Environment(loader=FileSystemLoader("./templates"), autoescape=True)
+                template = env.get_template("reportsmailtemplate.html")
 
-            with tempfile.NamedTemporaryFile(mode="wb", delete=False, suffix=".pdf") as tmp:
-                tmp.write(binf_report)
-                tmpb_file_path = tmp.name
+                mail_html = template.render(
+                    header=header,
+                    mail_body=content
+                )
 
-            status = await email_config(
-                subject=subject,
-                cc_mail=cc_mails,
-                to_mail=to,
-                mail_html=mail_html,
-                attachments=[{
-                    "file": tmpb_file_path,
-                    "filename": filename
-                }]
-            )
+                with tempfile.NamedTemporaryFile(mode="wb", delete=False, suffix=".pdf") as tmp:
+                    tmp.write(binf_report)
+                    tmpb_file_path = tmp.name
 
-            return {"status": status}
+                status = await email_config(
+                    subject=subject,
+                    cc_mail=cc_mails,
+                    to_mail=to,
+                    mail_html=mail_html,
+                    attachments=[{
+                        "file": tmpb_file_path,
+                        "filename": filename
+                    }]
+                )
 
+                return {
+                    "status": True,
+                    "message": status
+                }
 
+            except Exception as e:
+                print(str(e))
+                return {"status": False,
+                        "message" : "Mail not sent: Contact admin"}
+            
+                
+            finally:
+                if tmpb_file_path and os.path.exists(tmpb_file_path):
+                    try:
+                        os.unlink(tmpb_file_path)
+                    except Exception as e:
+                        pass
 
 
         elif section == "finalreport":
 
-            header = "theraCUES Project Final Report"
-            filename = f"{project_id}_Final_Report.pdf"
+            if usertok["role"] == "bd":
+                return{
+                    "status" : False,
+                    "message" : "No permission"
+                }
+            
+            try:
 
-            final_report = fin_report_collate(project_id)
+                header = "theraCUES Project Final Report"
+                filename = f"{project_id}_Final_Report.pdf"
 
-            env = Environment(loader=FileSystemLoader("./templates"), autoescape=True)
-            template = env.get_template("reportsmailtemplate.html")
+                final_report = fin_report_collate(project_id)
 
-            mail_html = template.render(
-                header=header,
-                mail_body=content
-            )
+                env = Environment(loader=FileSystemLoader("./templates"), autoescape=True)
+                template = env.get_template("reportsmailtemplate.html")
 
-            with tempfile.NamedTemporaryFile(mode="wb", delete=False, suffix=".pdf") as tmp:
-                tmp.write(final_report)
-                tmp_finalrep_path = tmp.name
+                mail_html = template.render(
+                    header=header,
+                    mail_body=content
+                )
 
-            status = await email_config(
-                subject=subject,
-                cc_mail=cc_mails,
-                to_mail=to,
-                mail_html=mail_html,
-                attachments=[{
-                    "file": tmp_finalrep_path,
-                    "filename": filename
-                }]
-            )
+                with tempfile.NamedTemporaryFile(mode="wb", delete=False, suffix=".pdf") as tmp:
+                    tmp.write(final_report)
+                    tmp_finalrep_path = tmp.name
 
-            return {"status": status}
+                status = await email_config(
+                    subject=subject,
+                    cc_mail=cc_mails,
+                    to_mail=to,
+                    mail_html=mail_html,
+                    attachments=[{
+                        "file": tmp_finalrep_path,
+                        "filename": filename
+                    }]
+                )
 
-
+                return {
+                    "status": True,
+                    "message": status
+                }
+            
+            except Exception as e:
+                print(str(e))
+                return {"status": False,
+                        "message" : "Mail not sent: Contact admin"}
+            
+                
+            finally:
+                if tmp_finalrep_path and os.path.exists(tmp_finalrep_path):
+                    try:
+                        os.unlink(tmp_finalrep_path)
+                    except Exception as e:
+                        pass
 
 
         elif section == "qc":
+
+            if usertok["role"] == "bd" or usertok["role"] == "analysis":
+                return{
+                    "status" : False,
+                    "message" : "No permission"
+                }
 
             header = "theraCUES QC Report"
             filename = f"{project_id}_QC_Report.pdf"
             pdf_bytes = qc_temp_bytes(project_id=project_id)
 
-
-
-
             
         elif section == "library":
+
+            if usertok["role"] == "bd" or usertok["role"] == "analysis":
+                return{
+                    "status" : False,
+                    "message" : "No permission"
+                }
 
             header = "theraCUES Library QC Report"
             filename = f"{project_id}_Library_QC_Report.pdf"
@@ -322,11 +397,15 @@ async def send_mail(payload: EmailCont):
             }]
         )
         
-        return {"status": status} 
+        return {
+            "status": True,
+            "message": status
+        }
     
     except Exception as e:
         print(str(e))
-        return {"status": "Mail not sent: Contact admin"}
+        return {"status": False,
+                "message" : "Mail not sent: Contact admin"}
     
     finally:
         if temp_file_path and os.path.exists(temp_file_path):

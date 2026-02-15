@@ -33,19 +33,17 @@ export function LabFormComp() {
 
         try {
             const response =  await axios.post("http://127.0.0.1:6050/intake/initialinfo",
-                {"project_token" : searchCont}
+                {"project_token" : searchCont}, {withCredentials : true}
             )
 
             const data = response.data
 
-            if (!data){
+            if (!data.status){
                 alert(`No project initiated, Please initialte a project`)
                 return
             }
-
-            const data_status = data.status
             
-            console.log(data_status)
+            console.log(data.status)
 
             const payload = data.payload
 
@@ -57,7 +55,6 @@ export function LabFormComp() {
         catch(error) {
             console.log(error)
             alert(`Not a valid token: Error loading the data`)
-            window.location.reload()
             return
         }
     }
