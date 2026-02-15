@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from utils.dbfunc import collections_load
 from schemas.schema import ProjIdStatus, ProjId, TaskUpdate
 import os
+from utils.jwt_utils import parse_token
 from fastapi.responses import FileResponse
 from urllib.parse import quote
 from datetime import datetime 
@@ -366,7 +367,9 @@ async def binf_sub_pop(payload : ProjId):
 
 
 @router.post("/taskstatusupdate")
-def task_update(payload : TaskUpdate):
+def task_update(payload : TaskUpdate, user_info : dict = Depends(parse_token)):
+
+    if user_info["role"] == "bd": return{"status" : "User not allowed"}
 
     collection = collections_load("tcProjects")
 

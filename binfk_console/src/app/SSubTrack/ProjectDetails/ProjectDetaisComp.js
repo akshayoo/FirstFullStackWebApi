@@ -33,7 +33,7 @@ export function ProjectDetailsComp() {
     useEffect(() =>{
         async function DataLoad(){
             try{
-                const response = await axios.get("http://127.0.0.1:6050/initialization/popservices")
+                const response = await axios.get("http://localhost:6050/initialization/popservices")
                 setServicesClass(response.data)
             }
             catch(error){
@@ -130,15 +130,15 @@ export function ProjectDetailsComp() {
         }
 
         try {
-            const response = await axios.post("http://127.0.0.1:6050/initialization/startproject",
+            const response = await axios.post("http://localhost:6050/initialization/startproject",
                 payload,
-                { headers: { "Content-Type": "application/json" } }
+                {   withCredentials: true,
+                    headers: { "Content-Type": "application/json" } }
             )
 
             const s_data = response.data
 
-            alert(`Project ${s_data.project_id} submitted successfully`)
-
+            alert(s_data.status)
 
             window.location.reload()
 
@@ -148,7 +148,7 @@ export function ProjectDetailsComp() {
 
             console.error(error)
             alert("Submission failed")
-            throw error        
+            throw error     
         }
     }
     

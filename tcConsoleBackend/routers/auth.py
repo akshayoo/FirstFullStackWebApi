@@ -45,12 +45,13 @@ async def login(payload : AuthLogin, response : Response):
             key="auth_token",
             value=token,
             httponly=True,
-            samesite="lax",
-            secure=False,
-            max_age=60*60*8
+            samesite="lax",     
+            secure=False,       
+            max_age=60*60*8,
+            path="/"             
         )
 
-        return {"status": "success", "token" : token}
+        return {"status": "success"}
 
     
     except Exception as e:

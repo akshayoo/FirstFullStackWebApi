@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, Depends
 from utils.dbfunc import collections_load
 from utils.confgmail import email_config
 from schemas.schema import ProjectSubmission
@@ -6,6 +6,7 @@ from jinja2 import FileSystemLoader, Environment
 from fastapi.exceptions import HTTPException
 from datetime import datetime
 from uuid import uuid1
+from utils.jwt_utils import parse_token
 
 
 router =  APIRouter(prefix= "/initialization")
@@ -66,7 +67,9 @@ async def prilim_info():
 
 
 @router.post("/startproject")
-async def form_fetch_mail(payload: ProjectSubmission):
+async def form_fetch_mail(payload: ProjectSubmission, user_info : dict = Depends(parse_token)):
+
+    if user_info["role"] == "projects" : return {"status" : "User not allowed"}
 
     collection = collections_load(collection = "tcProjects") 
 
@@ -129,7 +132,10 @@ async def form_fetch_mail(payload: ProjectSubmission):
         },
         "audit": {
             "created_at": datetime.now(),
-            "created_by" : "Ak"
+            "created_user" : user_info["name"],
+            "user_id" : user_info["user_id"],
+            "created_username" : user_info["username"],
+            "role" : user_info["role"]
         }
     }
 
@@ -162,7 +168,6 @@ async def form_fetch_mail(payload: ProjectSubmission):
                                     mail_html= html_cont)
 
         return {
-            "project_id": payload.project_id,
             "status": f"Project added and {email_status}"
         }
 

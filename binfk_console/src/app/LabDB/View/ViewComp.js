@@ -48,7 +48,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
     useEffect(() => {
         async function ProjectsPipeline() {
             try{
-                const response = await axios.get("http://127.0.0.1:6050/project/projects")
+                const response = await axios.get("http://localhost:6050/project/projects")
                 const data = await response.data
                 console.log(data.status)
 
@@ -68,7 +68,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
         if(!projectStatus) return
 
         try{
-            const response = await axios.post("http://127.0.0.1:6050/project/projectcomp",
+            const response = await axios.post("http://localhost:6050/project/projectcomp",
                 {
                     "project_id" : projectId,
                     "project_status" : projectStatus 
@@ -202,30 +202,17 @@ function StatusPop({projectCont, setProjectCont}){
 
             alert("You are about to mark this task completed")
 
-            const response = await axios.post("http://127.0.0.1:6050/project/taskstatusupdate",
+            const response = await axios.post("http://localhost:6050/project/taskstatusupdate",
                 {
                     "project_id" : projectId,
                     "task" : task,
                     "sec" : sec
-                }
+                }, {withCredentials : true}
             )
 
             const data = response.data
-
-            setProjectCont(prev => {
-
-                const updated = { ...prev }
-
-                const key = sec === "std" ? "std_del" : "add_del"
-
-                updated[key] = updated[key].map(item =>
-                    item.task_number === task
-                        ? { ...item, completed: true }
-                        : item
-                )
-
-                return updated
-            })
+            
+            alert(data.status)
         }
 
         catch(err) {
@@ -278,7 +265,7 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
     async function SampleSub(projectId) {
 
         try {
-            const response = await axios.post("http://127.0.0.1:6050/project/samsubdetails",
+            const response = await axios.post("http://localhost:6050/project/samsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -320,7 +307,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
         
         try{
 
-            const response = await axios.post("http://127.0.0.1:6050/project/qcsubdetails",
+            const response = await axios.post("http://localhost:6050/project/qcsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -377,7 +364,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
         try{
 
-            const response = await axios.post("http://127.0.0.1:6050/project/libqcsubdetails",
+            const response = await axios.post("http://localhost:6050/project/libqcsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -428,7 +415,7 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 
     async function BinfSub(projectId) {
         try{
-            const response = await axios.post("http://127.0.0.1:6050/project/binfsubdetails",
+            const response = await axios.post("http://localhost:6050/project/binfsubdetails",
                 {"project_id" : projectId}
             )
 
@@ -476,7 +463,7 @@ function Reports({projectCont}) {
     async function downlFinalRep(projectId) {
         try{
 
-            const response = await axios.post("http://127.0.0.1:6050/reports/genfinreportpdf",
+            const response = await axios.post("http://localhost:6050/reports/genfinreportpdf",
                 {"project_id" : projectId},
                 {responseType : "blob"}
             )
@@ -504,7 +491,7 @@ function Reports({projectCont}) {
             
             alert("You are going to perform a sensitive action. Do you wnat to continue")
             
-            const response = await axios.post("http://127.0.0.1:6050/project/closeproject",
+            const response = await axios.post("http://localhost:6050/project/closeproject",
                 {"project_id" : projectId}
             )
 

@@ -17,6 +17,8 @@ export function LoginComp() {
     })
 
 async function signIn(e) {
+
+        console.log("SIGN IN CLICKED");
     
          e.preventDefault()
 
@@ -26,7 +28,7 @@ async function signIn(e) {
         }
         try {
             const response = await axios.post(
-                "http://127.0.0.1:6050/auth/login",
+                "http://localhost:6050/auth/login",
                 formData,
                 { withCredentials: true }
             )
@@ -35,11 +37,7 @@ async function signIn(e) {
             
             if (response.data.status === "success") {
 
-                document.cookie = `auth_token=${response.data.token}; path=/; max-age=${90*60*60}`;
-                router.push('/')
-                router.refresh()
-                router.push('/')  
-                router.refresh()  
+                router.replace('/')
             } 
             else {
                 alert(response.data.status)
