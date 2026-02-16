@@ -252,7 +252,6 @@ function StatusPop({projectCont}){
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Project Tasks</h2>
-                <button className={styles.fieldPop}>&#8693;</button>
             </div>
 
             <div >
@@ -466,7 +465,7 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Analysis Details | {`${projectCont.project_id}`}</h2>
+                <h2 className={styles.sech}>Analysis Details</h2>
                 <button className={styles.fieldPop} onClick={() => BinfSub(projectCont.project_id)} >&#8693;</button>
             </div>
             {
@@ -535,7 +534,7 @@ function Reports({projectCont}) {
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
-                <h2 className={styles.sech}>Reports | {`${projectCont.project_id}`}</h2>
+                <h2 className={styles.sech}>Reports</h2>
             </div>
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>

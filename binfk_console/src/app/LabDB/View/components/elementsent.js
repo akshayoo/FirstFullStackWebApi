@@ -30,7 +30,7 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
                 {withCredentials : true}
             )
             const data = response.data
-            alert(data.status)
+            alert(data.message)
             EmailTemp(false)
         }
         catch(error){

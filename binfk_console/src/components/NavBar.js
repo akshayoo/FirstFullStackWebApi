@@ -79,7 +79,7 @@ function UserProfile() {
                 className={styles.UserButton}
                 onClick={() => setOpen(true)}
             >
-                Hi, Gopalakrishna Ramaswamy &#128100;
+                Hi, Akshay &#128100;
             </button>
 
             {open && <div 
@@ -94,9 +94,9 @@ function UserProfile() {
                 </div>
 
                 <div className={styles.panelBody}>
-                    <p><b>Name:</b> Gopalakrishna Ramaswamy</p>
-                    <p><b>Email:</b> user@theracues.com</p>
-                    <p><b>Role:</b> Scientist</p>
+                    <p><b>Name:</b> Akshay</p>
+                    <p><b>Email:</b> akshay.ramesh@theracues.com</p>
+                    <p><b>Role:</b> ad</p>
                 </div>
 
                 <div className={styles.panelFooter}>

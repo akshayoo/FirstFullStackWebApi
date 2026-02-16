@@ -21,10 +21,6 @@ export function SampleSubDetailsComp({samsubDetails, projectId}){
                 {responseType : "blob", withCredentials : true}
             )
 
-            if(!response.data.status){
-                alert(response.data.message)
-                return
-            }
 
             const blob = new Blob([response.data], {type : "application/pdf"})
 
@@ -168,11 +164,6 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
                 {"project_id" : projectId},
                 {responseType : "blob", withCredentials : true}
             )
-
-            if(!response.data.status){
-                alert(response.data.message)
-                return
-            }
 
             const blob = new Blob([response.data], {type: "application/pdf"})
             const url = window.URL.createObjectURL(blob)
