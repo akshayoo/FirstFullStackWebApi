@@ -5,6 +5,17 @@ import Image from "next/image"
 import styles from "./NavBar.module.css"
 import { useState } from 'react';
 
+
+export function NavBar() {
+    return (
+        <nav className= {styles.navBar}>
+            <Logo />
+            <NavBtns />
+            <UserProfile />
+        </nav>
+    )
+}
+
 function Logo() {
     return (
         <Image
@@ -107,12 +118,3 @@ function UserProfile() {
     )
 }
 
-export function NavBar() {
-    return (
-        <nav className= {styles.navBar}>
-            <Logo />
-            <NavBtns />
-            <UserProfile />
-        </nav>
-    )
-}
