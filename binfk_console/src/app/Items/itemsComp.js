@@ -19,7 +19,7 @@ export function ItemsComp() {
                     <div className={styles.Card}>
                         <h3>Catalog</h3>
                         <p>View Services</p>
-                        <Link href="/cues-ai" className={styles.CardLink}>
+                        <Link href="/Items/Catalog" className={styles.CardLink}>
                             Explore →
                         </Link>
                     </div>
@@ -30,7 +30,7 @@ export function ItemsComp() {
                         <p>Insert custom services</p>
 
                         <div className={styles.ActionRow}>
-                            <Link href="/projects" className={styles.CardLink}>
+                            <Link href="/Items/Insert" className={styles.CardLink}>
                                 Explore →
                             </Link>
                         </div>

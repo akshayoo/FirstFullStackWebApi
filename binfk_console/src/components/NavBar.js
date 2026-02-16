@@ -3,15 +3,36 @@
 import Link from 'next/link'
 import Image from "next/image"
 import styles from "./NavBar.module.css"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 export function NavBar() {
+
+    const [whoami, setWhoami] = useState({})
+
+    useEffect(() => {
+
+        async function WhoAmi(){
+
+            const response = await axios.get("http://localhost:6050/auth/whoami",
+                {withCredentials : true}
+            )
+
+            const data = response.data
+
+            setWhoami(data)
+        }
+
+        WhoAmi()
+
+    }, [])
+
     return (
         <nav className= {styles.navBar}>
             <Logo />
             <NavBtns />
-            <UserProfile />
+            <UserProfile whoami = {whoami} />
         </nav>
     )
 }
@@ -80,9 +101,32 @@ function NavBtns() {
     );
 }
 
-function UserProfile() {
+function UserProfile({whoami}) {
 
     const [open, setOpen] = useState(false)
+
+    const userLogout = async() =>{
+
+        try{
+
+            const response = await axios.post("http://localhost:6050/auth/logout",{},
+                {withCredentials : true}
+            )
+
+            const data = response.data
+
+            if(!data.status){
+                alert("logout failed")
+                return
+            }
+
+            window.location.href = "/"
+
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
 
     return(
         <>
@@ -90,7 +134,7 @@ function UserProfile() {
                 className={styles.UserButton}
                 onClick={() => setOpen(true)}
             >
-                Hi, Akshay &#128100;
+                Hi, {whoami.name} &#128100;
             </button>
 
             {open && <div 
@@ -100,18 +144,25 @@ function UserProfile() {
 
             <div className={`${styles.sidePanel} ${open ? styles.open : ""}`}>
                 <div className={styles.panelHeader}>
-                    <h3>User Profile</h3>
-                    <button onClick={() => setOpen(false)}>✕</button>
+                    <div className={styles.closeHead}>
+                        <button onClick={() => setOpen(false)}>✕</button>
+                    </div>
                 </div>
-
-                <div className={styles.panelBody}>
-                    <p><b>Name:</b> Akshay</p>
-                    <p><b>Email:</b> akshay.ramesh@theracues.com</p>
-                    <p><b>Role:</b> ad</p>
+                <div className={styles.UserPanel}>
+                    <div className={styles.panelSide}>
+                        <div>&#xf110;</div>
+                    </div>
+                    <div className={styles.panelBody}>
+                        <p>{whoami.name}</p>
+                        <p>{whoami.username}</p>
+                        <p>{whoami.user_id}</p>
+                        <p>{whoami.role}</p>
+                    </div>
                 </div>
 
                 <div className={styles.panelFooter}>
-                    <button className={styles.logoutBtn}>Logout</button>
+                    <div>My Account</div>
+                    <div><button onClick={userLogout} className={styles.logoutBtn}>Logout</button></div>
                 </div>
             </div>
         </>

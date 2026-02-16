@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException, Response, Depends
+from jose import JWTError
 from schemas.schema import AuthLogin, AuthSignup
 from utils.dbfunc import collections_load
 from utils.cache import to_hash, varify_hash
-from utils.jwt_utils import create_access_token
+from utils.jwt_utils import create_access_token, parse_token
 from datetime import datetime
 
 
@@ -61,6 +62,40 @@ async def login(payload : AuthLogin, response : Response):
             status_code= 500,
             detail= "Login unsuccessfull"
         )
+    
+
+@router.get("/whoami")
+async def whoami(whoami : dict = Depends(parse_token)):
+    try:
+
+        return{
+            "name" : whoami["name"],
+            "user_id" : whoami["user_id"],
+            "role" : whoami["role"].capitalize(),
+            "username" : whoami["username"]
+        }
+    
+    except JWTError as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Login not successfull"
+        )
+
+
+@router.post("/logout")
+async def logout(response: Response):
+
+    response.delete_cookie(
+        key="auth_token",
+        path="/"
+    )
+
+    return {
+        "status": True,
+        "message": "logged out"
+    }
+
 
 
 @router.post("/signup")

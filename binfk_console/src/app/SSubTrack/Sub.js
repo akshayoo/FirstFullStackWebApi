@@ -19,7 +19,7 @@ export function Sub() {
                     <div className={styles.Card}>
                         <h3>Initialization</h3>
                         <p>Initiate projects</p>
-                        <Link href="/cues-ai" className={styles.CardLink}>
+                        <Link href="/SSubTrack/ProjectDetails" className={styles.CardLink}>
                             Explore →
                         </Link>
                     </div>
@@ -30,7 +30,7 @@ export function Sub() {
                         <p>Manage sample submission forms</p>
 
                         <div className={styles.ActionRow}>
-                            <Link href="/projects" className={styles.CardLink}>
+                            <Link href="/SSubTrack/LabForm" className={styles.CardLink}>
                                 Explore →
                             </Link>
                         </div>
