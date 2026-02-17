@@ -1,6 +1,7 @@
 
 import { NavBar } from "@/components/NavBar";
 import { DbNav } from "./components/DbNav";
+import { ProjectsComp } from "./projectsComp";
 
 export function LabDB() {
 
@@ -10,6 +11,7 @@ export function LabDB() {
     <>
       <NavBar />
       <DbNav />
+      <ProjectsComp />
     </>
   );
 }

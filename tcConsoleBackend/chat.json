@@ -1,0 +1,42 @@
+[
+    {
+        "username" : "akshay.ramesh@theracues.com",
+        "name" : "Akshay",
+        "user_id" : "TIPL_033",
+        "chat_id" : "whqdjhejkw-wejhejhweh-wkjebjw178-djbwk3",
+        "chat_name" : "here chat will be date parsed name",
+        "chats" : [
+            {
+                "user" : "Hi",
+                "message_id" : 16533362,
+                "time" : "here will show the date and time"
+            },
+            {
+                "bot" : "Hello what do you want",
+                "message_id" : 16523362,
+                "time" : "here will show the date and time"
+            }
+        ],
+        "initiated_at" : "here will show the date"
+    },
+    {
+        "username" : "rahul.r@theracues.com",
+        "name" : "Rahul",
+        "user_id" : "TIPL_033",
+        "chat_id" : "whqdjhejkw-wejhejhweh-wkjebjw178-djbwk3",
+        "chat_name" : "here chat will be date parsed name",
+        "chats" : [
+            {
+                "user" : "Hi",
+                "message_id" : 16533362,
+                "time" : "here will show the date and time"
+            },
+            {
+                "bot" : "Hello what do you want",
+                "message_id" : 16523362,
+                "time" : "here will show the date and time"
+            }
+        ],
+        "initiated_at" : "here will show the date"
+    }
+]

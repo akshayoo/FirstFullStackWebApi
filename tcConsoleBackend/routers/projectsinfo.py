@@ -102,6 +102,29 @@ async def projects_comp( _ : dict = Depends(parse_token)):
 
 
 
+@router.get("projectdash")
+async def project_dashboard( _ : dict =  Depends(parse_token)):
+    
+    try:
+
+        collection = collections_load("tcProjects")
+
+        data = collection.find({},
+                               {
+                                   "_id" : 0,
+                                   "project_status" : 1
+                               })
+        
+        pass
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Fetch failed"
+        )
+
+
 
 
 @router.post("/projectcomp")

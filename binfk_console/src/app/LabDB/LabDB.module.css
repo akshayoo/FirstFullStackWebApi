@@ -4,3 +4,126 @@
     height: 100vh;
     overflow: hidden;
 }
+
+.ProjectComp{
+    padding: 30px;
+    height: 100vh;
+}
+
+.ProjectFr {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    border: 1px dotted rgb(114, 114, 114);
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.ProjectHead {
+    background-color: black;
+    border: none;
+    border-radius: 20px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    box-shadow: 2px 2px 2px rgb(82, 82, 82);
+    translate: 1px;
+}
+
+.ProjectHead div{
+    font-size: 9rem;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ProjectP{
+    transition: 0.5s ease;
+}
+
+.ProjectP:hover{
+    color: aqua;
+}
+
+
+
+.ProjectSide {
+    background-color: rgb(226, 226, 226);
+    border-radius: 15px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    box-shadow: 0 1px 1px 1px rgb(209, 209, 209);
+}
+
+.ProjectSide div:first-child{
+    font-size: 2rem;
+    padding: 10px;
+}
+
+.ProjectSide div:last-child{
+    font-size: 8rem;
+    padding: 10px;
+    color: rgb(0, 40, 92);
+}
+
+
+.ProjectInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    border-radius: 20px;
+    margin-top: 25px;
+    box-sizing: border-box;
+    place-items: center;
+}
+
+
+.ProjectInfoComp{
+    height: 120px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0, 68, 95);
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    transition: box-shadow 0.3s ease;
+}
+
+.ProjectInfoComp:hover{
+    transform: translate(1px, 1px, 1px);
+    box-shadow: inset 2px 2px 5px rgba(189, 189, 189, 0.925);;
+}
+
+.ProjectInfoComp div:first-child{
+    font-size: 16px;
+    padding: 10px;
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    color: rgb(230, 230, 230);
+}
+
+.ProjectInfoComp div:last-child{
+    font-size: 3.5rem;
+    padding: 5px;
+    color: rgb(0, 40, 92);
+    color: bisque;
+}
+
+.ProjectGraph{
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 25px;
+    height: 250px;
+}
