@@ -319,7 +319,8 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
             </div>
             {
                 Object.keys(samsubDetails).length > 0 && (
-                <SampleSubDetailsComp samsubDetails={samsubDetails} projectId={projectCont.project_id}/>)
+                <SampleSubDetailsComp samsubDetails={samsubDetails} projectId={projectCont.project_id}
+                setSamsubDetails = {setSamsubDetails}/>)
             }
         </div>
     )
@@ -364,7 +365,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
             </div>
             {
                 Object.keys(qcDetails).length > 0 && (
-                    <QcSamDetailsComp qcDetails = {qcDetails} projectId = {projectCont.project_id} />
+                    <QcSamDetailsComp qcDetails = {qcDetails} projectId = {projectCont.project_id} setQcDetails = {setQcDetails} />
                 )
             }
             <div className={styles.GridThree}>
@@ -418,7 +419,8 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
                 <button className={styles.fieldPop} onClick={() => LibSub(projectCont.project_id)}>&#8693;</button>
             </div>
             {
-                Object.keys(libqcDetails).length > 0 && (<LibSamDetailsComp libqcDetails = {libqcDetails} projectId={projectCont.project_id} />)
+                Object.keys(libqcDetails).length > 0 && (<LibSamDetailsComp libqcDetails = {libqcDetails} projectId={projectCont.project_id}
+                    setLibqcDetails={setLibqcDetails} />)
             }
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
@@ -469,7 +471,8 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
                 <button className={styles.fieldPop} onClick={() => BinfSub(projectCont.project_id)} >&#8693;</button>
             </div>
             {
-                Object.keys(binfDetails).length > 0 && (<BiinfoDetailsComp binfDetails={binfDetails} projectId={projectCont.project_id} />)
+                Object.keys(binfDetails).length > 0 && (<BiinfoDetailsComp binfDetails={binfDetails} projectId={projectCont.project_id}
+                     setBinfDetails= {setBinfDetails} />)
             }
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>

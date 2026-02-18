@@ -5,7 +5,7 @@ import { EmailReports } from './elementsent';
 
 
 
-export function SampleSubDetailsComp({samsubDetails, projectId}){
+export function SampleSubDetailsComp({samsubDetails, setSamsubDetails, projectId}){
 
 
     async function samsubFetch(projectId) {
@@ -41,6 +41,11 @@ export function SampleSubDetailsComp({samsubDetails, projectId}){
     return(
 
         <>
+
+            <div className={styles.ContentStart}>
+                <div>{projectId}</div>
+                <button onClick={() => setSamsubDetails(false)}>X</button>
+            </div>
             <div className={styles.GridThree}>
                 <div className={styles.ProjecIn}>
                     <div>Service Name</div>
@@ -148,7 +153,7 @@ export function SampleSubDetailsComp({samsubDetails, projectId}){
 }
 
 
-export function QcSamDetailsComp({qcDetails, projectId}) {
+export function QcSamDetailsComp({qcDetails, projectId, setQcDetails}) {
 
     const [qcEmailTemp, setQcEmailTemp] = useState(false)
 
@@ -182,6 +187,10 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
 
     return(
         <>
+            <div className={styles.ContentStart}>
+                <div>{projectId}</div>
+                <button onClick={() => setQcDetails(false)}>X</button>
+            </div>
             <div className={styles.GridTwo}>
                 <div className={styles.ProjecIn}>
                     <div>Method Writeup</div>
@@ -276,7 +285,7 @@ export function QcSamDetailsComp({qcDetails, projectId}) {
 
 
 
-export function LibSamDetailsComp({libqcDetails, projectId}) {
+export function LibSamDetailsComp({libqcDetails, projectId, setLibqcDetails}) {
 
     const [libqcEmailTemp, setLibqcEmailTemp] = useState(false)
 
@@ -312,6 +321,10 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
 
     return(
         <>  
+            <div className={styles.ContentStart}>
+                <div>{projectId}</div>
+                <button onClick={() => setLibqcDetails(false)}>X</button>
+            </div>
             <div className={styles.ProjecIn}>
                 <div>Library QC Method</div>
                 <div>{libqcDetails.library_method}</div>
@@ -385,12 +398,16 @@ export function LibSamDetailsComp({libqcDetails, projectId}) {
 }
 
 
-export function BiinfoDetailsComp({binfDetails, projectId}) {
+export function BiinfoDetailsComp({binfDetails, projectId, setBinfDetails}) {
 
     const [bioinfoEmailTemp, setBioinfoEmailTemp] = useState(false)
 
     return(
         <>   
+            <div className={styles.ContentStart}>
+                <div>{projectId}</div>
+                <button onClick={() => setBinfDetails(false)}>X</button>
+            </div>
             <div className={styles.ProjecIn}>
                 <div>Analysis summary</div>
                 <div>{binfDetails.bioinformatics_summary}</div>

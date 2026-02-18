@@ -80,6 +80,11 @@
     transform: translateY(0);
 }
 
+.projectBtns:focus {
+    border-color: #dd5800;
+    background-color: #fff9f4;
+}
+
 .BtnsHeader {
     display: flex;
     justify-content: space-between;
@@ -324,6 +329,35 @@
 .ProjecIn button:hover{
     background-color: rgb(95, 95, 95);
     transform: translateX(1px);
+}
+
+.ContentStart {
+    display: flex;
+    padding: 5px;
+    background-color: #d9e9ff;
+    border-radius: 30px;
+}
+
+.ContentStart div {
+    font-size: 16px;
+    color: #00293a;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.ContentStart button {
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    margin-left: auto;
+    margin-right: 10px;
+    transition: color 0.3s ease-in;
+    font-weight: 800;
+}
+
+.ContentStart button:hover {
+    color: #9f1239;
 }
 
 .GridThree{
