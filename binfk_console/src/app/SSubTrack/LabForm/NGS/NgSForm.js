@@ -1,6 +1,8 @@
 import styles from '../LabForm.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toastSet } from '@/components/toastfunc';
+import { MessageComp } from '@/components/messageComp';
 
 
 export function NgSForm({projectId}) {
@@ -34,6 +36,12 @@ export function NgSForm({projectId}) {
         reference_study: ""
 
     })
+
+    const [toast, setToast] = useState(null)
+
+    const [buttonDisable, setButtonDisable] = useState(false)
+
+
     
     const handleFieldChange = (e) => {
         const {name, value} = e.target
@@ -43,6 +51,8 @@ export function NgSForm({projectId}) {
         }))
     }
 
+
+
     const handleRadiooptChange = (e) => {
         const {name, value} = e.target
         setFormData(prev => ({
@@ -50,10 +60,14 @@ export function NgSForm({projectId}) {
         }))
     }
 
+
+
     const fileIn = (e) => {
         const selFile = e.target.files[0]
         setFile(selFile)
     }
+
+
 
     
     async function fileUpload(){
@@ -61,7 +75,7 @@ export function NgSForm({projectId}) {
         try{
 
             if (!file){
-                alert("Upload the file")
+                toastSet(setToast, false, "Upload the file")
                 return
             }
 
@@ -74,7 +88,7 @@ export function NgSForm({projectId}) {
             const data = response.data  
 
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
@@ -89,7 +103,7 @@ export function NgSForm({projectId}) {
 
         catch(error) {
             console.log(error)
-            alert("Error uploading the table")
+            toastSet(setToast, false, "Error uploading the table")
         }
     }
 
@@ -98,14 +112,15 @@ export function NgSForm({projectId}) {
 
     async function submitNGSForm() {
 
-        if(!tablePopulate.length){alert("No submission table found"); window.location.reload(); return}
-
-        if (!formData.application || !formData.extraction_needed || !formData.bioinformatics_needed) {alert("Missing fields");
-            window.location.reload(); return}
+        if (!formData.application || !formData.extraction_needed || !formData.bioinformatics_needed) {toastSet(setToast, false, "Missing fields");return}
+                
+        if(!tablePopulate.length){toastSet(setToast, false, "No submission table found"); return}
 
         const payload = {...formData, table: tablePopulate}
 
         console.log(payload)
+
+        setButtonDisable(true)
 
         try{
             const response =  await axios.post("http://127.0.0.1:6050/intake/ngsform", payload,
@@ -114,13 +129,12 @@ export function NgSForm({projectId}) {
 
             const data = response.data
 
-            alert(data.message)
-
-            window.location.reload()
+            toastSet(setToast, data.status, data.message)
+            setTimeout(() => window.location.reload(),2000)
         }
         catch(error) {
             console.log(error)
-            alert("Error submitting the form")
+            toastSet(setToast, false, "Error submitting the form")
         }
 
     }
@@ -197,10 +211,12 @@ export function NgSForm({projectId}) {
                         <DisplayTable fileIn={fileIn} 
                         fileUpload={fileUpload} 
                         tablePopulate={tablePopulate} 
-                        submitNGSForm={submitNGSForm} />
+                        submitNGSForm={submitNGSForm}
+                        buttonDisable = {buttonDisable} />
                     </div>
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
     );
 }
@@ -304,7 +320,7 @@ function DnaExtTrue({handleFieldChange, handleRadiooptChange}){
     );
 }
 
-function DisplayTable({ fileIn, fileUpload, tablePopulate, submitNGSForm}){
+function DisplayTable({ fileIn, fileUpload, tablePopulate, submitNGSForm, buttonDisable}){
     return(
         <>
             <div className={styles.DisplayTable}>
@@ -347,7 +363,7 @@ function DisplayTable({ fileIn, fileUpload, tablePopulate, submitNGSForm}){
                     <input onChange={fileIn} id='fileupload' type='file' accept='.csv, .xlsx' />
                     <button onClick={fileUpload}>Upload File</button>
                 </div>
-                <SendButton submitNGSForm={submitNGSForm} />
+                <SendButton submitNGSForm={submitNGSForm} buttonDisable={buttonDisable} />
                 
             </div>
         </>
@@ -381,26 +397,13 @@ function Binfo({handleFieldChange}) {
     );
 }
 
-function SendButton({ submitNGSForm }) {
-    const [sending, setSending] = useState(false)
-
-    const handleClick = async () => {
-        if (sending) return
-        setSending(true)
-
-        try {
-            await submitNGSForm()
-        } catch (err) {
-            console.error(err)
-            setSending(false)
-        }
-    }
+function SendButton({ submitNGSForm, buttonDisable }) {
 
     return (
         <div className={styles.SendAppButton}>
-        <button onClick={handleClick} disabled={sending}>
-            {sending ? "Submitting..." : "Submit"}
-        </button>
+            <button onClick={submitNGSForm} disabled={buttonDisable}>
+                {buttonDisable ? <>Processing</> : <>SUBMIT</>}
+            </button>
         </div>
     )
 }

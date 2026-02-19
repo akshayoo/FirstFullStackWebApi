@@ -1,4 +1,5 @@
 import styles from './LabDB.module.css'
+import Link from 'next/link';
 
 export function ProjectsComp(){
 
@@ -57,10 +58,25 @@ export function ProjectsComp(){
             </div>
 
             <div className={styles.ProjectGraph}>
-                <div>
+            <section className={styles.Section}>
 
-                    This will show the graph
+
+                <div className={styles.CardGrid}>
+
+                    <div className={styles.GridHead} >
+                        <h2 className={styles.SectionTitle}>Explore Submissions</h2>
+                    </div>
+
+                    <div className={styles.Card}>
+                        <h3>View</h3>
+                        <p>View Projects</p>
+                        <Link href="/LabDB/View" className={styles.CardLink}>
+                            Explore →
+                        </Link>
+                    </div>
+
                 </div>
+            </section>
             </div>
         
         </div>

@@ -6,6 +6,8 @@ import axios from 'axios';
 import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp, BiinfoDetailsComp } from './components/elements';
 import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm } from './components/elemoptions';
 import { EmailReports } from './components/elementsent';
+import { MessageComp } from '@/components/messageComp';
+import { toastSet } from '@/components/toastfunc';
 
 export function ViewComp(){
 
@@ -36,6 +38,8 @@ export function ViewComp(){
                 binfDetails ={binfDetails}
                 setBinfDetails = {setBinfDetails}/>
 
+                
+
             </div>
         </>
     );
@@ -44,6 +48,8 @@ export function ViewComp(){
 function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDetails, setBinfDetails}){
 
     const [projectPipeline, setProjectPipeline] = useState([])
+    
+    const [toast, setToast] = useState(null);
 
     useEffect(() => {
         async function ProjectsPipeline() {
@@ -82,11 +88,20 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
+                setToast({
+                    condition : false,
+                    message : data.message
+                })
+
+                setTimeout(() => {
+                    setToast(null)
+                }, 2000)
+
                 return
             }
 
             console.log(data.message)
+
 
             setProjectCont(data.payload)
             setSamsubDetails({})
@@ -98,7 +113,13 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
         catch(error) {
 
             console.log(error)
-            alert("Error fetching project details")
+            setToast({
+                condition: false,
+                message: "Error fetching project details"
+            });
+            setTimeout(() => {
+                setToast(null);
+            }, 2000);
 
         }
     }
@@ -114,6 +135,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
                     projectPipeline.map((project) => {
                         const percent = project.percent
                         return(
+
                             <button key={project.project_id} className={styles.projectBtns} onClick={() => ProjectPop(project.project_id, project.status)}>
                                 <div className={styles.BtnsHeader}>
                                     <span id='projectId' className={styles.projectId}>{project.project_id}</span>
@@ -134,7 +156,9 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
                     })
                 }
             </div> 
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
+        
     );
 }
 
@@ -154,7 +178,9 @@ function ViewWin ({projectCont, samsubDetails, setSamsubDetails,
                         <LibSamDetails projectCont={projectCont} libqcDetails={libqcDetails} setLibqcDetails={setLibqcDetails} />
                         <BiInfoDetails projectCont={projectCont} binfDetails={binfDetails} setBinfDetails={setBinfDetails}/>
                         <Reports projectCont={projectCont} />
+                        
                     </div>
+                    
                 
                 }
             </div>
@@ -214,12 +240,11 @@ function ViewProjDetails({projectCont}) {
 
 function StatusPop({projectCont}){
 
+    const [toast, setToast] = useState(null)
+
     async function updateTaskstage(sec, projectId, task){
 
         try {
-
-            const confirmAction = window.confirm("Mark this task as completed?");
-            if(!confirmAction) return;
 
             const response = await axios.post("http://localhost:6050/project/taskstatusupdate",
                 {
@@ -232,17 +257,42 @@ function StatusPop({projectCont}){
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
+
+                setToast({
+                    condition : false,
+                    message : data.message
+                })
+
+                setTimeout(() =>{
+                    setToast(null)
+                }, 2000)
                 return
             }
 
-            alert(data.message)
+            setToast({
+                condition : true,
+                message : data.message
+            })
+
+            setTimeout(() =>{
+                setToast(null)
+            }, 2000)
+            return
             
         }
 
         catch(err) {
             console.log(err)
-            alert("Updating task failed")
+
+            setToast({
+                condition : false,
+                message : "Updating task failed"
+            })
+
+            setTimeout(() =>{
+                setToast(null)
+            }, 2000)
+            return
         }
 
     }
@@ -278,12 +328,15 @@ function StatusPop({projectCont}){
                     })}             
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message}/>}
         </div>
     );
 }
 
 
 function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
+
+    const [toast, setToast] = useState(null)
 
 
     async function SampleSub(projectId) {
@@ -297,7 +350,15 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
             const data = response.data
 
             if (!data.status){
-                alert(data.message)
+
+                setToast({
+                    condition : false,
+                    message : data.message
+                })
+
+                setTimeout(() => {
+                    setToast(null)
+                }, 3000)
                 return
             } 
 
@@ -307,7 +368,15 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
         }
         catch(error){
             console.log(error)
-            alert("Error fetching sample submission details")
+
+            setToast({
+                condition : false,
+                message : "Error fetching sample submission details"
+            })
+            
+            setTimeout(() => {
+                setToast(null)
+            }, 3000)
         }
     }
 
@@ -316,6 +385,7 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
             <div className={styles.HeadComp}>
                 <h2 className={styles.sech}>Sample Submission Details</h2>
                 <button className={styles.fieldPop} onClick={() => SampleSub(projectCont.project_id)}>&#8693;</button>
+                {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
             {
                 Object.keys(samsubDetails).length > 0 && (
@@ -331,6 +401,8 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
 
     const [qcDataForm, setQcDataForm] = useState(false)
 
+    const[toast, setToast] = useState(null)
+
     async function QcSub(projectId){
         
         try{
@@ -342,7 +414,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
             const data = response.data
 
             if (!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
             
@@ -353,7 +425,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
 
         catch(error) {
             console.log(error)
-            alert("Error fetching QC details")
+            toastSet(setToast, false, "Error fetching QC details")
         }
     }
 
@@ -377,6 +449,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
                     {qcDataForm && <QcReportPushForm projectId={projectCont.project_id} setQcDataForm={setQcDataForm}/>}
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
     )
 }
@@ -385,6 +458,7 @@ function QcSamDetails({projectCont, qcDetails, setQcDetails}) {
 function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
     const [ libQcDataFrom , setLibQcDataForm] = useState(false)
+    const[toast, setToast] = useState(null)
 
     async function LibSub(projectId){
 
@@ -397,7 +471,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
@@ -408,7 +482,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 
         catch(err){
             console.log(err)
-            alert("Error fetching library QC details")
+            toastSet(setToast, false, "Error fetching library QC details")
         } 
     }
 
@@ -431,6 +505,7 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
                     {libQcDataFrom && <LibQcReportPushForm projectId={projectCont.project_id} setLibQcDataForm ={setLibQcDataForm} />}
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
     )
 }
@@ -439,6 +514,8 @@ function LibSamDetails({projectCont, libqcDetails, setLibqcDetails}) {
 function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 
     const [ binfDataForm, setBinfDataForm] = useState(false)
+
+    const[toast, setToast] = useState(null)
 
     async function BinfSub(projectId) {
         try{
@@ -449,7 +526,7 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 
             const data = response.data
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
@@ -460,7 +537,7 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
         }
         catch(error){
             console.log(error)
-            alert("Error fetching bioinformatics details")
+            toastSet(setToast, false, "Error fetching bioinformatics details")
         }
     }
 
@@ -480,6 +557,7 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
                     {binfDataForm && <BinfReportPushForm setBinfDataForm={setBinfDataForm} projectId = {projectCont.project_id} />}
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
     )
 }
@@ -487,6 +565,8 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
 function Reports({projectCont}) {
 
     const [finreportEmailTemp, setfinreportEmailTemp] = useState(false)
+    
+    const[toast, setToast] = useState(null)
 
     async function downlFinalRep(projectId) {
         try{
@@ -509,27 +589,26 @@ function Reports({projectCont}) {
         catch(error){
 
             console.log(error)
-            alert("Downloading failed")
+            setToast(setToast, false, "Downloading failed")
 
         }
     }
 
     async function closeProject(projectId){
         try{
-            
-            alert("You are going to perform a sensitive action. Do you wnat to continue")
-            
+    
             const response = await axios.post("http://localhost:6050/project/closeproject",
                 {"project_id" : projectId},
                 {withCredentials : true}
             )
 
             const data = response.data
-            alert(data.status)
+            toastSet(setToast, data.status, data.message)
+            return
         }
         catch(error){
             console.log(error)
-            alert("Faliled to close project")
+            toastSet(setToast, false, "Faliled to close project")
         }
 
     }
@@ -551,6 +630,7 @@ function Reports({projectCont}) {
                     <button onClick={() => closeProject(projectCont.project_id)}>{`Close Project`}</button>
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
         
     )

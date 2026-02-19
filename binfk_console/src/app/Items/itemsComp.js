@@ -28,7 +28,6 @@ export function ItemsComp() {
                     <div className={styles.Card}>
                         <h3>Insert</h3>
                         <p>Insert custom services</p>
-
                         <div className={styles.ActionRow}>
                             <Link href="/Items/Insert" className={styles.CardLink}>
                                 Explore →

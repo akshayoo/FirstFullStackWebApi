@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 from routers import auth, initialization, intake, samsubmission, items, projectsinfo, projectforms, projectsrepos
 
 app = FastAPI(title= "theraConsole", version= "V.0.0.1")
@@ -24,3 +25,6 @@ app.include_router(projectsrepos.router)
 @app.get("/")
 def root():
     return{"status" : "The app is running"}
+
+#if __name__ == "__main__":
+ #   uvicorn.run( port= 6050, reload=True)

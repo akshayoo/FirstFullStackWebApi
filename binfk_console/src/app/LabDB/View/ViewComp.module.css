@@ -665,6 +665,19 @@
     background-color: #007ba1;
 }
 
+.formElem button:disabled{
+    cursor: not-allowed;
+    background-color: #004e66;
+}
+
+.formElem button:active{
+    border: 2px solid rgb(255, 202, 103);
+}
+
+.formElem button:focus{
+    border: 2px solid rgb(255, 202, 103);
+}
+
 .formElemel {
     margin: 5px;
 }

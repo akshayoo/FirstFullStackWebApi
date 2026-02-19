@@ -385,7 +385,8 @@ def close_project(payload: ProjId):
         status = data.get("project_status", {})
 
         if not status.get("qc") and not status.get("library") and not status.get("bioinformatics"):
-            return {"status": "Cannot be closed at this stage"}
+            return {"status": False,
+                    "message" : "Cannot be closed at this stage"}
 
         if not status.get("closed"):
 
@@ -396,9 +397,11 @@ def close_project(payload: ProjId):
                     "$set": {"project_status.closed": True}
                 }
             )
-            return {"status": "Project closed"}
+            return {"status": True,
+                    "message" : "Project closed"}
 
-        return {"status": "Project already closed"}
+        return {"status": False,
+                "message" : "Project already closed"}
 
     except Exception as e:
         print(str(e))

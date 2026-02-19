@@ -2,16 +2,19 @@ import styles from '../ViewComp.module.css'
 import axios from 'axios';
 import { useState } from 'react';
 import { EmailReports } from './elementsent';
+import { MessageComp } from '@/components/messageComp';
+import { toastSet } from '@/components/toastfunc';
 
 
 
 export function SampleSubDetailsComp({samsubDetails, setSamsubDetails, projectId}){
 
+    const [toast, setToast] = useState(null)
 
     async function samsubFetch(projectId) {
 
         if(!projectId){
-            alert("Please restart the page and try again")
+            setToast(setToast, false, "Please restart the page and try again")
             return
         }
 
@@ -33,7 +36,7 @@ export function SampleSubDetailsComp({samsubDetails, setSamsubDetails, projectId
             })
         }
         catch{
-            alert("Cannot connect to the server")
+            toastSet(setToast, false, "Cannot connect to the server")
         }
     }
 
@@ -147,6 +150,7 @@ export function SampleSubDetailsComp({samsubDetails, setSamsubDetails, projectId
                 <div className={styles.ProjecInOnBtn}>
                     <button className={styles.ProjecOnBtn} onClick={() => samsubFetch(projectId)}>{`Download Form`}</button>
                 </div>
+                {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
         </>
     );
@@ -157,10 +161,12 @@ export function QcSamDetailsComp({qcDetails, projectId, setQcDetails}) {
 
     const [qcEmailTemp, setQcEmailTemp] = useState(false)
 
+    const [toast, setToast] = useState(null)
+
     async function qcReportsFetch(projectId){
 
         if(!projectId){
-            alert("Please refresh the page and try again"); 
+            toastSet(setToast, false, "Please refresh the page and try again")
             return
         }
 
@@ -181,7 +187,7 @@ export function QcSamDetailsComp({qcDetails, projectId, setQcDetails}) {
         }
         catch(error){
             console.log(error)
-            alert("Error downloading report")
+            toastSet(setToast, false, "Error downloading report")
         }
     }
 
@@ -278,6 +284,7 @@ export function QcSamDetailsComp({qcDetails, projectId, setQcDetails}) {
                     <button className={styles.ProjecOnBtn} onClick={() =>setQcEmailTemp(true)} >{`Send QC Report`}</button>
                     {qcEmailTemp && <EmailReports projectId={projectId} sec={"qc"} flow={"QC"} EmailTemp = {setQcEmailTemp} />}
                 </div>
+                {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
         </>
     );
@@ -289,10 +296,12 @@ export function LibSamDetailsComp({libqcDetails, projectId, setLibqcDetails}) {
 
     const [libqcEmailTemp, setLibqcEmailTemp] = useState(false)
 
+    const[toast, setToast] = useState(null)
+
     async function libqcReportsFetch(projectId){
 
         if(!projectId){
-            alert("Reload the window and try again")
+            toastSet(setToast, false, "Please refresh the page and try again")
             return
         }
 
@@ -313,7 +322,7 @@ export function LibSamDetailsComp({libqcDetails, projectId, setLibqcDetails}) {
         }
         catch{
             console.log(error)
-            alert("Error downloading report")
+            toastSet(setToast, false, "Error downloading report")
         }
 
     }
@@ -392,6 +401,9 @@ export function LibSamDetailsComp({libqcDetails, projectId, setLibqcDetails}) {
                     <button className={styles.ProjecOnBtn} onClick={()=>setLibqcEmailTemp(true)}>{`Send Lib QC Report`}</button>
                 </div>
                 {libqcEmailTemp && <EmailReports projectId={projectId} sec={"library"} flow={"Library QC"} EmailTemp={setLibqcEmailTemp} />}
+                <div>
+                    {toast && <MessageComp condition={toast.condition} message={toast.message} />}
+                </div>
             </div>
         </>
     );
@@ -401,6 +413,7 @@ export function LibSamDetailsComp({libqcDetails, projectId, setLibqcDetails}) {
 export function BiinfoDetailsComp({binfDetails, projectId, setBinfDetails}) {
 
     const [bioinfoEmailTemp, setBioinfoEmailTemp] = useState(false)
+
 
     return(
         <>   

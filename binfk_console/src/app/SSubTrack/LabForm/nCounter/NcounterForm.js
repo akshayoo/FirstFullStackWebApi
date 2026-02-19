@@ -1,6 +1,8 @@
 import styles from '../LabForm.module.css'
 import { useState } from 'react';
 import axios from 'axios';
+import { toastSet } from '@/components/toastfunc';
+import { MessageComp } from '@/components/messageComp';
 
 export function NcounterForm({projectId}) {
 
@@ -28,6 +30,10 @@ export function NcounterForm({projectId}) {
         additional_analysis: "",
         reference_study: ""
     })
+
+    const [toast, setToast] = useState(null)
+
+    const [buttonDis, setButtonDis] = useState(false)
 
     const handleFieldChange = (e) => {
         const{name, value} = e.target
@@ -57,7 +63,7 @@ export function NcounterForm({projectId}) {
         try{
 
             if (!file){
-                alert("Upload the file")
+                toastSet(setToast, false, "Upload the file")
                 return
             }
 
@@ -70,7 +76,7 @@ export function NcounterForm({projectId}) {
             const data = response.data  
 
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
@@ -85,22 +91,21 @@ export function NcounterForm({projectId}) {
 
         catch(error) {
             console.log(error)
-            alert("Error uploading the table")
+            toastSet(setToast, false, "Error uploading the table")
         }
     }
-
-
-
 
 
     async function sendNcounterForm() {
         if(!formData.application || !formData.replicates || 
             !formData.extraction_needed || !formData.bioinformatics_needed)
-            {alert("Missing fields"); window.location.reload(); return}
+            {toastSet( setToast, false, "Missing fields"); return}
         
-        if (!tablePopulate.length){alert("Upload sample tables"); window.location.reload(); return}
+        if (!tablePopulate.length){toastSet(setToast, false, "Upload sample tables"); return}
 
         const payload = {...formData, table: tablePopulate}
+
+        setButtonDis(true)
 
         try{
             const response = await axios.post("http://127.0.0.1:6050/intake/ncounterform", payload, 
@@ -109,13 +114,14 @@ export function NcounterForm({projectId}) {
 
             const data = response.data
 
-            alert(data.message)
+            toastSet(setToast, data.status, data.message)
 
-            window.location.reload()
+            setTimeout(() => window.location.reload(), 2000)
+
         }
         catch(error) {
             console.log(error)
-            alert("Error submitting the form")
+            toastSet(setToast, false, "Error submitting the form")
         }
     }
 
@@ -179,9 +185,11 @@ export function NcounterForm({projectId}) {
 
                 <div className={styles.FormSceSec}>
                     <div className={styles.FormTableSec}>
-                        <DisplayTable fileIn={fileIn} fileUpload={fileUpload} tablePopulate={tablePopulate} sendNcounterForm={sendNcounterForm} />
+                        <DisplayTable fileIn={fileIn} fileUpload={fileUpload} tablePopulate={tablePopulate} sendNcounterForm={sendNcounterForm}
+                        buttonDis={buttonDis} />
                     </div>
                 </div>
+                {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
         </div>
     );
@@ -231,7 +239,7 @@ function ExtCont({handleFieldChange, handleRadiooptChange}) {
     );
 }
 
-function DisplayTable({fileIn, fileUpload, tablePopulate, sendNcounterForm}){
+function DisplayTable({fileIn, fileUpload, tablePopulate, sendNcounterForm, buttonDis}){
     return(
         <>
             <div className={styles.DisplayTable}>
@@ -274,7 +282,7 @@ function DisplayTable({fileIn, fileUpload, tablePopulate, sendNcounterForm}){
                     <input onChange={fileIn} htmlFor='fileupload' type='file' accept='.csv, .xlsx' />
                     <button onClick={fileUpload}>Upload File</button>
                 </div>
-                <SendButton sendNcounterForm={sendNcounterForm} />
+                <SendButton sendNcounterForm={sendNcounterForm} buttonDis={buttonDis} />
                 
             </div>
         </>
@@ -308,25 +316,12 @@ function Binfo({handleFieldChange}) {
     );
 }
 
-function SendButton({ sendNcounterForm }) {
-    const [sending, setSending] = useState(false)
-
-    const handleClick = async () => {
-        if (sending) return
-        setSending(true)
-
-        try {
-            await sendNcounterForm()
-        } catch (err) {
-            console.error(err)
-            setSending(false)
-        }
-    }
+function SendButton({ sendNcounterForm, buttonDis }) {
 
     return (
         <div className={styles.SendAppButton}>
-        <button onClick={handleClick} disabled={sending}>
-            {sending ? "Submitting..." : "Submit"}
+        <button onClick={sendNcounterForm} disabled={buttonDis}>
+            {buttonDis ? <>Processing</> : <>SUBMIT</>}
         </button>
         </div>
     )

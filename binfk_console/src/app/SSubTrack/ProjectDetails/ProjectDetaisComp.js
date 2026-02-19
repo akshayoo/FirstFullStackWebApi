@@ -2,6 +2,9 @@
 import styles from './ProjectDetails.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toastSet } from '@/components/toastfunc';
+import { MessageComp } from '@/components/messageComp';
+import { toast } from 'react-toastify';
 
 export function ProjectDetailsComp() {
     
@@ -28,7 +31,17 @@ export function ProjectDetailsComp() {
         platform: "",
         standard_deliverables: [],  
         added_deliverables: []      
-    });
+    })
+
+    const[toast, setToast] = useState(null)
+
+    const [submitDis, setSubmitDis] = useState(false)
+
+
+
+
+
+
     
     useEffect(() =>{
         async function DataLoad(){
@@ -42,6 +55,7 @@ export function ProjectDetailsComp() {
         }
         DataLoad()
     }, [])
+
     
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -49,14 +63,18 @@ export function ProjectDetailsComp() {
             ...prev,
             [name]: value
         }));
-    };
+    }
+
+
     
     const handleRadioChange = (e) => {
         setFormData(prev => ({
             ...prev,
             [e.target.name]: e.target.value
         }));
-    };
+    }
+
+
     
     const onClassChange = (e) => {
         const value = e.target.value;
@@ -67,7 +85,9 @@ export function ProjectDetailsComp() {
             ...prev,
             offering_type: value
         }));
-    };
+    }
+
+
     
     const onServiceSelct = (e) => {
         const serv_value = e.target.value;
@@ -99,7 +119,10 @@ export function ProjectDetailsComp() {
                 added_deliverables: []  
             }))
         }
-    };
+    }
+
+
+
     
     const validateForm = () => {
         const requiredFields = ['project_id', 'pi_name', 'email', 'institution', 'labdept', 
@@ -108,12 +131,15 @@ export function ProjectDetailsComp() {
         
         for (const key of requiredFields) {
             if (!formData[key] || formData[key].toString().trim() === "") {
-                alert(`Missing required field: ${key.replaceAll("_", " ")}`);
+                toastSet(setToast, false, `Missing required field: ${key.replaceAll("_", " ")}`)
                 return false;
             }
         }
         return true;
     }
+
+
+
     
     const SendProjectInfo = async () => {
 
@@ -129,6 +155,8 @@ export function ProjectDetailsComp() {
             added_deliverables: addedDeliverablesArray
         }
 
+        setSubmitDis(true)
+
         try {
             const response = await axios.post("http://localhost:6050/initialization/startproject",
                 payload,
@@ -139,19 +167,18 @@ export function ProjectDetailsComp() {
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
-                window.location.reload()
+                toastSet(setToast, false, data.message)
                 return
             }
 
-            alert(data.message)
-            window.location.reload()
+            toastSet(setToast, true, data.message)
+            setTimeout(() => window.location.reload(), 2000)
             
 
         } catch (error) {
 
             console.error(error)
-            alert("Submission failed")     
+            toastSet(setToast, false, "Submission failed")    
         }
     }
     
@@ -169,7 +196,9 @@ export function ProjectDetailsComp() {
                 handleChange={handleChange}
                 handleRadioChange={handleRadioChange}
                 SendProjectInfo={SendProjectInfo}
+                submitDis = {submitDis}
             />
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
     )
 }
@@ -200,7 +229,8 @@ function MainFormPage({
     setProjectDesc,
     handleChange,
     handleRadioChange,
-    SendProjectInfo
+    SendProjectInfo,
+    submitDis
 }) {
     
     const getStandardDeliverables = () => {
@@ -351,34 +381,20 @@ function MainFormPage({
                         />
                     </div>
                     
-                    <SendButton SendProjectInfo={SendProjectInfo} />
+                    <SendButton SendProjectInfo={SendProjectInfo} submitDis={submitDis} />
                 </div>
             </div>
         </div>
     );
 }
 
-function SendButton({ SendProjectInfo }) {
+function SendButton({ SendProjectInfo, submitDis }) {
 
-    const [isSending, setIsSending] = useState(false)
-
-    const handleClick = async () => {
-        if (isSending) return
-
-        setIsSending(true)
-
-        try {
-            await SendProjectInfo()
-        } catch (err) {
-            console.error(err)
-            setIsSending(false)  
-        }
-    }
 
     return (
         <div className={styles.SendAppButton}>
-            <button onClick={handleClick} disabled={isSending}>
-                {isSending ? "Submitting..." : "Submit and Send for approval"}
+            <button onClick={SendProjectInfo} disabled={submitDis}>
+                {submitDis ? <>Processing</> : <>SUBMIT</>}
             </button>
         </div>
     )

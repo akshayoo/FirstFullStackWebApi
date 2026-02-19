@@ -1,6 +1,7 @@
 import styles from '../ViewComp.module.css'
 import axios from 'axios'
-import { forbidden } from 'next/navigation'
+import { toastSet } from '@/components/toastfunc'
+import { MessageComp } from '@/components/messageComp'
 import { useState } from 'react'
 
 
@@ -15,27 +16,34 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
         "mail_content" : ""
     })
 
+    const [toast, setToast] = useState(null)
+
+    const [buttonDis, setButtonDis] = useState(false)
 
     async function sendEmail() {
  
         if(!formData.mail_subject || !formData.mail_content){
-            console.log("Validation failed - missing subject or content")
-            alert("Missing Mail Subject or Content")
+
+            toastSet(setToast, false, "Missing Mail Subject or Content")
             return
         }
+
+        setButtonDis(true)
         
         try{
             const response = await axios.post('http://localhost:6050/reports/sendemail',
                 formData,
                 {withCredentials : true}
             )
+
             const data = response.data
-            alert(data.message)
-            EmailTemp(false)
+            toastSet(setToast, data.status, data.message)
+
+            setTimeout(() => EmailTemp(false), 2000)
         }
         catch(error){
             console.log(error)
-            alert("Error sending mail")
+            toastSet(setToast, false, "Error sending mail")
         }
     }
 
@@ -71,8 +79,11 @@ export function EmailReports({projectId, sec, flow, EmailTemp}) {
                     <textarea onChange={handleChange} name="mail_content" rows = '8' placeholder="Email body"/>
                 </div>
                 <div className={styles.formElem}>
-                    <button onClick={sendEmail}>SEND</button>
+                    <button onClick={sendEmail} disabled={buttonDis}>
+                        {buttonDis ? <>Processing</> : <>SEND</>}
+                    </button>
                 </div>
+                {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
 
             </div>

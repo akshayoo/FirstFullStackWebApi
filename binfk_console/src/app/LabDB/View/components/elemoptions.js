@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import styles from '../ViewComp.module.css'
+import { toastSet } from '@/components/toastfunc';
+import { MessageComp } from '@/components/messageComp';
 
 export function QcReportPushForm({setQcDataForm, projectId}){
 
@@ -15,10 +17,16 @@ export function QcReportPushForm({setQcDataForm, projectId}){
         "qc_data" : null
     })
 
+    const[toast, setToast] = useState(null)
+
     async function updateQcData(){
         if(!formData.method_writeup || !formData.method_summary || !formData.concentration_technology ||  
             !formData.integrity_technology || !formData.qc_summary || !formData.qc_report || !formData.qc_data)
-            {alert("All entries are mandatory, Please fill the missing fields"); return}
+
+            {
+                toastSet(setToast, false, "All entries are mandatory, Please fill the missing fields")
+                return
+            }
 
         try {
 
@@ -36,17 +44,17 @@ export function QcReportPushForm({setQcDataForm, projectId}){
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
-            alert(data.message)
-            setQcDataForm(false);
+            toastSet(setToast, true, data.message)
+            setTimeout(() => setQcDataForm(false), 2000 ) 
 
         }
         catch (err){
             console.error(err);
-            alert("QC report can't be updated");
+            toastSet(setToast, false, "QC report can't be updated")
         }
     }
 
@@ -126,7 +134,7 @@ export function QcReportPushForm({setQcDataForm, projectId}){
                     <button onClick={updateQcData}>Submit</button>
                 </div>
             </div>
-
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
         </div>
     )
@@ -146,11 +154,17 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
         "library_data" : null
     })
 
+    const [toast, setToast] = useState(null)
+
 
     async function updateLibQcData() {
         
         if (!formData.library_method || !formData.library_summary || !formData.library_report
-            || !formData.library_data){alert("All entries are mandatory, Please fill the missing fields"); return}
+            || !formData.library_data)
+            {
+                toastSet(setToast, false, "All entries are mandatory, Please fill the missing fields")
+                return
+            }
 
         try {
 
@@ -168,16 +182,16 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
-            alert(data.message)
-            setLibQcDataForm(false)
+            toastSet(setToast, true, data.message)
+            setTimeout(() => setLibQcDataForm(false), 2000)
         }
         catch(error){
             console.log(error)
-            alert("Library QC report can't be updated")
+            toastSet(setToast, false, "Library QC report can't be updated")
         }
         
     }
@@ -233,6 +247,7 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
                     </div>  
                 </div>
             </div>
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
     )
 }
@@ -242,6 +257,8 @@ export function LibQcReportPushForm({setLibQcDataForm, projectId}){
 
 
 export function BinfReportPushForm({setBinfDataForm, projectId}){
+
+    const [toast, setToast] = useState(null)
 
     const [formData, setFormData] = useState({
         "project_id" : projectId,
@@ -253,11 +270,11 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
 
     async function updateBinfData() {
 
-        if(!formData.bioinformatics_summary || !formData.estimated_hours || !formData.approximate_hours || !formData.bioinformatics_report){
-            alert("All entries are mandatory, Please fill the missing fields")
-            return
-        }
-
+        if(!formData.bioinformatics_summary || !formData.estimated_hours || !formData.approximate_hours || !formData.bioinformatics_report)            
+            {
+                toastSet(setToast, false, "All entries are mandatory, Please fill the missing fields")
+                return
+            }
         try {
             const binff = new FormData()
 
@@ -273,13 +290,12 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
             const data = response.data
 
             if(!data.status){
-                alert(data.message)
+                toastSet(setToast, false, data.message)
                 return
             }
 
-            alert(data.message)
-
-            setBinfDataForm(false)
+            toastSet(setToast, true, data.message)
+            setTimeout(() => setBinfDataForm(false), 2000)
 
         }
         catch(error){
@@ -336,7 +352,7 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
                     <button onClick={updateBinfData} >Submit</button>
                 </div>  
             </div>
-
+            {toast && <MessageComp condition={toast.condition} message={toast.message} />}
             </div>
         </div>
     )

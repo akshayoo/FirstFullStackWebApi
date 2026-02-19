@@ -122,8 +122,83 @@
 }
 
 .ProjectGraph{
-    border: 1px solid black;
     padding: 20px;
-    margin-top: 25px;
+    margin-top: 50px;
     height: 250px;
 }
+
+
+.SectionTitle {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #005091;
+}
+
+.CardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.GridHead {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8cb;
+    border: 1px dotted gray;
+    border-radius: 20px;
+}
+
+.Card {
+    background: #d6d6d6;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.Card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.Card h3 {
+    margin-bottom: 10px;
+    color: #374151;
+}
+
+.Card p {
+    color: #677183;
+    margin-bottom: 18px;
+}
+
+.CardLink {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.CardLink:hover {
+    text-decoration: underline;
+}
+
+.ActionRow {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ActionBtn {
+    background: #1f2933;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.ActionBtn:hover {
+    background: #374151;
+}
+
+
