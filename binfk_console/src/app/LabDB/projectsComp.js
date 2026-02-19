@@ -1,7 +1,34 @@
+"use client"
+
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './LabDB.module.css'
 import Link from 'next/link';
 
 export function ProjectsComp(){
+
+    const [dashboard, setDashboard] = useState({})
+
+    useEffect(() =>{
+
+        async function qetProjects() {
+
+            try{
+                const response = await axios.get("http://localhost:6050/project/projectdash", 
+                    {withCredentials : true}
+                )
+                const data = response.data
+                setDashboard(data.payload)
+                console.log("fetched")
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+        
+        qetProjects()
+
+    }, [])
 
     return(
         
@@ -22,38 +49,34 @@ export function ProjectsComp(){
                 </div>
                 <div className={styles.ProjectSide}>
                     <div>Total projects</div>
-                    <div>21</div>
+                    <div>{dashboard.total}</div>
                 </div>
             </div>
 
             <div className={styles.ProjectInfo}>
                 <div className={styles.ProjectInfoComp}>
                     <div>Initiated</div>
-                    <div>21</div>
+                    <div>{dashboard.initiated}</div>
                 </div>
                 <div className={styles.ProjectInfoComp}>
                     <div>Accepted</div>
-                    <div>21</div>
+                    <div>{dashboard.accepted}</div>
                 </div>
                 <div className={styles.ProjectInfoComp}>
-                    <div>QC Stage</div>
-                    <div>21</div>
+                    <div>QC</div>
+                    <div>{dashboard.qc}</div>
                 </div>
                 <div className={styles.ProjectInfoComp}>
-                    <div>Lib QC Stage</div>
-                    <div>215</div>
+                    <div>Lib QC</div>
+                    <div>{dashboard.library}</div>
                 </div>
                 <div className={styles.ProjectInfoComp}>
-                    <div>Analysis Stage</div>
-                    <div>21</div>
-                </div>
-                <div className={styles.ProjectInfoComp}>
-                    <div>Completed</div>
-                    <div>21</div>
+                    <div>Analysis</div>
+                    <div>{dashboard.bioinfo}</div>
                 </div>
                 <div className={styles.ProjectInfoComp}>
                     <div>Closed</div>
-                    <div>21</div>
+                    <div>{dashboard.closed}</div>
                 </div>
             </div>
 

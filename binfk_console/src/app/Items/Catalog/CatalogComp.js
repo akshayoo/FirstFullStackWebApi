@@ -197,17 +197,7 @@ function MainWin({ selectedService }){
 
                 </div>
 
-                <div className={styles.ButtonSec}>
-                <DownloadSc/>
-                </div>
-
             </div>
         </div>
-  )
-}
-
-function DownloadSc(){
-  return(
-    <button>Download Soft Copy</button>
   )
 }

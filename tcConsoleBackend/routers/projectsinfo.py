@@ -102,7 +102,7 @@ async def projects_comp( _ : dict = Depends(parse_token)):
 
 
 
-@router.get("projectdash")
+@router.get("/projectdash")
 async def project_dashboard( _ : dict =  Depends(parse_token)):
     
     try:
@@ -115,7 +115,46 @@ async def project_dashboard( _ : dict =  Depends(parse_token)):
                                    "project_status" : 1
                                })
         
-        pass
+        projects  = []
+
+        for doc in data:
+            projects.append(doc)
+        
+        total_projects = len(projects)
+
+        closed = 0
+        bioinformatics = 0
+        library = 0
+        qc = 0
+        accepted = 0
+        initiated = 0
+
+        for project_stats in projects:
+            stats = project_stats.get("project_status")
+
+            if stats.get("closed"): closed += 1; continue
+            if stats.get("bioinformatics"): bioinformatics += 1; continue
+            if stats.get("library"): library += 1; continue
+            if stats.get("qc") : qc += 1; continue
+            if stats.get("sample_submission"): accepted += 1; continue
+            if stats.get("service_info") : initiated += 1; continue
+
+        print(closed)
+
+        return{
+            "status" : True,
+            "message" : "Fetch successfull",
+            "payload" : {
+                "total" : total_projects,
+                "closed" : closed,
+                "bioinfo" : bioinformatics,
+                "library" : library,
+                "qc" : qc,
+                "accepted" : accepted,
+                "initiated" : initiated
+            }
+        }
+
 
     except Exception as e:
         print(str(e))
