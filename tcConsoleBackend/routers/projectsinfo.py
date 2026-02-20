@@ -18,13 +18,14 @@ async def projects_comp( _ : dict = Depends(parse_token)):
 
         collections = collections_load("tcProjects")
 
-        data = collections.find({}, 
+        data = (collections.find({}, 
                                 {"_id": 0,
                                 "project_id" : 1,
                                 "project_details.standard_deliverables.completed" : 1,
                                 "project_details.added_deliverables.completed" : 1,
-                                "project_status" : 1
-                                })
+                                "project_status" : 1,
+                                "audit.created_at" : 1
+                                }).sort("audit.created_at" , -1))
 
         list_elements = []
 

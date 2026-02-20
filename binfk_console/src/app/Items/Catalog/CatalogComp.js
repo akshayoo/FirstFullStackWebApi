@@ -121,35 +121,10 @@ function MainWin({ selectedService }){
                     <div>{selectedService.applications}</div>
                 </div>
 
-                <div className={styles.ItemPrNo}>
-
-                    <div className={styles.ItemSec}>
-                        <div className={styles.ItemHead}>Pros</div>
-                        <ul>
-                            {selectedService.pros_cons?.pros?.map((p,i)=>(
-                                <li key={i}>{p}</li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className={styles.ItemSec}>
-                        <div className={styles.ItemHead}>Notes</div>
-                        <ul>
-                            {selectedService.pros_cons?.notes?.map((n,i)=>(
-                                <li key={i}>{n}</li>
-                            ))}
-                        </ul>
-                    </div>
-
-                </div>
-
                 <div className={styles.ItemSamp}>
 
                     <div className={styles.ItemSampDiv}>
-                        <div className={styles.ItemHead}>Sample Input</div>
-                            <div>{selectedService.input_req?.sample_type}</div>
-
-                            <div className={styles.ItemHead}>Platform</div>
+                        <div className={styles.ItemHead}>Platform</div>
                         <div>{selectedService.instrumentation?.platform}</div>
                     </div>
 
@@ -162,17 +137,6 @@ function MainWin({ selectedService }){
                         </ul>
                     </div>
 
-                </div>
-
-                <div className={styles.ItemProcess}>
-                    <div className={styles.ItemHead}>Process Map</div>
-                    <div className={styles.ProcessMap}>
-                        {Array.isArray(selectedService.process_map) &&
-                        selectedService.process_map.map((step,i)=>(
-                            <div key={i}>{step}</div>
-                        ))
-                        }
-                    </div>
                 </div>
 
                 <div className={styles.ItemAppl}>

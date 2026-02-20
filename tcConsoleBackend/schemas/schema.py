@@ -94,3 +94,12 @@ class AuthSignup(BaseModel):
     username : str
     password : str
     password_re : str
+
+class CustomServics(BaseModel):
+    category : str
+    service_name : str
+    catalog_number : str
+    application : str
+    platform : str
+    sam_types : str
+    standard_deliverables : str

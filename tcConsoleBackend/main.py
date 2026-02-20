@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from routers import auth, initialization, intake, samsubmission, items, projectsinfo, projectforms, projectsrepos
+from routers import auth, initialization, intake, samsubmission, items, projectsinfo, projectforms, projectsrepos, llinter
 
 app = FastAPI(title= "theraConsole", version= "V.0.0.1")
 
@@ -21,6 +21,7 @@ app.include_router(items.router)
 app.include_router(projectsinfo.router)
 app.include_router(projectforms.router)
 app.include_router(projectsrepos.router)
+app.include_router(llinter.router)
 
 @app.get("/")
 def root():

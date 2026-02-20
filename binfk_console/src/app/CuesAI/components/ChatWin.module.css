@@ -1,15 +1,22 @@
 .chatWin {
   height: 100vh;
   display: flex;
-  overflow:hidden
+  overflow:hidden;
+  background-color: rgb(37, 37, 37);
 }
 .chatSideBarComp {
-  width: 280px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-right: 1px solid rgb(183, 183, 183);
+  background-color: rgb(21, 21, 21);
   padding: 20px 10px;
+}
+
+.chatSideBarComp h2{
+    padding: 10px;
+    font-size: 15px;
+
 }
 
 .chatNewChatDIV {
@@ -54,20 +61,19 @@
 
 .chatHistoryDiv button {
     align-self: center;
-    margin-top: 5px;
-    margin-bottom:5px;
+    margin-bottom:1px;
     height: 35px;
     border: none;
-    border-radius: 8px;
+    border-radius: 2px;
     font-size: 15px;
-    background-color: rgb(246, 251, 255);
+    background-color: rgb(245, 245, 245);
     transition: background-color 0.5s ease;
-    width: 80%;
+    width: 100%;
 }
 
 
 .chatHistoryDiv button:hover {
-    background-color: rgb(15, 195, 255);
+    background-color: rgb(228, 228, 228);
 }
 
 .chatBar {

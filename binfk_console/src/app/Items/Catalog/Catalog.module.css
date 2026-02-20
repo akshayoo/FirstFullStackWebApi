@@ -5,8 +5,8 @@
 }
 
 .sideBar {
-    border-right: 1px solid rgb(182, 182, 182);
-    border-top: 1px solid rgb(182, 182, 182);;
+    border-right: 1px solid rgb(218, 218, 218);
+    border-top: 1px solid rgb(218, 218, 218);;
     width: 400px;
     min-height: 0;
     overflow-y:scroll;
@@ -16,11 +16,11 @@
 
 .sideBarIn {
     display: flex;
-    border-top: 1px solid rgb(165, 165, 165) ;
-    border-bottom: 1px solid rgb(165, 165, 165) ;
+    background-color: rgb(0, 112, 139);
     border-radius: 2px;
     padding: 10px;
-    margin: 10px;
+    color: aliceblue;
+    margin: 1px;
 }
 
 .sideBar::-webkit-scrollbar {
@@ -50,7 +50,7 @@
     border: 1px solid rgb(134, 134, 134);
     padding: 1px;
     margin-left: auto;
-    background-color: transparent;
+    background-color: rgb(255, 243, 222);
     transition: background-color 0.5s ease;
 }
 
@@ -67,16 +67,16 @@
     width: 100%;
     border: none;
     background-color: transparent;
-    border-radius: 4px;
-    padding: 10px;
+    padding: 8px;
     font-size: 15px;
     text-align: left;
     transition: background-color 0.5s ease;
     color: rgb(56, 56, 56);
+    margin: 1px;
 }
 
 .InComp:hover {
-    background-color: rgb(0, 81, 148);
+    background-color: rgb(0, 97, 177);
     color: white;
 }
 
@@ -86,7 +86,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding: 50px;
-    border-top: 1px solid rgb(182, 182, 182);
+    border-top: 1px solid rgb(218, 218, 218);
 }
 
 .MainSub {
@@ -99,11 +99,14 @@
 .ItemInitial {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    padding: 10px;
+    padding: 15px;
     margin: 10px;
     font-size: 18px;
-    border:  1px solid rgb(180, 180, 180);
+    box-shadow: 1px 1px 1px 1px gray;
+    background-color: rgb(248, 248, 248);
     border-radius: 5px;
+    place-items: center;
+    margin-bottom: 20px
 }
 
 .ItemInitial div{
@@ -115,8 +118,10 @@
     padding: 20px;
     margin: 10px;
     font-size: 15px;
-    border:  1px solid rgb(180, 180, 180);
+    box-shadow: 1px 1px 1px 1px gray;
+    background-color: rgb(248, 248, 248);
     border-radius: 5px;
+    margin-bottom: 20px
 }
 
 .ItemAppl div {
@@ -135,8 +140,10 @@
     padding: 20px;
     margin: 10px;
     font-size: 15px;
-    border:  1px solid rgb(180, 180, 180);
+    box-shadow: 1px 1px 1px 1px gray;
+    background-color: rgb(248, 248, 248);
     border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 .ItemSec {
@@ -150,8 +157,11 @@
     padding: 20px;
     margin: 10px;
     font-size: 15px;
-    border:  1px solid rgb(180, 180, 180);
-    border-radius: 4px;
+    box-shadow: 1px 1px 1px 1px gray;
+    background-color: rgb(248, 248, 248);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    place-items: center;
 }
 
 .ItemSamp div {
@@ -168,7 +178,7 @@
     padding: 20px;
     margin: 10px;
     font-size: 15px; 
-    border:  1px solid rgb(180, 180, 180);
+    background-color: rgb(248, 248, 248);
     border-radius: 4px;
 }
 

@@ -12,10 +12,21 @@ export function ChatSlideBar() {
     const [previousChats, setPreviousChats] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:4000/chat/chatContent").then(resp => {
-            console.log(resp.data)
-            setPreviousChats(resp.data.conversations);
-        });
+
+        async function fetcHistory(){
+
+            try{
+                const response = await axios.get("http://localhost:6050/cuesai/history")
+                const data = response.data
+
+                setPreviousChats(data.payload)
+            }
+
+            catch(err){
+                console.log(err)
+            }
+        }
+        fetcHistory()
     }, [])
 
      return(
@@ -23,11 +34,11 @@ export function ChatSlideBar() {
             <div className={styles.chatNewChatDIV}>
                 <button>New Chat</button>
             </div>
-            <h2>Chat History</h2>
+            <h2>Your chats</h2>
             <div className={styles.chatHistoryDiv}>
                 {previousChats.map(chathist => (
                     <button key={chathist._id}>
-                        {chathist.conversationId}
+                        {chathist.createdAt}
                     </button>
                 ))}
             </div>

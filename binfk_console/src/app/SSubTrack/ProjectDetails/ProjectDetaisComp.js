@@ -168,6 +168,7 @@ export function ProjectDetailsComp() {
 
             if(!data.status){
                 toastSet(setToast, false, data.message)
+                setSubmitDis(false)
                 return
             }
 
@@ -178,7 +179,8 @@ export function ProjectDetailsComp() {
         } catch (error) {
 
             console.error(error)
-            toastSet(setToast, false, "Submission failed")    
+            toastSet(setToast, false, "Submission failed")   
+            setSubmitDis(false) 
         }
     }
     
