@@ -103,3 +103,11 @@ class CustomServics(BaseModel):
     platform : str
     sam_types : str
     standard_deliverables : str
+
+class ConversationPop(BaseModel):
+    convo_id : str
+
+class Inference(BaseModel):
+    new_chat : bool 
+    convo_id : Optional[str] = None
+    user_message: str

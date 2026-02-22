@@ -15,12 +15,14 @@
     "next-auth": "^4.24.13",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-toastify": "^11.0.5"
+    "react-markdown": "^10.1.0",
+    "react-toastify": "^11.0.5",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^4.1.1",
+    "eslint": "^10.0.1",
     "eslint-config-next": "^0.2.4",
     "tailwindcss": "^4"
   }
