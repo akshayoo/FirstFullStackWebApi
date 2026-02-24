@@ -30,11 +30,14 @@ async def login(payload : AuthLogin, response : Response):
                                 "is_active" : 1
                             })
         
-        if not data : return {"status" : "User not found, please sign up"}
+        if not data : return {"status" : False,
+                              "message" : "User not found, please sign up"}
         
         if data.get("is_active") == False : return {"status" : "Not an active user contact admin"}
 
-        if not varify_hash(password, data.get("password_hash")):return {"status": "Invalid credentials"}
+        if not varify_hash(password, data.get("password_hash")):
+            return {"status": False,
+                    "message" : "Invalid credentials"}
 
         token = create_access_token({
             "name" : data.get("name"),
@@ -53,7 +56,8 @@ async def login(payload : AuthLogin, response : Response):
             path="/"         
         )
 
-        return {"status": "success"}
+        return {"status": True,
+                "message" : "Logging you in"}
 
     
     except Exception as e:
