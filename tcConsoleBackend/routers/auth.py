@@ -48,9 +48,9 @@ async def login(payload : AuthLogin, response : Response):
             value=token,
             httponly=True,
             samesite="lax",     
-            secure=False,       
+            secure=True,       
             max_age=60*60*8,
-            path="/"             
+            path="/"         
         )
 
         return {"status": "success"}
@@ -88,7 +88,9 @@ async def logout(response: Response):
 
     response.delete_cookie(
         key="auth_token",
-        path="/"
+        path="/",
+        secure=True,
+        samesite="lax"
     )
 
     return {

@@ -3,7 +3,7 @@ import "./globals.css"
 
 export const metadata = {
   title: "tconsole",          
-  description: "tconsole web app for managing projects",
+  description: "Theracues internal console for project management, sample tracking etc.",
   icons: {
     icon: "/favicon.ico",      
   },

@@ -62,7 +62,7 @@ export function SignupComp() {
                 <div className={styles.loginImg}>
                     <Image src="/logo.webp" alt="Theracues logo" width={125} height={40} className={styles.navLogo} />
                 </div>
-                <h1 className={styles.loginTitle}>theraCONSOLE</h1>
+                <h1 className={styles.loginTitle}>tCONSOLE</h1>
                 <p className={styles.loginSubtitle}>Register as a user</p>
 
                 <form className={styles.loginForm} onSubmit={signUp}>
