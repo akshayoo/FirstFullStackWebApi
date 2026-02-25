@@ -187,21 +187,15 @@ def fin_report_collate(project_id :  str):
             for page in reader.pages:
 
                 new_page = writer.add_blank_page(width=A4_WIDTH, height=A4_HEIGHT)
-
                 or_width = float(page.mediabox.width)
-
                 or_height = float(page.mediabox.height)
-
                 x_scale = A4_WIDTH / or_width
-
                 y_scale = A4_HEIGHT / or_height
-
                 scale = min(x_scale, y_scale)
 
                 page.scale_by(scale)
 
                 x_off = (A4_WIDTH - (or_width * scale)) / 2
-                
                 y_off = (A4_HEIGHT - (or_height * scale)) / 2
 
                 new_page.merge_translated_page(page, x_off, y_off)
