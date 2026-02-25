@@ -7,7 +7,6 @@ import Image from "next/image"
 import Link from 'next/link';
 import { toastSet } from '@/components/toastfunc';
 import { MessageComp } from '@/components/messageComp';
-import { sendStatusCode } from 'next/dist/server/api-utils';
 
 export function SignupComp() {
 
@@ -18,6 +17,12 @@ export function SignupComp() {
     const [signUpMail, setSignUpMail] = useState({
         "email" : ""
     })
+
+    const [validCode, setValidCode] = useState({
+        "code" : ""
+    })
+
+    const [passWd, setPassWd] = useState(null)
 
     const handleEmailChange = (e) => {
         const {name, value} = e.target
@@ -30,9 +35,16 @@ export function SignupComp() {
 
         e.preventDefault()
 
-        if(!signUpMail.email){
-            toastSet(setToast, false, "Missing email")
+        if(!signUpMail.email.trim()){
+            toastSet(setToast, false, "Missing values")
+            return
         }
+
+        if(!signUpMail.email.trim().endsWith("@theracues.com")){
+            toastSet(setToast, false, "Use your organization email")
+            return
+        }
+
         try{
 
             const response = await axiosApi.post("/auth/signupmail", signUpMail)
@@ -58,6 +70,47 @@ export function SignupComp() {
         }
     }
 
+    const handleValidCodeChange = (e) => {
+        const {name, value} = e.target
+        setValidCode(prev => ({
+            ...prev, [name] : value
+        }))
+    }
+
+    async function validateCode(Name , userName) {
+        
+        if(!validCode.code) {
+            toastSet(setToast, false, "Paste your code")
+            return
+        }
+        
+        try{
+
+            const response = await axiosApi("/auth/signupcodeval",
+                {
+                    name : Name,
+                    username : userName,
+                    validCode
+                }
+            )
+
+            const data = response.data
+
+            if(!data.status){
+                toastSet(setToast, data.status, data.message)
+            }
+
+            toastSet(setToast, data.status, data.message)
+            setPassWd(data.payload)
+            setGetCode(null)
+        }
+
+        catch(err){
+            console.log(err)
+            toastSet(setToast, false, "Server error please try after some time")
+        }
+    }
+
     return (
         <div className={styles.loginPage}>
 
@@ -69,7 +122,9 @@ export function SignupComp() {
                 <p className={styles.loginSubtitle}>Register as a user</p>
                 <p className={styles.loginSubtitle}><Link className={styles.Link} href="/login">Sign in</Link></p>
 
-                {getCode ? <GetCode /> : <SighUp sendSignupCode={sendSignupCode} handleEmailChange={handleEmailChange} />}
+                {getCode ? <GetCode getCode={getCode} validateCode={validateCode} handleValidCodeChange={handleValidCodeChange} /> : 
+                setPassWd ? <PasswdComp passWd={passWd} /> :
+                <SignUp sendSignupCode={sendSignupCode} handleEmailChange={handleEmailChange} />}
 
                 <p className={styles.loginFooter}>
                     Authorized personnel only
@@ -80,14 +135,14 @@ export function SignupComp() {
   );
 }
 
-function SighUp({sendSignupCode, handleEmailChange}) {
+function SignUp({sendSignupCode, handleEmailChange}) {
 
     return(
 
         <form className={styles.loginForm} onSubmit={sendSignupCode}>
             <div className={styles.formGroup}>
                 <label>Employee Email</label>
-                <input name="email" type="text" placeholder="eg: user@theracues.com" onChange={handleEmailChange}/>
+                <input name="email" type="email" placeholder="eg: user@theracues.com" onChange={handleEmailChange}/>
             </div>
 
             <button type="submit" className={styles.loginBtn}>Get code</button>
@@ -95,34 +150,36 @@ function SighUp({sendSignupCode, handleEmailChange}) {
     );
 }
 
-function GetCode() {
+function GetCode({getCode, validateCode, handleValidCodeChange}) {
 
     return(
+        <>
+            <form className={styles.loginForm} onSubmit={() => validateCode(getCode.name, getCode.username)} >
+                <div className={styles.formGroup}>
+                    <label>Enter your varification code</label>
+                    <input name="code" type="text" placeholder="Enter your varification code" onChange={handleValidCodeChange} />
+                </div>
 
-        <form className={styles.loginForm} onSubmit={sendSignupCode}>
-            <div className={styles.formGroup}>
-                <label>Code</label>
-                <input name="username" type="text" placeholder="Enter the code" onChange={handleChange}/>
-            </div>
-
-            <button type="submit" className={styles.loginBtn}>Submit</button>
-        </form>
+                <button type="submit" className={styles.loginBtn}>Submit</button>
+            </form>
+            <button>Resend code</button>
+        </>
     );
 }
 
 
-function PasswdComp(){
+function PasswdComp({passWd}){
     return(
   
-        <form className={styles.loginForm} onSubmit={signUp} >
+        <form className={styles.loginForm}  >
             <div className={styles.formGroup}>
                 <label>Type Password</label>
-                <input name="password" type="password" placeholder="Enter your password" onChange={handleChange}/>
+                <input name="password" type="password" placeholder="Enter your password" />
             </div>
 
             <div className={styles.formGroup}>
                 <label>Re-type Password</label>
-                <input name="password_re" type="password" placeholder="Re-enter your password" onChange={handleChange}/>
+                <input name="password_re" type="password" placeholder="Re-enter your password" />
             </div>
 
             <button type="submit" className={styles.loginBtn}>Sign Up</button>

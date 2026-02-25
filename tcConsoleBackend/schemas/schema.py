@@ -114,3 +114,8 @@ class Inference(BaseModel):
 
 class Email(BaseModel):
     email : EmailStr
+
+class ValidateSignup(BaseModel):
+    name : str
+    username : EmailStr
+    code : str

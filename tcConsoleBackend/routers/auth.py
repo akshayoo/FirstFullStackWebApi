@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Response, Depends
 from jose import JWTError
-from schemas.schema import AuthLogin, AuthSignup, Email
+from schemas.schema import AuthLogin, AuthSignup, Email, ValidateSignup
 from utils.confgmail import email_config
 from jinja2 import Environment, FileSystemLoader
 import random
@@ -114,30 +114,27 @@ async def logout(response: Response):
 @router.post("/signupmail")
 async def send_signupcode(payload : Email):
 
-    user_email = payload.email
-    user_collection = collections_load("tcUsers")   
+    user_email = payload.email.lower().strip()
+    user_collection = collections_load("tcUsers")    
 
     try:
 
         data = user_collection.find_one(
             {"user_email": user_email},
-            {"_id": 0, "name" : 1}
+            {"_id": 0, "name" : 1, "has_signed_up" : 1}
         )
 
         if not data:
             return {"status": False,
-                    "message" : "Not an authorized user"}
+                    "message" : "Not an authorized user",
+                    "payload" : False}
 
         if data.get("has_signed_up"):
             return {"status": False,
-                    "message" : "Already a user please login"}
+                    "message" : "Already a user please login",
+                    "payload" : False}
         
         signup_code = random.randint(100000, 999999)
-
-        user_collection.update_one({"user_email": user_email},
-                                   {
-                                       "$set" : {"signup_code" : signup_code}
-                                   })
         
         name = data.get("name")
         
@@ -152,9 +149,14 @@ async def send_signupcode(payload : Email):
         status = await email_config(
             subject="tConsole- Email Varification",
             cc_mail=[],
-            to_mail=user_email,
+            to_mail=[user_email],
             mail_html=mail_html,
         )
+
+        user_collection.update_one({"user_email": user_email},
+                            {
+                                "$set" : {"signup_code" : signup_code}
+                            })
 
         if not status:
             return{
@@ -181,6 +183,44 @@ async def send_signupcode(payload : Email):
         )
 
 
+
+@router.post("/signupcodeval")
+async def validate_signupcode(payload : ValidateSignup):
+    
+    name = payload.name
+    username = payload.username
+    user_collection = collections_load("tcUsers")  
+
+    try:
+        code = int(payload.code)
+
+        data = user_collection.find_one(
+            {"user_email": username},
+            {"_id": 0, "status_code" : 1}
+        )
+
+        if not code == data.get("status_code"):
+            return {
+                "status" : False,
+                "message" : "Not a valid varification code please try again with a valid one",
+                "payload" : False
+            }
+        
+        return{
+            "status" : True,
+            "message" : "Varification successful, please provide a password",
+            "payload" : {
+                "name" : name,
+                "username" : username
+            } 
+        }
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Sign-up Failed"
+        )
 
 
 @router.post("/signup")
