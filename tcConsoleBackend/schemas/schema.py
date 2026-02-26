@@ -80,6 +80,10 @@ class EmailCont(BaseModel):
     mail_subject : str
     mail_content : str
 
+class ProjComments(BaseModel):
+    project_id : str
+    project_comments : str
+
 
 class TaskUpdate(BaseModel):
     project_id : str
@@ -120,3 +124,8 @@ class ValidateSignup(BaseModel):
     name : str
     username : EmailStr
     code : str
+
+
+class GenCatNo(BaseModel):
+    category : str
+    service_name : str

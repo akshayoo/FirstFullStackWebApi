@@ -149,7 +149,7 @@ async def samsub_gen(payload : ProjId, usertok : dict = Depends(parse_token)):
         sample_type = service_info.get("sample_type")
         application = data.get("sample_submission").get("details").get("application")
         sample_number = service_info.get("sample_number")
-        extraction_needed = service_info.get("extraction_needed").upper()
+        extraction_needed = service_info.get("extraction_needed")
         replicates = "YES" if ss_info.get("replicates") == True else "NO"
         bin_req  = "YES" if ss_info.get("bioinformatics_required") == True else "NO"
 

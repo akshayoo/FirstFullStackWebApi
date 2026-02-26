@@ -2,15 +2,15 @@ from fastapi import APIRouter, HTTPException, Depends
 from utils.llmcall import ModelLoad
 from utils.jwt_utils import parse_token
 from utils.dbfunc import collections_load
-from schemas.schema import ConversationPop, Inference
+from schemas.schema import ConversationPop, Inference, GenCatNo
 from datetime import datetime
 from uuid import uuid1
 import time
 from bson import ObjectId
 from bson.errors import InvalidId
 
-#MODEL = "/home/ak/Projects/Models/TextGeneration/models--meta-llama--Meta-Llama-3-8B-Instruct/snapshots/8afb486c1db24fe5011ec46dfbe5b5dccdb575c2"
-MODEL = "/home/akshay/Projects/models/text/models--mistralai--Mistral-7B-Instruct-v0.3/snapshots/0d4b76e1efeb5eb6f6b5e757c79870472e04bd3a"
+MODEL = "/home/ak/Projects/Models/TextGeneration/models--meta-llama--Meta-Llama-3-8B-Instruct/snapshots/8afb486c1db24fe5011ec46dfbe5b5dccdb575c2"
+#MODEL = "/home/akshay/Projects/models/text/models--mistralai--Mistral-7B-Instruct-v0.3/snapshots/0d4b76e1efeb5eb6f6b5e757c79870472e04bd3a"
 
 LLM = ModelLoad(path=MODEL)   
 LLM.load_in4bit() 
@@ -230,3 +230,24 @@ async def delet_chat(payload : ConversationPop, _ : dict = Depends(parse_token))
         )
 
 
+
+@router.post("/gencatno")
+async def gen_catnumber(payload: GenCatNo):
+
+    collection = collections_load("tcStdDeliverables")
+    category = payload.category
+
+    try:
+
+        data = collection.find({},{
+            "_id" : 0,
+            "service."
+            "services.service_code" :  1
+        })
+        pass
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail="Unable to generate Cat.No"
+        )

@@ -4,7 +4,7 @@ import styles from './ViewComp.module.css'
 import { useState, useEffect } from 'react';
 import axiosApi from '@/lib/api';
 import { SampleSubDetailsComp, QcSamDetailsComp, LibSamDetailsComp, BiinfoDetailsComp } from './components/elements';
-import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm } from './components/elemoptions';
+import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm, ProjectCommentsForm } from './components/elemoptions';
 import { EmailReports } from './components/elementsent';
 import { MessageComp } from '@/components/messageComp';
 import { toastSet } from '@/components/toastfunc';
@@ -189,6 +189,9 @@ function ViewWin ({projectCont, samsubDetails, setSamsubDetails,
 
 
 function ViewProjDetails({projectCont}) {
+
+    const [projectComments, setProjectComments] = useState(false)
+
     return(
         <>
             <div className={styles.ProjectSection}>
@@ -196,9 +199,17 @@ function ViewProjDetails({projectCont}) {
                     <div>Project ID</div>
                     <div>{projectCont.project_id}</div>
                 </div>
+                <div className={styles.IdComponentComm}>
+                    <div>Comments</div>
+                    <div>
+                        {projectCont.project_comments}
+                    </div>
+                    <button onClick={() => setProjectComments(true)} >Update comment</button>
+                </div>
                 <div className={styles.ProjectHealth}>
                     <div>{projectCont.project_status}</div>
                 </div>
+                {projectComments && <ProjectCommentsForm projectId={projectCont.project_id} setProjectComments={setProjectComments} />}
             </div>
 
             <div className={styles.ProjectComp}>

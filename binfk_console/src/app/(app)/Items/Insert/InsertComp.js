@@ -70,6 +70,36 @@ export function InsertComp() {
         }))
     }
 
+    async function genCatNo(){
+        if(!formData.category || !formData.service_name){
+            toastSet(setToast, false, "Service category or Service name")
+        }
+
+        try{
+            const response = await axiosApi.post("/cuesai/gencatno",
+                {
+                    "category" : formData.category,
+                    "service_name" : formData.service_name
+                }
+            )
+
+            const data = response.data
+
+            setFormData(prev => ({
+                ...prev,
+                catalog_number : data.payload.catalog_number
+            }))
+            toastSet(setToast, data.status, data.message)
+
+        }
+
+        catch(error){
+            console.log(error)
+            toastSet(setToast, false, "Error generating CAT No.")
+        }
+
+    }
+
     return (
        <div className={styles.ProgCompDiv}>
             <div className={styles.projDetSide}>
@@ -90,7 +120,7 @@ export function InsertComp() {
 
                         <div className={styles.InputcompDiv}>
                             <label>Service category</label>
-                            <select name="category" onChange={handleChange}>
+                            <select value={formData.category} name="category" onChange={handleChange}>
                                 <option value="">--select--</option>
                                 <option value="Bulk Transcriptomics">Bulk Transcriptomics</option>
                                 <option value="Metagenomics & Applied Genomics">Metagenomics & Applied Genomics</option>
@@ -104,12 +134,12 @@ export function InsertComp() {
                         
                         <div className={styles.InputcompDiv}>
                             <label>Service Name</label>
-                            <input name="service_name" type="text" onChange={handleChange} />
+                            <input value={formData.service_name} name="service_name" type="text" onChange={handleChange} />
                         </div>
                         
                         <div className={styles.InputcompDiv}>
-                            <label>Catalog Number <button className={styles.GenCatno}>Generate Cat: no</button> </label>
-                            <input name="catalog_number" type="text" onChange={handleChange} />
+                            <label>Catalog Number <button onClick={genCatNo} className={styles.GenCatno}>Generate Cat: no</button> </label>
+                            <input value={formData.catalog_number} name="catalog_number" type="text" onChange={handleChange} />
                         </div>
                     </div>
 

@@ -198,6 +198,9 @@ export function ProjectDetailsComp() {
                 handleRadioChange={handleRadioChange}
                 SendProjectInfo={SendProjectInfo}
                 submitDis = {submitDis}
+                setToast={setToast}
+                setFormData = {setFormData}
+                formData ={formData}
             />
             {toast && <MessageComp condition={toast.condition} message={toast.message} />}
         </div>
@@ -231,7 +234,10 @@ function MainFormPage({
     handleChange,
     handleRadioChange,
     SendProjectInfo,
-    submitDis
+    submitDis,
+    setToast,
+    setFormData,
+    formData
 }) {
     
     const getStandardDeliverables = () => {
@@ -243,6 +249,25 @@ function MainFormPage({
         
         return [...reports, ...addons];
     };
+
+
+    async function getProjectId(){
+        try{
+            const response = await axiosApi.post("/initialization/genprojectid")
+            const data = response.data
+
+            setFormData(prev => ({
+                ...prev,
+                project_id: data.payload.project_id
+            }))
+
+            toastSet(setToast, data.status, data.message);
+        }
+        catch(err){
+            console.log(err)
+            toastSet(setToast, false, "Unable to process request")
+        }
+    }
     
     return(
         <div className={styles.MainFormPage}>
@@ -250,8 +275,8 @@ function MainFormPage({
                 <div className={styles.ForminBox}>
                     
                     <div className={styles.InputcompDiv}>
-                        <label>Project ID <button className={styles.GenCatno} >Get Project ID</button> </label>
-                        <input name="project_id" type="text" onChange={handleChange} />
+                        <label>Project ID <button onClick={getProjectId} className={styles.GenCatno} >Get Project ID</button> </label>
+                        <input name="project_id" value={formData.project_id} type="text" onChange={handleChange} />
                     </div>
                     
                     <div className={styles.InputcompDiv}>
@@ -284,7 +309,7 @@ function MainFormPage({
                     
                     <div className={styles.InputcompDiv}>
                         <label>Offerings Type</label>
-                        <select name="platform" onChange={onClassChange}>
+                        <select name="offering_type" onChange={onClassChange}>
                             <option value="">Select Offering Type</option>
                             {Object.keys(servicesClass).map((category) => (
                                 <option key={category} value={category}>

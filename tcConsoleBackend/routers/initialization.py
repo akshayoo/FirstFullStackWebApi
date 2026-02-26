@@ -118,6 +118,7 @@ async def form_fetch_mail(payload: ProjectSubmission, usertok : dict = Depends(p
     document = {
         "project_id": payload.project_id,
         "project_token" : project_token,
+        "project_comments" : "",
         "project_info": {
             "pi_name": payload.pi_name,
             "email": payload.email,
@@ -196,4 +197,44 @@ async def form_fetch_mail(payload: ProjectSubmission, usertok : dict = Depends(p
             status_code=500,
             detail="Project submission failed"
         )
+    
+
+@router.post("/genprojectid")
+async def gen_projectid(_ : dict = Depends(parse_token)):
+
+    collection = collections_load("tcProjects")
+
+    try:
+        latest_proj = collection.find_one({},
+                                          {
+                                              "_id": 0,
+                                              "project_id": 1,
+                                              "audit.created_at": 1
+                                          },
+                                          sort=[("audit.created_at", -1)])
+
+        
+        if not latest_proj or "project_id" not in latest_proj:
+            next_projid = "TCP_2627_01"
+        else:
+            last_proj = latest_proj["project_id"]
+            proj_number = int(last_proj.replace("TCP_2627_", ""))
+            next_projid = f"TCP_2627_0{proj_number+1}"
+
+        return{
+            "status" : True,
+            "message" : "Generated project_id",
+            "payload" : {
+                "project_id" : next_projid
+            }
+        }
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Unable to generate project id"
+        )
+    pass
+
 

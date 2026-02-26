@@ -236,6 +236,48 @@
     padding: 10px;
 }
 
+.IdComponentComm {
+    border-radius: 5px;
+    padding: 40px;
+    margin: 5px;
+    color: white;
+
+}
+
+
+.IdComponentComm div:first-child {
+    padding: 5px;
+    color: #005772;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.IdComponentComm div {
+    padding: 10px;
+    color: #4b4b4b;
+    font-size: 14px;
+}
+
+.IdComponentComm button {
+    border: none;
+    border-radius: 15px;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #555555;
+    color: whitesmoke;
+    font-weight: 300;
+    box-shadow: 1px 1px 5px rgb(199, 255, 199);
+    transition: transform 0.3s ease;
+}
+
+.IdComponentComm button:hover{
+    transform: translateY(-1px);
+}
+
+.IdComponentComm button:active{
+    transform: translateY(1px);
+}
+
 .ProjectHealth {
     padding: 20px;
     margin-left: auto;

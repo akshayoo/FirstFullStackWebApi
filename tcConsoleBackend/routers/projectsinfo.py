@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from utils.dbfunc import collections_load
-from schemas.schema import ProjIdStatus, ProjId, TaskUpdate
+from schemas.schema import ProjIdStatus, ProjId, TaskUpdate, ProjComments
 import os
 from utils.jwt_utils import parse_token
 from fastapi.responses import FileResponse
@@ -176,7 +176,7 @@ async def projectcomp_pop(payload: ProjIdStatus, _ : dict = Depends(parse_token)
 
         project_id = payload.project_id.strip()
         
-        data = collections.find_one({"project_id" : project_id}, {"_id" : 0,
+        data = collections.find_one({"project_id" : project_id}, {"_id" : 0, "project_comments" : 1,
                                                 "project_info.pi_name" : 1,
                                                 "project_info.email" : 1,
                                                 "project_info.phone": 1,
@@ -193,6 +193,7 @@ async def projectcomp_pop(payload: ProjIdStatus, _ : dict = Depends(parse_token)
                 "message": "Project not found"
             }
         
+        comments = data.get("project_comments", "")
         pi_name = data["project_info"]["pi_name"]
         email = data["project_info"]["email"]
         phone = data["project_info"]["phone"]
@@ -208,6 +209,7 @@ async def projectcomp_pop(payload: ProjIdStatus, _ : dict = Depends(parse_token)
             "message" : "Data fetched",
             "payload" : {
                 "project_id" : project_id,
+                "project_comments" : comments,
                 "project_status" : payload.project_status,
                 "pi_name" : pi_name, 
                 "email" : email, 
@@ -304,6 +306,41 @@ async def samsub_pop(payload : ProjId, _ : dict = Depends(parse_token)):
             detail= "Sample submission details fetch failed"
         )
 
+
+
+@router.post("/projcommupdate")
+async def update_comments(payload :  ProjComments, usertok : dict=Depends(parse_token)):
+
+    if usertok["role"] == "bd":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
+
+    collection = collections_load("tcProjects")
+
+    try:
+
+        project_id = payload.project_id.strip()
+
+        collection.update_one({"project_id" : project_id},
+                              {
+                                  "$set" : {
+                                      "project_comments" : payload.project_comments
+                                  }
+                              })
+
+        return{
+            "status" : True,
+            "message" : "Comment updated",
+        }
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Comments update failed"
+        )
 
 
 

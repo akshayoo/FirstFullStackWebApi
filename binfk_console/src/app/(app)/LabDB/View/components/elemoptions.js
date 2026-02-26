@@ -354,3 +354,72 @@ export function BinfReportPushForm({setBinfDataForm, projectId}){
         </div>
     )
 }
+
+
+export function ProjectCommentsForm({projectId, setProjectComments}){
+
+    const [toast, setToast] = useState(null)
+
+    const [formData, setFormData] = useState({
+        "project_id" : projectId,
+        "project_comments" : ""
+    })
+
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setFormData(prev => ({
+            ...prev, [name] : value
+        }))
+    }
+
+    async function updateProjectComments() {
+        if(!formData.project_comments){
+            toastSet(setToast, false, "Missing fields")
+            return
+        }
+
+        if(formData.project_comments.length > 500){
+            toastSet(setToast, false, "Exceeded charecter limit make the comments short")
+            return
+        }
+
+        try {
+            const response = await axiosApi.post("/project/projcommupdate",
+                formData
+            )
+            
+            const data = response.data
+
+            toastSet(setToast, data.status, data.message)
+            setTimeout(() => setProjectComments(false), 2000)
+
+        }
+        catch(err){
+            console.log(err)
+            toastSet(setToast, false, "Failed to update comments")
+        }
+    }
+
+    return(
+
+        <div className={styles.modalOverlay}>
+            <div className={styles.modalBox}>
+                <div className={styles.modalHeader}>
+                    <h3>Update a new project comment for {projectId}</h3>
+                    <button onClick={() => setProjectComments(false)} >X</button>
+                </div>
+
+                <div className={styles.modalBody}>
+                    <div className={styles.formElem}>
+                        <label>Update comment</label>
+                        <textarea name="project_comments" placeholder='Maximum 500 charecters' rows='12' onChange={handleChange}/>
+                    </div>
+                    <div className={styles.formElem}>
+                        <button onClick={updateProjectComments} >Submit</button>
+                    </div>  
+                </div>
+                {toast && <MessageComp condition={toast.condition} message={toast.message} />}
+            </div>
+        </div>
+    );
+}
