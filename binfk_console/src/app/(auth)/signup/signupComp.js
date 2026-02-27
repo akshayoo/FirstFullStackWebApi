@@ -11,6 +11,8 @@ import { useRouter } from 'next/navigation';
 
 export function SignupComp() {
 
+    const[buttonDis, setButtonDis] = useState(false)
+
     const [toast, setToast] = useState(null)
 
     const [getCode, setGetCode] = useState(null)
@@ -53,6 +55,8 @@ export function SignupComp() {
             return
         }
 
+        setButtonDis(true)
+
         try{
 
             const response = await axiosApi.post("/auth/signupmail", signUpMail)
@@ -60,20 +64,27 @@ export function SignupComp() {
 
             if(!data.status){
                 toastSet(setToast, false,  data.message)
+                setButtonDis(false)
                 return
             }
 
-            toastSet(setToast, data.status, data.message)
             if(!data.payload){
                 toastSet(setToast, false,  data.message)
+                setButtonDis(false)
                 return
             } 
 
+            toastSet(setToast, data.status, data.message)
+
             setGetCode(data.payload)
+            
+            setButtonDis(false)
+
             toastSet(setToast, data.status, data.message)
         }
         catch(err){
             console.log(err)
+            setButtonDis(false)
             toastSet(setToast, false, "Unable to process requests right now, Please try again after some time")
         }
     }
@@ -96,6 +107,8 @@ export function SignupComp() {
             toastSet(setToast, false, "Paste your code")
             return
         }
+
+        setButtonDis(true)
         
         try{
 
@@ -111,16 +124,19 @@ export function SignupComp() {
 
             if(!data.status){
                 toastSet(setToast, data.status, data.message)
+                setButtonDis(false)
                 return
             }
 
             toastSet(setToast, data.status, data.message)
             setPassWd(data.payload)
+            setButtonDis(false)
             setGetCode(null)
         }
 
         catch(err){
             console.log(err)
+            setButtonDis(false)
             toastSet(setToast, false, "Server error please try after some time")
         }
     }
@@ -151,6 +167,8 @@ export function SignupComp() {
             return
         }
 
+        setButtonDis(true)
+
         try{
 
             const response = await axiosApi.post("/auth/signup",
@@ -166,15 +184,18 @@ export function SignupComp() {
 
             if(!data.status){
                 toastSet(setToast, data.status, data.message)
+                setButtonDis(false)
                 return
             }
 
             toastSet(setToast, data.status, data.message)
+            setButtonDis(true)
             setTimeout(() => router.push("/login"), 2000)
         }
 
         catch(error){
             console.log(error)
+            setButtonDis(false)
             toastSet(setToast, false, "Unable to process your request")
         }
     }
@@ -190,9 +211,9 @@ export function SignupComp() {
                 <p className={styles.loginSubtitle}>Register as a user</p>
                 <p className={styles.loginSubtitle}><Link className={styles.Link} href="/login">Sign in</Link></p>
 
-                {getCode ? <GetCode getCode={getCode} validateCode={validateCode} handleValidCodeChange={handleValidCodeChange} /> : 
-                passWd ? <PasswdComp passWd={passWd} signUp={signUp} handlePasswd={handlePasswd} /> :
-                <SignUp sendSignupCode={sendSignupCode} handleEmailChange={handleEmailChange} />}
+                {getCode ? <GetCode buttonDis={buttonDis} getCode={getCode} validateCode={validateCode} handleValidCodeChange={handleValidCodeChange} /> : 
+                passWd ? <PasswdComp buttonDis={buttonDis} passWd={passWd} signUp={signUp} handlePasswd={handlePasswd} /> :
+                <SignUp buttonDis={buttonDis} sendSignupCode={sendSignupCode} handleEmailChange={handleEmailChange} />}
 
                 <p className={styles.loginFooter}>
                     Authorized personnel only
@@ -203,7 +224,7 @@ export function SignupComp() {
   );
 }
 
-function SignUp({sendSignupCode, handleEmailChange}) {
+function SignUp({sendSignupCode, handleEmailChange, buttonDis}) {
 
     return(
 
@@ -213,12 +234,14 @@ function SignUp({sendSignupCode, handleEmailChange}) {
                 <input name="email" type="email" placeholder="eg: user@theracues.com" onChange={handleEmailChange}/>
             </div>
 
-            <button type="submit" className={styles.loginBtn}>Get code</button>
+            <button type="submit" className={styles.loginBtn} disabled={buttonDis} >
+                {buttonDis ? <><span className={styles.loader}></span></> : <>Get Code</>}
+            </button>
         </form>
     );
 }
 
-function GetCode({getCode, validateCode, handleValidCodeChange}) {
+function GetCode({getCode, validateCode, handleValidCodeChange, buttonDis}) {
 
     return(
         <>
@@ -228,15 +251,16 @@ function GetCode({getCode, validateCode, handleValidCodeChange}) {
                     <input name="code" type="text" placeholder="Enter your varification code" onChange={handleValidCodeChange} />
                 </div>
 
-                <button type="submit" className={styles.loginBtn}>Submit</button>
+                <button type="submit" className={styles.loginBtn} disabled={buttonDis} >
+                    {buttonDis ? <><span className={styles.loader}></span></> : <>Verify Code</>}
+                </button>
             </form>
-            <button>Resend code</button>
         </>
     );
 }
 
 
-function PasswdComp({passWd, signUp, handlePasswd}){
+function PasswdComp({passWd, signUp, handlePasswd, buttonDis}){
     return(
   
         <form className={styles.loginForm} onSubmit={(e) => {e.preventDefault(); signUp(passWd.name, passWd.username)}}  >
@@ -250,7 +274,9 @@ function PasswdComp({passWd, signUp, handlePasswd}){
                 <input name="password_re" type="password" placeholder="Re-enter your password" onChange={handlePasswd} />
             </div>
 
-            <button type="submit" className={styles.loginBtn}>Sign Up</button>
+            <button type="submit" className={styles.loginBtn} disabled={buttonDis} >
+                {buttonDis ? <><span className={styles.loader}></span></> : <>Sign UP</>}
+            </button>
         </form>
     );
 }

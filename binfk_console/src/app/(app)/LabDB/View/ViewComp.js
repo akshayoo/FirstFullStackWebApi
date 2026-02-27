@@ -606,7 +606,7 @@ function Reports({projectCont}) {
     async function closeProject(projectId){
         try{
     
-            const response = await axios.post("/project/closeproject",
+            const response = await axiosApi.post("/project/closeproject",
                 {"project_id" : projectId}
             )
 

@@ -230,24 +230,61 @@ async def delet_chat(payload : ConversationPop, _ : dict = Depends(parse_token))
         )
 
 
-
+"""
 @router.post("/gencatno")
 async def gen_catnumber(payload: GenCatNo):
 
     collection = collections_load("tcStdDeliverables")
-    category = payload.category
 
     try:
 
-        data = collection.find({},{
-            "_id" : 0,
-            "service."
-            "services.service_code" :  1
+        data = collection.find({}, {
+            "_id": 0,
+            "category": 1,
+            "services": 1
         })
-        pass
+        data_set = list(data)
+
+        stand_del = ""
+
+        for doc in data_set:
+            category_name = doc.get("category", "")
+            stand_del += f"\nCategory: {category_name}\n"
+
+            services = doc.get("services", [])
+
+            if not isinstance(services, list):
+                continue
+
+            for service in services:
+                if not isinstance(service, dict):
+                    continue
+
+                service_name = service.get("service_name")
+                service_code = service.get("service_code")
+
+                if service_name and service_code:
+                    stand_del += (
+                        f"- Service Name: {service_name}\n"
+                        f"  Catalogue Number: {service_code}\n"
+                    )
+
+        cat_no = LLM.generate( query=stand_del, gencat= True, category= payload.category, service_name= payload.service_name)
+
+        return{
+            "status" : True,
+            "message" :  "Generated Cat.No",
+            "payload" : {
+                "cat_no" : cat_no
+            }
+        }
+
     except Exception as e:
         print(str(e))
         raise HTTPException(
             status_code= 500,
             detail="Unable to generate Cat.No"
         )
+
+
+"""

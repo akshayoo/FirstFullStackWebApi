@@ -420,7 +420,7 @@ function SendButton({ SendProjectInfo, submitDis }) {
     return (
         <div className={styles.SendAppButton}>
             <button onClick={SendProjectInfo} disabled={submitDis}>
-                {submitDis ? <>Processing</> : <>SUBMIT</>}
+                {submitDis ? <><span className={styles.loader}></span></> : <>SUBMIT</>}
             </button>
         </div>
     )

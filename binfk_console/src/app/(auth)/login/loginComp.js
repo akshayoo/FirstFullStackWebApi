@@ -20,15 +20,20 @@ export function LoginComp() {
 
     const [toast, setToast] = useState(null)
 
+    const [buttonDis, setButtonDis] = useState(false)
+
 async function signIn(e) {
 
     
-         e.preventDefault()
+        e.preventDefault()
 
         if(!formData.username || !formData.password){
             toastSet(setToast, false, "Missing fields")
             return
         }
+
+        setButtonDis(true)
+
         try {
             const response = await axiosApi.post(
                 "/auth/login",
@@ -41,11 +46,13 @@ async function signIn(e) {
             } 
             else {
                 toastSet(setToast, response.data.status, response.data.message)
+                setButtonDis(false)
                 return
             }
         }
         catch(error) {
             console.log(error)
+            setButtonDis(false)
             toastSet(setToast, false, "Unable to reach the servers please try after some time")
         }
     }
@@ -82,7 +89,9 @@ async function signIn(e) {
                         <input name="password" type="password" placeholder="Enter your password" onChange={handleChange}/>
                     </div>
 
-                    <button type="submit" className={styles.loginBtn}> Sign In</button>
+                    <button type="submit" className={styles.loginBtn} disabled={buttonDis} >
+                        {buttonDis ? <><span className={styles.loader}></span></> : <>Sign In</>}
+                    </button>
                 </form>
 
                 <p className={styles.loginFooter}>

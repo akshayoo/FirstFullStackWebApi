@@ -82,7 +82,8 @@ class ModelLoad:
                 model=self.model
             )
 
-    def generate(self, query: str, gencontext:bool = False, title: bool = False):
+    def generate(self, query: str, gencontext:bool = False, title: bool = False, 
+                 gencat:bool = False, category: str= None, service_name:str = None):
 
         if self.pipe is None:
             raise RuntimeError("Model not loaded")
@@ -115,38 +116,78 @@ class ModelLoad:
 
                 Answer:
             """
-            max_new_tokens = 1000
+            max_new_tokens = 500
+            temp = 0.2
+            top_p = 0.9
+            sample = True
 
-        if title:
+        elif title:
         
             prompt = f"""
+                You generate short titles.
 
-                You are an expert at creating short conversation titles.
-                Generate a title based only on the assistant's first answer.
-                And return the Answer.
+                Examples:
+
+                Text: RNA sequencing analysis workflow
+                Title: RNA Analysis
+
+                Text: Flask backend email error
+                Title: Flask Error
+
+                Text: Cancer transcriptomics service overview
+                Title: Cancer Transcriptomics
+
+                Now generate a title.
 
                 Rules:
-                - Output exactly TWO words.
-                - No punctuation.
-                - No quotes.
-                - Capture the main topic.
+                - Exactly two words
+                - Only alphabetic characters
+                - No punctuation
+                - No explanation
 
-                First Answer: {query}
-                Answer:
+                Text:
+                {query}
+
+                Title:
             """
 
             max_new_tokens = 5
+            temp = 0.0
+            top_p = 1.0
+            sample = False
+
+        elif gencat:
+
+            prompt = f"""
+            Catalogue code pattern reference:
+
+            {query}
+
+            New service:
+            Category = {category}
+            Service = {service_name}
+
+            Output a valid catalogue code following the same style.
+            Return only the code.
+            """
+            max_new_tokens = 10
+            temp = 0.0
+            top_p = 1.0
+            sample = False
             
 
         output = self.pipe(
             prompt,
             max_new_tokens=max_new_tokens,
-            do_sample=False,
-            temperature=0.2,
-            top_p=0.9
+            do_sample=sample,
+            temperature=temp,
+            top_p=top_p,
+            return_full_text=False,
+            repetition_penalty=1.15,
+            eos_token_id=self.tokenizer.eos_token_id
         )[0]["generated_text"]
 
-        return output.split("Answer:")[-1].strip()
+        return output.strip()
 
     def clean(self):
 

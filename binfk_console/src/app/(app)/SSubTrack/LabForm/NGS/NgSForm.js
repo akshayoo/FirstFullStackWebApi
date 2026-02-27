@@ -400,7 +400,7 @@ function SendButton({ submitNGSForm, buttonDisable }) {
     return (
         <div className={styles.SendAppButton}>
             <button onClick={submitNGSForm} disabled={buttonDisable}>
-                {buttonDisable ? <>Processing</> : <>SUBMIT</>}
+                {buttonDisable ? <><span className={styles.loader}></span></>: <>SUBMIT</>}
             </button>
         </div>
     )

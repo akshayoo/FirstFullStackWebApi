@@ -319,7 +319,7 @@ function SendButton({ sendNcounterForm, buttonDis }) {
     return (
         <div className={styles.SendAppButton}>
         <button onClick={sendNcounterForm} disabled={buttonDis}>
-            {buttonDis ? <>Processing</> : <>SUBMIT</>}
+            {buttonDis ? <><span className={styles.loader}></span></> : <>SUBMIT</>}
         </button>
         </div>
     )
