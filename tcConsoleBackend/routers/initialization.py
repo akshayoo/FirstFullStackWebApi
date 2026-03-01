@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends
 from utils.dbfunc import collections_load
 from utils.confgmail import email_config
-from schemas.schema import ProjectSubmission
+from schemas.schema import ProjectSubmission, ProjId
 from jinja2 import FileSystemLoader, Environment
 from fastapi.exceptions import HTTPException
 from datetime import datetime
@@ -239,3 +239,47 @@ async def gen_projectid(_ : dict = Depends(parse_token)):
     pass
 
 
+@router.post("/samsubresend")
+async def resend_submission(payload : ProjId, usertok : dict = Depends(parse_token)):
+
+    project_id = payload.project_id
+    collection = collections_load("tcProjects")
+
+    try:
+
+        data = collection.find_one({"project_id" : payload.project_id},
+                                   {
+                                       "_id" : 0,
+                                       "project_token" : 1,
+                                       "project_info.pi_name" : 1,
+                                       "project_info.email" : 1
+
+                                   })
+
+        env = Environment(loader= FileSystemLoader("./templates"))
+        template = env.get_template("samplesubresend.html")
+
+        html_cont = template.render(
+            project_id = project_id,
+            project_token = data.get("project_token"),
+            pi_name = data.get("project_info", {}).get("pi_name"),
+        ) 
+
+        email_status = await email_config(subject= "Sample Submission Form",
+                                    to_mail= [data.get("project_info", {}).get("email")],
+                                    cc_mail= [usertok["username"]],
+                                    mail_html= html_cont)
+
+        return {
+            "status" : True,
+            "message": email_status
+        }
+
+
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code= 500,
+            detail= "Unabl to resend sample submission details"
+        )

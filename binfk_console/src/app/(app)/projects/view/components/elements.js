@@ -81,7 +81,7 @@ export function SampleSubDetailsComp({samsubDetails, setSamsubDetails, projectId
                 </div>
                 <div>
                     <div className={styles.ProjecIn}>
-                        <div>Treated with RNAase</div>
+                        <div>Treated with nucleases</div>
                         <div>{samsubDetails.nucleases}</div>
                     </div>
                     <div className={styles.ProjecIn}>

@@ -8,6 +8,7 @@ import { QcReportPushForm, LibQcReportPushForm, BinfReportPushForm, ProjectComme
 import { EmailReports } from './components/elementsent';
 import { MessageComp } from '@/components/messageComp';
 import { toastSet } from '@/components/toastfunc';
+import { useRouter } from "next/navigation"; 
 
 export function ViewComp(){
 
@@ -36,7 +37,9 @@ export function ViewComp(){
                 libqcDetails={libqcDetails}
                 setLibqcDetails={setLibqcDetails}
                 binfDetails ={binfDetails}
-                setBinfDetails = {setBinfDetails}/>
+                setBinfDetails = {setBinfDetails}
+                setProjectCont ={setProjectCont}
+                />
 
                 
 
@@ -163,7 +166,7 @@ function ViewSideBar({setProjectCont, setSamsubDetails, setQcDetails, setLibqcDe
 
 
 function ViewWin ({projectCont, samsubDetails, setSamsubDetails, 
-    qcDetails, setQcDetails, libqcDetails, setLibqcDetails, binfDetails, setBinfDetails}){
+    qcDetails, setQcDetails, libqcDetails, setLibqcDetails, binfDetails, setBinfDetails, setProjectCont}){
     return(
         <div className={styles.ViewWin}>
             <div className={styles.contentWin}>
@@ -176,10 +179,9 @@ function ViewWin ({projectCont, samsubDetails, setSamsubDetails,
                         <QcSamDetails projectCont={projectCont} qcDetails ={qcDetails} setQcDetails = {setQcDetails} />
                         <LibSamDetails projectCont={projectCont} libqcDetails={libqcDetails} setLibqcDetails={setLibqcDetails} />
                         <BiInfoDetails projectCont={projectCont} binfDetails={binfDetails} setBinfDetails={setBinfDetails}/>
-                        <Reports projectCont={projectCont} />
+                        <Reports projectCont={projectCont} setProjectCont={setProjectCont} />
                         
                     </div>
-                    
                 
                 }
             </div>
@@ -348,6 +350,8 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
 
     const [toast, setToast] = useState(null)
 
+    const [disButton, setDisButton] = useState(false)
+
 
     async function SampleSub(projectId) {
 
@@ -390,6 +394,35 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
         }
     }
 
+
+    async function SamSubResend(projectId) {
+
+        const confirmAction = window.confirm(
+            "Do you want to resend the submission link to the client?"
+        )
+
+        if (!confirmAction) return
+
+        setDisButton(true)
+        try{
+            const response = await axiosApi.post("/initialization/samsubresend",
+                {
+                    project_id : projectId
+                }
+            )
+
+            const data = response.data
+            toastSet(setToast, data.status, data.message)
+        }
+        catch(err){
+            console.log(err)
+            toastSet(setToast, false, "Error sending sample submission form")
+        }
+        finally{
+            setDisButton(false)
+        }
+    }
+
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
@@ -404,7 +437,9 @@ function SampleSubDetails({projectCont, samsubDetails, setSamsubDetails}){
             }
             <div className={styles.GridThree}>
                 <div className={styles.ProjecInOnBtn}>
-                    <button className={styles.ProjecInBtn}>{`Resend Submission Link`}</button>
+                    <button className={styles.ProjecInBtn} onClick={() => SamSubResend(projectCont.project_id)} disabled={disButton} >
+                        { disButton ? `Sending....` : `Resend Submission Link`}
+                    </button>
                 </div>
             </div>
         </div>
@@ -576,7 +611,9 @@ function BiInfoDetails({projectCont, binfDetails, setBinfDetails}) {
     )
 }
 
-function Reports({projectCont}) {
+function Reports({projectCont, setProjectCont}) {
+
+    const router = useRouter()
 
     const [finreportEmailTemp, setfinreportEmailTemp] = useState(false)
     
@@ -626,6 +663,38 @@ function Reports({projectCont}) {
 
     }
 
+    async function deleteProject(projectId){
+
+        const confirmAction = window.confirm(
+            "You are going to delete this project, Do you want to proceed"
+        )
+
+        if (!confirmAction) return
+
+        try{
+
+            const response = await axiosApi.post("/project/deleteproject",
+                {"project_id" : projectId}
+            )
+
+            const data = response.data
+
+            if(!data.status){
+                toastSet(setToast, false, data.message)
+                return
+            }
+
+            toastSet(setToast, data.status, data.message)
+            setTimeout(() => setProjectCont(null))
+            return
+
+        }
+        catch(err){
+            console.log(err)
+            toastSet(setToast, false, "Failed to delete the project")
+        }
+    }
+
     return(
         <div className={styles.ProjectComp}>
             <div className={styles.HeadComp}>
@@ -641,7 +710,7 @@ function Reports({projectCont}) {
                 </div>
                 <div className={styles.FinBtns}>
                     <button  onClick={() => closeProject(projectCont.project_id)}>{`Close Project`}</button>
-                    <button >{`Delete Project`}</button>
+                    <button onClick={() => deleteProject(projectCont.project_id)} >{`Delete Project`}</button>
                     <button disabled >{`Push to projects`}</button>
                 </div>
             </div>

@@ -370,12 +370,19 @@ async def binfdata_update(
     
     
 @router.post("/closeproject")
-def close_project(payload: ProjId):
+def close_project(payload: ProjId, usertok : dict = Depends(parse_token)):
 
-    project_id = payload.project_id
+    if usertok["role"] == "bd":
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
+    
+    collection = collections_load("tcProjects")
 
     try: 
-        collection = collections_load("tcProjects")
+
+        project_id = payload.project_id
 
         data = collection.find_one(
             {"project_id": project_id},
@@ -409,6 +416,47 @@ def close_project(payload: ProjId):
             status_code=500,
             detail="Project status error"
         )
+    
+
+@router.post("/deleteproject")
+async def delete_project(payload : ProjId, usertok : dict = Depends(parse_token)):
+
+    if usertok["role"] == "analysis" or usertok["role"] == "projects" :
+        return{
+            "status" : False,
+            "message" : "No permission"
+        }
+    
+    collection = collections_load("tcProjects")
+    delete_collection = collections_load("tcDropProjects")
+    
+    try:
+
+        project_id = payload.project_id
+
+        data = collection.find_one({"project_id": project_id}, {"_id": 0})
+
+        if not data:
+            return {
+                "status": False,
+                "message": "Project not found"
+            }
+
+        delete_collection.insert_one(data)
+        collection.delete_one({"project_id": project_id})
+
+        return{
+            "status" : True,
+            "message" : "Project deleted"
+        }
+
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code=500,
+            detail="Delete project error"
+        ) 
+
 
 
 
