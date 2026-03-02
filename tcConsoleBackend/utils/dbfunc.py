@@ -1,15 +1,22 @@
 from pymongo import MongoClient
 from fastapi import HTTPException
+import os
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from datetime import date
 from pypdf import PdfWriter, PdfReader
 from io import BytesIO
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MONGO_CLIENT = os.getenv("MONGO_CLIENT")
+
 
 
 def collections_load(collection: str):
     try:
-        CLIENT = MongoClient("mongodb://localhost:27017")
+        CLIENT = MongoClient(MONGO_CLIENT)
 
         db = CLIENT.tcDB
         
