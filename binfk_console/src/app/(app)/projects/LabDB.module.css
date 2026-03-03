@@ -83,8 +83,8 @@
 
 
 .ProjectInfoComp{
-    height: 120px;
-    width: 120px;
+    height: 110px;
+    width: 110px;
     display: flex;
     flex-direction: column;
     background-color: rgb(0, 68, 95);
@@ -123,7 +123,7 @@
 
 .ProjectGraph{
     padding: 20px;
-    margin-top: 50px;
+    margin-top: 25px;
     height: 250px;
 }
 

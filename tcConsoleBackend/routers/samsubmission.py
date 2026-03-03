@@ -111,7 +111,7 @@ async def ngs_form(payload : NgsForm):
         mail_status = await email_config(
             subject= "Sample Submission form recieved",
             to_mail= [email],
-            cc_mail= ["itsmeakshay8055@theracues.com"],
+            cc_mail= ["projectmgt@theracues.com", "analysis@theracues.com"],
             mail_html= html_msg
         )
 
@@ -191,7 +191,7 @@ async def ncounter_form(payload: NcounterForm):
         mail_status = await email_config(
             subject= "Sample Submission form recieved",
             to_mail= [email],
-            cc_mail= ["itsmeakshay8055@theracues.com"],
+            cc_mail= ["projectmgt@theracues.com", "analysis@theracues.com"],
             mail_html= html_msg
         )
 

@@ -184,7 +184,7 @@ async def form_fetch_mail(payload: ProjectSubmission, usertok : dict = Depends(p
 
         email_status = await email_config(subject= "Project Created Successfully",
                                     to_mail= [payload.email],
-                                    cc_mail= [usertok["username"]],
+                                    cc_mail= [usertok["username"], "cues@theracues.com"],
                                     mail_html= html_cont)
 
         return {
@@ -267,7 +267,7 @@ async def resend_submission(payload : ProjId, usertok : dict = Depends(parse_tok
 
         email_status = await email_config(subject= "Sample Submission Form",
                                     to_mail= [data.get("project_info", {}).get("email")],
-                                    cc_mail= [usertok["username"]],
+                                    cc_mail= [usertok["username"],"projectmgt@theracues.com", "analysis@theracues.com"],
                                     mail_html= html_cont)
 
         return {
@@ -281,5 +281,5 @@ async def resend_submission(payload : ProjId, usertok : dict = Depends(parse_tok
         print(str(e))
         raise HTTPException(
             status_code= 500,
-            detail= "Unabl to resend sample submission details"
+            detail= "Unable to resend sample submission details"
         )
