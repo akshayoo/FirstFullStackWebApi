@@ -310,6 +310,15 @@
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
+.DispUpbtn a {
+  padding: 4px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  color: #1f2937;
+}
+
 .DispUpbtn button:hover {
   background-color: #7abcff;
   border-color: #9fa0a1;
