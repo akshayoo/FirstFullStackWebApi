@@ -7,6 +7,8 @@ import remarkGfm from "remark-gfm";
 import Image from 'next/image';
 import { ChatOption } from './ChatOption';
 import axiosApi from '@/lib/api';
+import { toastSet } from '@/components/toastfunc';
+import { MessageComp } from '@/components/messageComp';
 
 
 export function ChatWin() {
@@ -20,6 +22,8 @@ export function ChatWin() {
     const [inference, setInference] = useState([])
 
     const [activeConversation, setActiveConversation] = useState(null)
+
+    const [toast, setToast] = useState(null)
 
 
 
@@ -68,7 +72,7 @@ export function ChatWin() {
 
         catch(err){
             console.log(err)
-            alert("server error")
+            toastSet(setToast, false, "Server error")
         }
     }
 
@@ -138,7 +142,7 @@ export function ChatWin() {
 
         catch(err){
             console.log(err)
-            alert("cannot connect to the network")
+            toastSet(setToast, false, "Cannot connect to the server")
         }
     }
     
@@ -151,6 +155,7 @@ export function ChatWin() {
                 <ChatBar inference={inference} conversation={conversation} 
                 handleQueryChange={handleQueryChange} sendQuery={sendQuery}
                 query={query} />
+                <MessageComp condition={toast.condition} message={toast.message} />
             </div>
         </>
 
@@ -218,6 +223,7 @@ function ChatBar({inference, conversation, handleQueryChange, sendQuery, query})
             <div className={styles.chatInputBar}>
                 <InputBar handleQueryChange={handleQueryChange} sendQuery={sendQuery} query={query} />
             </div>
+            
         </div>
     );
 }
