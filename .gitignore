@@ -1,2 +1,6 @@
-binfk_backend/REPORTS/**/AK_accessKeys.csv
-binfk_backend/REPORTS/
+.env
+.env.*
+**/.env
+**/.env.*
+V-1.0.0/tcConsoleBackend/REPORTS/
+V-2.0.0/tcConsoleBackend/REPORTS/
