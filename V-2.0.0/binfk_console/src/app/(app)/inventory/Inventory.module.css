@@ -1,0 +1,31 @@
+
+.InvntRoot{
+    padding: 15px;
+    display: flex;
+}
+
+.FormRoot{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 10px;
+    margin-right: 50px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.FormCont{
+    display: flex;
+    flex-direction: column;
+}
+
+.FormCont input,
+.FormCont textarea,
+.FormCont select{
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid rgb(48, 65, 48);
+    border-radius: 5px;
+}
+

@@ -1,0 +1,903 @@
+.NewSopComp { 
+    justify-self:flex-end;  
+    position: fixed;
+    right: 25px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e6eaf0;
+    margin-top: 20px;
+    box-shadow: 
+        0 10px 35px rgba(15, 23, 42, 0.12),
+        0 2px 10px rgba(15, 23, 42, 0.06);
+    z-index: 1000;
+    box-sizing: border-box;
+    animation: formFade 0.25s ease;
+}
+
+@keyframes formFade {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.CloseBtn {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #f5f7fa;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-bottom: 18px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+
+.CloseBtn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.SopForm {
+    padding: 10px;
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 5px;
+}
+
+.SopFormDiv {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+} 
+
+.SopFormDiv label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    padding: 0;
+    margin: 5px;
+    margin-top: 6px;
+}
+
+.SopFormDiv input,
+.SopFormDiv textarea,
+.SopFormDiv select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #dbe2ea;
+    background: #f8fafc;
+    font-size: 14px;
+    color: #0f172a;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.SopFormDiv input:focus,
+.SopFormDiv textarea:focus,
+.SopFormDiv select:focus {
+    border-color: #0f766e;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+}
+
+.SopFormDiv textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.5;
+}
+
+.SopForm button {
+    width: 20%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0f766e, #115e59);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 20px rgba(15, 118, 110, 0.18);
+}
+
+.SopForm button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(15, 118, 110, 0.25);
+}
+
+.SopForm button:active {
+    transform: scale(0.98);
+}
+
+.SopFormIn {
+    padding-top: 15px;
+}
+
+.SopContView{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background: #f0f2f7;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.SopContViewLeft {
+    border: 1px solid black;
+    width: 100%;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.SopHead{
+    padding: 20px 25px;
+    font-size: 25px;
+    background-color: rgb(253, 254, 255);
+    border-radius: 50px;
+    margin-bottom: 10px;
+}
+
+.SopViewMainWin{
+    padding: 20px 25px;
+    background-color: rgb(253, 254, 255);
+    border-radius: 50px;
+}
+
+
+.SopFCont{
+    margin-top: 10px;
+    padding: 10px 10px;
+    border: 1px solid black;
+}
+
+.SopFCont div{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.SopSCont{
+    margin-top: 10px;
+    padding: 10px 10px;
+    border: 1px solid black;
+}
+
+.SopTCont{
+    margin-top: 10px;
+    padding: 10px 10px;
+    border: 1px solid black;
+}
+
+.NewSopComp::-webkit-scrollbar {
+    width: 8px;
+}
+
+.NewSopComp::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 20px;
+}
+
+.NewSopComp::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+.SopContView {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #e5e5e3;
+}
+ 
+
+.SopHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e5e3;
+    background: #f9f9f7;
+    flex-shrink: 0;
+}
+ 
+.SopHeaderTitle {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    gap: 8px;
+    font-weight: 500;
+    color: #1a1a18;
+}
+
+.SopHeaderBtns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.SopHeaderBtns button {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.SopHeaderBtns button svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+}
+
+.SopHeaderBtns button:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #111827;
+    transform: translateY(-1px);
+}
+
+.SopHeaderBtns button:active {
+    transform: translateY(0);
+}
+
+.SopHeaderBtns .deleteBtn:hover {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+ 
+.SopClose {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #e5e5e3;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888780;
+    font-size: 18px;
+    line-height: 1;
+    transition: background 0.15s;
+    transition:  color 0.15s;
+}
+
+.SopClose:hover { 
+    background: #f0f0ee; 
+    color: red;
+}
+
+.SopContDw {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
+}
+ 
+
+.SopContSide {
+    width: 300px;
+    flex-shrink: 0;
+    border-right: 1px solid #e5e5e3;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+ 
+.SopPanel {
+    border-bottom: 1px solid #e5e5e3;
+}
+
+.SopPanel:last-child {
+    border-bottom: none; 
+}
+ 
+.SopPanelLabel {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #004370;
+    padding: 12px 15px 5px;
+}
+ 
+.SopDetails,
+.SopRevAppr {
+    padding: 0 0 8px;
+}
+ 
+.SopDetails > div,
+.SopRevAppr > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 5px 20px;
+    font-size: 15px;
+}
+ 
+
+.SopDetails > div > div:first-child,
+.SopRevAppr > div > div:first-child {
+  color: #888780;
+  text-align: left;
+}
+ 
+
+.SopDetails > div > div:last-child,
+.SopRevAppr > div > div:last-child {
+    color: #1a1a18;
+    font-weight: 500;
+    text-align: right;
+    font-size: 15px;
+}
+
+
+.commentSection {
+    background: #f7f4fc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.commentSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.commentSectionTitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d2d2d;
+}
+
+.redraftBadge {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #FAECE7;
+    color: #993C1D;
+}
+
+.commentText {
+    font-size: 14px;
+    color: #2d2d2d;
+    line-height: 1.7;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid #D85A30;
+    background: #ffffff;
+    border-radius: 0 6px 6px 0;
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+}
+
+.commentMeta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #888888;
+}
+
+.acknoListBox {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #f1f1f1;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 0 12px;
+    background: #f8f8f8;
+}
+
+.acknoListTitle {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888888;
+    margin-bottom: 8px;
+}
+
+.acknoItem {
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+}
+
+.acknoItemHead {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.acknoBy {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2d2d2d;
+}
+
+.acknoDate {
+    font-size: 11px;
+    color: #888888;
+}
+
+.acknoComment {
+    font-size: 12px;
+    color: #555555;
+    white-space: pre-wrap;
+    border-left: 2px solid #007736;
+    padding-left: 8px;
+    margin-top: 4px;
+}
+
+.acknoEmpty {
+    font-size: 12px;
+    color: #aaaaaa;
+    font-style: italic;
+    text-align: center;
+    padding: 12px 0;
+}
+ 
+.SopBadge,
+.SopPill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 99px;
+    line-height: 1.5;
+}
+ 
+.SopBadgeGreen,
+.SopPillGreen {
+    background: #eaf3de;
+    color: #3b6d11;
+}
+ 
+.SopPillBlue {
+    background: #e6f1fb;
+    color: #185fa5;
+}
+ 
+.SopPillAmber {
+    background: #faeeda;
+    color: #854f0b;
+}
+ 
+.SopPillRed {
+    background: #fcebeb;
+    color: #a32d2d;
+}
+ 
+.SopAch {
+    padding: 0 0 10px;
+}
+ 
+.SopAch > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 16px;
+    font-size: 12.5px;
+}
+ 
+.SopAch > div > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #1a1a18;
+    font-weight: 500;
+}
+ 
+.SopAch > div > div:last-child {
+    color: #888780;
+    font-size: 11.5px;
+}
+
+.SopRevAppr > div > button{
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 2px 4px;
+    border: 1px solid rgb(231, 231, 231);
+    border-radius: 5px;
+    font-size: 12.5px;
+    background-color: #f7f7f7;
+}
+ 
+.SopAvatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #eeedfe;
+    color: #3c3489;
+    font-size: 9px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+ 
+.SopContMain {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;        
+    min-height: 0;          
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+ 
+.SopMainTitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1a1a18;
+}
+ 
+.SopMainMeta {
+    font-size: 15px;
+    color: #646464;
+    margin-top: 2px;
+}
+ 
+.SopDivider {
+    width: 1240px;
+    height: 1754px;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 2px;
+    background: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 1px 1px 5px 1px rgb(192, 192, 192);
+}
+
+
+.EditorCard {
+    width: 100%;
+    background: var(--color-background-primary, #fff);
+    border: 0.5px solid #e5e7eb;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.EditorHeader {
+    padding: 14px 20px;
+    border-bottom: 0.5px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.EditorHeader p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+}
+
+.EditorHeader span {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.EditorBody {
+    min-height: 320px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.EditorFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-top: 0.5px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.WordCount {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.FooterActions {
+    display: flex;
+    gap: 8px;
+}
+
+.BtnSecondary {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 0.5px solid #d1d5db;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #374151;
+}
+
+
+
+
+
+.a4Shell {
+    flex: 1;               
+    min-height: 0;          
+    background: #ffffff;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    overflow-y: auto;
+}
+
+.a4Page {
+    background: #ffffff;
+    width: 900px;
+    min-height: 1300px;     
+    padding: 72px 80px;
+    box-sizing: border-box;
+    position: relative;
+    flex-shrink: 0;         
+}
+
+
+
+
+
+
+
+.BtnSecondary:hover { background: #f3f4f6; }
+
+.BtnPrimary {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #185FA5;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.BtnPrimary:hover { background: #0C447C; }
+ 
+.SopStep {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e5e3;
+}
+.SopStep:last-child { 
+    border-bottom: none; 
+}
+ 
+.SopStepNum {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f1efe8;
+    border: 1px solid #e5e5e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: #5f5e5a;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+ 
+.SopStepText {
+    font-size: 13.5px;
+    color: #1a1a18;
+    line-height: 1.6;
+}
+ 
+.SopStepLabel {
+    font-size: 11px;
+    color: #888780;
+    margin-top: 3px;
+}
+ 
+.SopContSide::-webkit-scrollbar,
+.SopContMain::-webkit-scrollbar { 
+    width: 4px; 
+}
+
+.SopContSide::-webkit-scrollbar-track,
+.SopContMain::-webkit-scrollbar-track { 
+    background: transparent; 
+}
+
+.SopContSide::-webkit-scrollbar-thumb,
+.SopContMain::-webkit-scrollbar-thumb { 
+    background: #d3d1c7; border-radius: 99px; 
+}
+
+
+
+.commentOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.commentModal {
+    width: 100%;
+    max-width: 550px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.commentModalHead{
+    display: flex;
+}
+
+.commentModalHead div:last-child{
+    margin-left: auto;
+    vertical-align: top;
+}
+
+.commentModalHead div:last-child button{
+    border-radius: 4px;
+    background-color: white;
+    color: grey;
+    border: 1px solid grey;
+    width: 25px;
+    height: 25px;
+}
+
+.commentModalHead div:last-child button:hover{
+    background-color: rgba(255, 0, 0, 0.199);
+    color: rgb(124, 82, 82);
+    border: 1px solid rgb(150, 0, 0);
+    cursor: pointer;
+}
+
+.commentTitle {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.commentSubtitle {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.commentInput {
+    width: 100%;
+    min-height: 130px;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.commentInput:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.buttonContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submitButton {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+}
+
+.deleteButton {
+    border: none;
+    background: #eb2525;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+}
+
+.submitButton:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.deleteButton:hover {
+    background: #d81d1d;
+    transform: translateY(-1px);
+}
+
+.submitButton:active {
+    transform: translateY(0);
+}
+
+.deleteButton:active {
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

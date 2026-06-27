@@ -1,0 +1,418 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.PipelineView {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
+}
+
+.TopBar {
+    padding: 5px;
+    width: clamp(180px, 20%, 260px);
+    flex-shrink: 0;      
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.BtnWrap{
+    padding: 5px;
+}
+
+.BtnWrapAdd{
+    padding: 5px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.BtnWrapAdd button{
+    padding: 10px 10px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 2, 49);
+    border-radius: 12px;
+    border: 1px solid rgb(132, 132, 132);
+    font-size: 15px;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.BtnWrapAdd button:hover{
+    background-color: rgb(0, 101, 217);
+    color: aliceblue;
+}
+
+.BtnWrapAdd button:active{
+    background-color: rgb(0, 101, 217);
+    color: aliceblue;
+    transform: translateY(1px)
+}
+
+.BtnWrap button{
+    padding: 10px 10px;
+    width: 100%;
+    color: rgb(35, 35, 35);
+    border-radius: 5px;
+    font-size: 15px;
+    text-align: center;
+    border: none;
+    background-color: rgb(255, 255, 255);
+}
+
+.BtnWrap button:hover{
+    background-color: rgb(210, 231, 255);
+    color: rgb(35, 35, 35);
+    box-shadow: 1px 1px 5px 1px rgb(209, 218, 228);
+}
+
+.BtnWrap button:active{
+    background-color: rgb(210, 231, 255);
+    color: rgb(35, 35, 35);
+    transform: translateY(1px)
+}
+
+
+.MainCont{
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-width: 0;
+    justify-content: left;
+    align-items: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.CardCont{
+    border: 1px solid rgb(219, 219, 219);
+    width: 350px;
+    padding: 20px 50px;
+    margin: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 1px rgb(225, 225, 225);
+}
+
+.CardHead {
+    display: flex;
+    align-items: center;
+}
+
+.CardHead h3 {
+    font-size: 16px;
+}
+
+.CardHead button {
+  margin-left: auto;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4f46e5; 
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.CardHead button:hover {
+  background-color: #4338ca;
+  transform: translateY(-1px);
+}
+
+.CardHead button:active {
+  transform: scale(0.97);
+}
+
+.CardHead button {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.CardSub {
+    padding-bottom: 10px;
+    font-size: 15px;
+    color: rgb(35, 51, 59);
+    font-weight: 500;
+}
+
+.CardInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.CardSubInfo {
+    padding: 10px 12px;
+    border-top: 1px solid rgb(191, 191, 191);
+    border-bottom: 1px solid rgb(191, 191, 191);
+    padding-bottom: 10px;
+}
+
+.CardSubInfo div:first-child {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    color: rgb(91, 91, 91);
+    font-weight: 500;
+}
+
+.CardSubInfo div:last-child {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    color: rgb(91, 91, 91);
+    font-weight: 400;
+    border-top: 2px dashed rgb(18, 33, 47);
+}
+
+.CardFooter {
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    color: rgb(40, 40, 40);
+    font-size: 16px;
+}
+
+.CardFooter div{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.CardFooter span {
+    margin-left: auto;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: rgb(123, 255, 182);
+    color: rgb(0, 82, 37);
+    box-shadow: 1px 1px 5px 1px rgb(168, 198, 187);
+}
+
+.KanBanBoard {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: #f0f2f7;
+    padding: 12px;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.KanBanBoard::-webkit-scrollbar {
+    height: 6px;
+}
+
+.KanBanBoard::-webkit-scrollbar-thumb {
+    background: #b0b5c3;
+    border-radius: 3px;
+}
+
+.KanbanCell {
+    min-width: 380px;
+    flex: 0 0 280px;
+    display: flex;
+    flex-direction: column;
+    background: #e4e7f0;
+    border-radius: 4px;
+    padding: 10px;
+    gap: 10px;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    margin: 0;
+}
+
+.KanBanHeadDr {
+    border: none;
+    width: 100%;
+    background: rgb(133, 133, 133);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.KanBanHeadDr div {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.01em;
+}
+
+.KanBanHeadRev {
+    border: none;
+    width: 100%;
+    background: rgb(0, 42, 119);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.KanBanHeadRev div {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.01em;
+}
+
+.KanBanHeadApp {
+    border: none;
+    width: 100%;
+    background: rgb(6, 119, 0);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.KanBanHeadApp div {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.01em;
+}
+
+.KanBanHeadRevs {
+    border: none;
+    width: 100%;
+    background: rgb(159, 80, 0);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.KanBanHeadRevs div {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.01em;
+}
+
+.KanBanHeadCnc {
+    border: none;
+    width: 100%;
+    background: rgb(160, 7, 7);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.KanBanHeadCnc div {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.01em;
+}
+
+.KanBanCardsComp {
+    margin-top: 0;
+    border: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.KanBanCardsComp::-webkit-scrollbar {
+    width: 4px;
+}
+
+.KanBanCardsComp::-webkit-scrollbar-thumb {
+    background: #b0b5c3;
+    border-radius: 2px;
+}
+
+.KanbanCard {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 0.5px solid rgb(219, 219, 219);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: box-shadow 0.15s, transform 0.1s;
+    cursor: pointer;
+}
+
+.KanbanCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.KanbanCardLink {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(0, 56, 109);
+    text-decoration: none;
+    margin: 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.KanbanCardLink:hover {
+    text-decoration: underline;
+    color: rgb(0, 108, 209);
+}
+
+.KanbanCard div:first-child{
+    display: flex;
+    align-items: center;
+}
+
+.KanbanCard div:first-child button{
+    margin-left: auto;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    font-size: 20px;
+    color: rgb(0, 0, 62);
+    padding: 2px;
+    font-weight: bolder;
+    transition: 0.3s ease;
+}
+
+.KanbanCard div:first-child button:hover{
+    background-color: rgb(219, 244, 255);
+    color: rgb(0, 45, 167);
+}
+
+.KanbanCard div {
+    font-size: 12px;
+    color: #555;
+    font-weight: 400;
+    line-height: 1.5;
+}

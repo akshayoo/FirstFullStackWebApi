@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ sop_name }} - SOP</title>
+    <style>
+        @page {
+            size: A4;
+            margin-top: 30mm;
+            margin-bottom: 20mm;
+            margin-left: 15mm;
+            margin-right: 15mm;
+
+            @top-center {
+                content: element(pageHeader);
+            }
+
+            @bottom-center {
+                content: element(pageFooter);
+            }
+        }
+
+        @page :first {
+            margin-top: 0;
+            margin-bottom: 0;
+            @top-center { content: none; }
+            @bottom-center { content: none; }
+        }
+
+        .page-header {
+            position: running(pageHeader);
+        }
+
+        .page-footer {
+            position: running(pageFooter);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            margin: 0;
+            color: #2d2d2d;
+            font-size: 13px;
+        }
+
+        /* ── RUNNING HEADER (page 2+) ─────────────────────── */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #5b3a8a;
+            padding: 6px 0 4px;
+            margin-bottom: 4px;
+        }
+
+        .page-header .ph-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #5b3a8a;
+        }
+
+        .page-header .ph-id {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .page-header img {
+            height: 28px;
+        }
+
+        /* ── RUNNING FOOTER ───────────────────────────────── */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            padding-top: 4px;
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        /* ── COVER PAGE ───────────────────────────────────── */
+        .cover-page {
+            width: 100%;
+            min-height: 297mm;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+        }
+
+        .cover-top-bar {
+            height: 8px;
+            background-color: #8bc34a;
+            width: 100%;
+        }
+
+        .cover-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cover-header img {
+            height: 48px;
+        }
+
+        .cover-header-title {
+            font-size: 11px;
+            color: #888;
+            text-align: right;
+        }
+
+        .cover-banner {
+            background-color: #5b3a8a;
+            color: #fff;
+            text-align: center;
+            padding: 14px 20px;
+            margin: 0;
+        }
+
+        .cover-banner h1 {
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .cover-banner p {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: #d8c8f0;
+        }
+
+        .cover-body {
+            padding: 24px 28px;
+            flex: 1;
+        }
+
+        /* ── METADATA TABLE ───────────────────────────────── */
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #5b3a8a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 20px 0 8px;
+            padding-bottom: 4px;
+            border-bottom: 1.5px solid #e0d4f5;
+        }
+
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .meta-table tr:nth-child(even) {
+            background-color: #f7f4fc;
+        }
+
+        .meta-table td {
+            padding: 8px 12px;
+            border: 1px solid #e8e0f5;
+            vertical-align: top;
+        }
+
+        .meta-table td:first-child {
+            width: 38%;
+            font-weight: bold;
+            color: #5b3a8a;
+            background-color: #f0ebfa;
+        }
+
+        .meta-table td:last-child {
+            color: #2d2d2d;
+        }
+
+        /* ── STATUS BADGE ─────────────────────────────────── */
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        /* ── APPROVAL TABLE ───────────────────────────────── */
+        .approval-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .approval-table thead tr {
+            background-color: #5b3a8a;
+            color: #fff;
+        }
+
+        .approval-table th {
+            padding: 8px 10px;
+            font-size: 12px;
+            text-align: left;
+            font-weight: normal;
+        }
+
+        .approval-table td {
+            padding: 8px 10px;
+            border: 1px solid #e0d4f5;
+            font-size: 12px;
+        }
+
+        .approval-table tr:nth-child(even) td {
+            background-color: #f7f4fc;
+        }
+
+        /* ── COVER FOOTER ─────────────────────────────────── */
+        .cover-footer {
+            background-color: #f5f5f5;
+            border-top: 2px solid #8bc34a;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #777;
+        }
+
+        /* ── CONTENT PAGE ─────────────────────────────────── */
+        .content-page {
+            padding: 0;
+        }
+
+        /* Styles for HTML content coming from DB */
+        .sop-content {
+            line-height: 1.75;
+            color: #2d2d2d;
+        }
+
+        .sop-content h1 {
+            font-size: 16px;
+            color: #5b3a8a;
+            border-bottom: 1.5px solid #e0d4f5;
+            padding-bottom: 4px;
+            margin-top: 20px;
+        }
+
+        .sop-content h2 {
+            font-size: 14px;
+            color: #5b3a8a;
+            margin-top: 16px;
+        }
+
+        .sop-content h3 {
+            font-size: 13px;
+            color: #5b3a8a;
+        }
+
+        .sop-content p {
+            margin: 8px 0;
+        }
+
+        .sop-content ul, .sop-content ol {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        .sop-content li {
+            margin: 4px 0;
+        }
+
+        .sop-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 12px;
+        }
+
+        .sop-content table th {
+            background-color: #5b3a8a;
+            color: #fff;
+            padding: 7px 10px;
+            text-align: left;
+        }
+
+        .sop-content table td {
+            padding: 7px 10px;
+            border: 1px solid #e0d4f5;
+        }
+
+        .sop-content table tr:nth-child(even) td {
+            background-color: #f7f4fc;
+        }
+
+        .sop-content blockquote {
+            border-left: 3px solid #8bc34a;
+            margin: 10px 0;
+            padding: 8px 12px;
+            background-color: #f9fbe7;
+            color: #555;
+            font-style: italic;
+        }
+
+        .sop-content pre, .sop-content code {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!--              COVER PAGE                -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="cover-page">
+        <div class="cover-top-bar"></div>
+
+        <div class="cover-header">
+            <img src="https://theracues.com/images/logo.png" alt="TheraCUES Logo">
+            <div class="cover-header-title">
+                Standard Operating Procedure<br>
+                <span style="color:#5b3a8a; font-weight:bold;">{{ sop_id }}</span>
+            </div>
+        </div>
+
+        <div class="cover-banner">
+            <h1>STANDARD OPERATING PROCEDURE</h1>
+            <p>{{ sop_title }}</p>
+        </div>
+
+        <div class="cover-body">
+
+            <!-- General Info -->
+            <div class="section-title">SOP Information</div>
+            <table class="meta-table">
+                <tr>
+                    <td>SOP ID</td>
+                    <td>{{ sop_id }}</td>
+                </tr>
+                <tr>
+                    <td>SOP Title</td>
+                    <td>{{ sop_title }}</td>
+                </tr>
+                <tr>
+                    <td>Version</td>
+                    <td>{{ sop_version }}</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{ sop_category }}</td>
+                </tr>
+                <tr>
+                    <td>Department</td>
+                    <td>{{ sop_department }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td><span class="status-badge">{{ sop_status }}</span></td>
+                </tr>
+                <tr>
+                    <td>Effective Date</td>
+                    <td>{{ sop_effective_date }}</td>
+                </tr>
+                <tr>
+                    <td>Revision Due Date</td>
+                    <td>{{ sop_revision_date }}</td>
+                </tr>
+                <tr>
+                    <td>Revision Period</td>
+                    <td>{{ sop_revision_gap }} months</td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>{{ sop_description }}</td>
+                </tr>
+            </table>
+
+            <!-- Approval Info -->
+            <div class="section-title">Approval &amp; Review</div>
+            <table class="approval-table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Prepared by</td>
+                        <td>{{ created_by }}</td>
+                        <td>{{ created_at }}</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Reviewed by</td>
+                        <td>{{ reviewed_by or "—" }}</td>
+                        <td>{{ reviewed_at or "—" }}</td>
+                        <td>{{ review_comments or "—" }}</td>
+                    </tr>
+                    <tr>
+                        <td>Approved by</td>
+                        <td>{{ approved_by or "—" }}</td>
+                        <td>{{ approved_at or "—" }}</td>
+                        <td>{{ approve_comments or "—" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Change Summary -->
+            {% if sop_change_summary %}
+            <div class="section-title">Change Summary</div>
+            <table class="meta-table">
+                <tr>
+                    <td>Summary</td>
+                    <td>{{ sop_change_summary }}</td>
+                </tr>
+            </table>
+            {% endif %}
+
+        </div>
+
+        <div class="cover-footer">
+            <span>TheraCUES Innovations Pvt. Ltd. &bull; Bangalore - 560 092</span>
+            <span>Confidential &bull; For Internal Use Only</span>
+        </div>
+    </div>
+
+
+    <div class="page-header">
+
+        <img src="https://theracues.com/images/logo.png" alt="logo">
+
+    </div>
+
+    <div class="page-footer">
+        <span>TheraCUES Innovations Pvt. Ltd.</span>
+        <span>Confidential &bull; For Internal Use Only :</span>
+        <span>{{ sop_id }} &bull; v{{ sop_version }}</span>
+    </div>
+
+
+    <div class="content-page">
+        <div class="sop-content">
+            {{ sop_content | safe }}
+        </div>
+    </div>
+
+</body>
+</html>

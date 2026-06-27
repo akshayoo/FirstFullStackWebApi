@@ -1,0 +1,706 @@
+[
+  {
+    _id: ObjectId('6a27b814808a4bc0665b9947'),
+    project_id: 'TCP_2627_02',
+    project_token: '0e4f35ae-63d1-11f1-b3a8-e40d36250e54',
+    project_comments: '',
+    project_info: {
+      pi_name: 'Mr. Sam Altman',
+      email: 'akshayramesh543@gmail.com',
+      phone: '09746801041',
+      institution: 'TheraCUES Innovations Pvt Ltd',
+      lab_dept: 'LAB'
+    },
+    project_stakeholders: [
+      {
+        name: 'Ak',
+        email: 'akshayramesh543@gmail.com',
+        added_by: 'TIPL_031'
+      }
+    ],
+    service_info: {
+      offering_type: 'Human Genetic Analysis',
+      service_name: 'Exome Sequencing - Standard (Germline)',
+      platform: 'ONT Promethion',
+      sample_type: 'Cells',
+      sample_number: 12,
+      extraction_needed: 'yes'
+    },
+    project_details: {
+      standard_deliverables: [
+        {
+          label: 'Sample and library quality control (QC) reports',
+          task_number: 0,
+          completed: true,
+          completed_at: ISODate('2026-06-09T12:25:22.453Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        },
+        {
+          label: 'Summary of methods and raw data QC',
+          task_number: 1,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'Reference genome alignment summary',
+          task_number: 2,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'Variant identification and summary statistics',
+          task_number: 3,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'Zygosity analysis and coding variant annotation with variant effect prediction',
+          task_number: 4,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'Pathogenic or likely pathogenic variants (if detected)',
+          task_number: 5,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'Rare variant prioritization based on provided phenotypes',
+          task_number: 6,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        }
+      ],
+      added_deliverables: []
+    },
+    project_status: {
+      project_info: true,
+      service_info: true,
+      project_details: true,
+      sample_submission: true,
+      method: true,
+      qc: true,
+      library: true,
+      bioinformatics: true
+    },
+    audit: {
+      created_at: ISODate('2026-06-09T12:22:04.705Z'),
+      created_user: 'Rahul',
+      user_id: 'TIPL_031',
+      username: 'rahul.r@theracues.com',
+      role: 'admin'
+    },
+    sample_submission: [
+      {
+        submission_number: 1,
+        service_technology: 'NGS',
+        project_description: '3t4y',
+        details: {
+          application: 'DNA',
+          replicates: true,
+          extraction_needed: true,
+          total_rna_prep: 'Not applicable',
+          nucleases: '',
+          kit_name: '',
+          qc_assessed: '',
+          bioinformatics_required: false,
+          key_objectives: '',
+          comparisons: '',
+          additional_analysis: '',
+          reference_studies: '',
+          sample_details: [
+            {
+              sample_id: 1,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 2,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 3,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 43,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 54,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 5,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 5,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 564,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 3,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 4,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 3,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 2323,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 3,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            },
+            {
+              sample_id: 43,
+              description: 'egfedgerger',
+              concentration: 'No Value',
+              notes: 'No Value',
+              replicate_group: 'ergtertger'
+            }
+          ],
+          audit: { submitted_at: ISODate('2026-06-09T12:31:36.460Z') }
+        }
+      }
+    ],
+    qc: [
+      {
+        submission_number: 1,
+        qc_title: 'wgdiwueh',
+        method_summary: 'Thi is the edited summary',
+        concentration_technology: 'Qubit',
+        integrity_technology: 'TapeStation',
+        qc_summary: 'Editeed Summary Second',
+        qc_report: 'REPORTS/TCP_2627_02/QC/2026-06-11 17:13:30.983343_Offerings_flyers 1.pdf',
+        qc_sample_details: [
+          {
+            sample_id: 1,
+            tcues_sample_id: 'efwf',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'wef'
+          },
+          {
+            sample_id: 1,
+            tcues_sample_id: 'qwd',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'efewfe'
+          },
+          {
+            sample_id: 1,
+            tcues_sample_id: 'wed',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'weffw'
+          },
+          {
+            sample_id: 1,
+            tcues_sample_id: 'wed',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'fewf'
+          }
+        ],
+        qc_audit: {
+          completed_at: ISODate('2026-06-09T12:33:27.082Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com',
+          edited_at: ISODate('2026-06-11T17:17:44.839Z')
+        },
+        qc_application: 'RNA'
+      },
+      {
+        submission_number: 2,
+        qc_application: 'RNA',
+        method_summary: 'wefownefj  goer nfoejfe fenfenfoeofner f ere oenfeokgneofnoen vev oervenvokenrgenrke gvgeov oe ve veoj voe voenvoenveo vej voevneinve vke voejr vjeve rvjeonv e ',
+        concentration_technology: 'Qubit',
+        integrity_technology: 'TapeStation',
+        qc_summary: 'acssdcws w f wf w f w fw',
+        qc_report: 'REPORTS/TCP_2627_02/QC/2026-06-11 00:52:02.259402_Offerings_flyers (1).pdf',
+        qc_sample_details: [
+          {
+            sample_id: 1,
+            tcues_sample_id: 'wefre',
+            nucleic_acid_conc: 2,
+            integrity: 2,
+            comments: 4,
+            'Conc-Quibit': 4,
+            Comments: 'ewff'
+          },
+          {
+            sample_id: 2,
+            tcues_sample_id: 'weferf',
+            nucleic_acid_conc: 2,
+            integrity: 2,
+            comments: 4,
+            'Conc-Quibit': 4,
+            Comments: 'erf'
+          },
+          {
+            sample_id: 3,
+            tcues_sample_id: 'ergerg',
+            nucleic_acid_conc: 2,
+            integrity: 2,
+            comments: 4,
+            'Conc-Quibit': 4,
+            Comments: 'erf'
+          },
+          {
+            sample_id: 4,
+            tcues_sample_id: 'ererger',
+            nucleic_acid_conc: 2,
+            integrity: 2,
+            comments: 4,
+            'Conc-Quibit': 4,
+            Comments: 'eg'
+          },
+          {
+            sample_id: 5,
+            tcues_sample_id: 'referg',
+            nucleic_acid_conc: 2,
+            integrity: 2,
+            comments: 4,
+            'Conc-Quibit': 4,
+            Comments: 'g'
+          }
+        ],
+        qc_audit: {
+          completed_at: ISODate('2026-06-11T00:52:02.283Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        }
+      },
+      {
+        submission_number: 3,
+        qc_application: 'DNA',
+        method_summary: 'asdsfsf\r\ns\r\n\r\nfdsf\r\n\r\n',
+        concentration_technology: 'Qubit',
+        integrity_technology: 'TapeStation',
+        qc_summary: 'wefbwhebf gywegfhwiuhfwiuh figfweifhwiuefh igfiwgfiuwgfiwygf iwgf',
+        qc_report: 'REPORTS/TCP_2627_02/QC/2026-06-11 00:56:37.101347_Offerings_flyers (2).pdf',
+        qc_sample_details: [
+          {
+            sample_id: 1,
+            tcues_sample_id: 'wefre',
+            conc_f: 2,
+            purity_ratio_f: 2,
+            purity_ratio_s: 4,
+            conc_s: 4,
+            comments: 'ewff'
+          },
+          {
+            sample_id: 2,
+            tcues_sample_id: 'weferf',
+            conc_f: 2,
+            purity_ratio_f: 2,
+            purity_ratio_s: 4,
+            conc_s: 4,
+            comments: 'erf'
+          },
+          {
+            sample_id: 3,
+            tcues_sample_id: 'ergerg',
+            conc_f: 2,
+            purity_ratio_f: 2,
+            purity_ratio_s: 4,
+            conc_s: 4,
+            comments: 'erf'
+          },
+          {
+            sample_id: 4,
+            tcues_sample_id: 'ererger',
+            conc_f: 2,
+            purity_ratio_f: 2,
+            purity_ratio_s: 4,
+            conc_s: 4,
+            comments: 'eg'
+          },
+          {
+            sample_id: 5,
+            tcues_sample_id: 'referg',
+            conc_f: 2,
+            purity_ratio_f: 2,
+            purity_ratio_s: 4,
+            conc_s: 4,
+            comments: 'g'
+          }
+        ],
+        qc_audit: {
+          completed_at: ISODate('2026-06-11T00:56:37.104Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        }
+      },
+      {
+        submission_number: 4,
+        qc_application: 'RNA',
+        method_summary: 'wdw',
+        concentration_technology: 'NanoDrop',
+        integrity_technology: 'BioAnalyzer',
+        qc_summary: 'ewfwe',
+        qc_report: 'REPORTS/TCP_2627_02/QC/2026-06-11 16:42:12.826170_Offerings_flyers.pdf',
+        qc_sample_details: [],
+        qc_audit: {
+          completed_at: ISODate('2026-06-11T16:42:12.830Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        }
+      },
+      {
+        submission_number: 5,
+        qc_application: 'RNA',
+        method_summary: 'wdw',
+        concentration_technology: 'NanoDrop',
+        integrity_technology: 'BioAnalyzer',
+        qc_summary: 'ewfwe',
+        qc_report: 'REPORTS/TCP_2627_02/QC/2026-06-11 16:43:26.384618_Offerings_flyers.pdf',
+        qc_sample_details: [
+          {
+            sample_id: 1,
+            tcues_sample_id: 'efwf',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'wef'
+          },
+          {
+            sample_id: 1,
+            tcues_sample_id: 'qwd',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'efewfe'
+          },
+          {
+            sample_id: 1,
+            tcues_sample_id: 'wed',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'weffw'
+          },
+          {
+            sample_id: 1,
+            tcues_sample_id: 'wed',
+            nucleic_acid_conc: 1,
+            integrity: 1,
+            comments: 'fewf'
+          }
+        ],
+        qc_audit: {
+          completed_at: ISODate('2026-06-11T16:43:26.388Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        }
+      }
+    ],
+    library: [
+      {
+        submission_number: 1,
+        library_method: 'Edited method',
+        library_summary: 'This is an edited summary',
+        library_report: 'REPORTS/TCP_2627_02/LIB/2026-06-11 18:04:21.357686_Offerings_flyers 1.pdf',
+        qc_sample_details: [
+          {
+            sample_id: 'S009',
+            tcues_sample_id: 1,
+            nucleic_acid_conc: 267.4,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S010',
+            tcues_sample_id: 2,
+            nucleic_acid_conc: 254.1,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S011',
+            tcues_sample_id: 3,
+            nucleic_acid_conc: 279.6,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S012',
+            tcues_sample_id: 4,
+            nucleic_acid_conc: 198.5,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S013',
+            tcues_sample_id: 5,
+            nucleic_acid_conc: 187.9,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S014',
+            tcues_sample_id: 6,
+            nucleic_acid_conc: 205.3,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S015',
+            tcues_sample_id: 7,
+            nucleic_acid_conc: 221.7,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S016',
+            tcues_sample_id: 8,
+            nucleic_acid_conc: 239.2,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S017',
+            tcues_sample_id: 9,
+            nucleic_acid_conc: 226.8,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S018',
+            tcues_sample_id: 10,
+            nucleic_acid_conc: 171.4,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S019',
+            tcues_sample_id: 11,
+            nucleic_acid_conc: 184.6,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S020',
+            tcues_sample_id: 12,
+            nucleic_acid_conc: 193.9,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S021',
+            tcues_sample_id: 13,
+            nucleic_acid_conc: 312.8,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S022',
+            tcues_sample_id: 14,
+            nucleic_acid_conc: 305.1,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S023',
+            tcues_sample_id: 15,
+            nucleic_acid_conc: 297.6,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S024',
+            tcues_sample_id: 16,
+            nucleic_acid_conc: 289.4,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S025',
+            tcues_sample_id: 17,
+            nucleic_acid_conc: 276.2,
+            comments: 'Optimal'
+          },
+          {
+            sample_id: 'S026',
+            tcues_sample_id: 18,
+            nucleic_acid_conc: 283.7,
+            comments: 'Optimal'
+          }
+        ],
+        audit: {
+          completed_at: ISODate('2026-06-11T16:04:37.051Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        },
+        lib_audit: {
+          edited_at: ISODate('2026-06-11T18:15:52.646Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com'
+        }
+      }
+    ],
+    bioinformatics: [
+      {
+        submission_number: 1,
+        bioinformatics_summary: 'This is an edited report',
+        estimated_hours: 20,
+        approximate_hours: 100,
+        bioinformatics_report: 'REPORTS/TCP_2627_02/ANALYSIS/Offerings_flyers 1.pdf_2026-06-11 18:21:25.924118',
+        binf_audit: {
+          completed_at: ISODate('2026-06-11T16:23:57.431Z'),
+          updated_user: 'Rahul',
+          user_id: 'TIPL_031',
+          username: 'rahul.r@theracues.com',
+          edited_at: ISODate('2026-06-11T18:21:25.924Z')
+        }
+      }
+    ]
+  },
+  {
+    _id: ObjectId('6a27ceba791d46d632155452'),
+    project_id: 'TCP_2627_03',
+    project_token: '3935f882-63dd-11f1-81b4-e40d36250e54',
+    project_comments: '',
+    project_info: {
+      pi_name: 'Akshay',
+      email: 'akshayramesh543@gmail.com',
+      phone: '+919746801041',
+      institution: 'TheraCUES Innovations Pvt Ltd',
+      lab_dept: 'NN Research Lab'
+    },
+    project_stakeholders: [],
+    service_info: {
+      offering_type: 'Custom services',
+      service_name: 'hrthtyhtyyh',
+      platform: 'ONT Promethion',
+      sample_type: 'Cells',
+      sample_number: 23,
+      extraction_needed: 'yes'
+    },
+    project_details: {
+      standard_deliverables: [
+        {
+          label: 'rtg',
+          task_number: 1,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'rtg',
+          task_number: 2,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'rg',
+          task_number: 3,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'rttgh',
+          task_number: 4,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        },
+        {
+          label: 'rt',
+          task_number: 5,
+          completed: false,
+          completed_at: null,
+          updated_user: null,
+          user_id: null,
+          username: null
+        }
+      ],
+      added_deliverables: []
+    },
+    project_status: {
+      project_info: true,
+      service_info: true,
+      project_details: true,
+      sample_submission: false,
+      method: false,
+      qc: false,
+      library: false,
+      bioinformatics: false
+    },
+    audit: {
+      created_at: ISODate('2026-06-09T13:58:42.395Z'),
+      created_user: 'Rahul',
+      user_id: 'TIPL_031',
+      username: 'rahul.r@theracues.com',
+      role: 'admin'
+    }
+  }
+]

@@ -1,0 +1,2433 @@
+
+.View {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    height: 100%;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f0f4f8;
+}
+ 
+.ProjectsAllComp {
+    width: 100%;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    gap: 20px;
+    overflow-y: auto;
+}
+ 
+ 
+.SearchDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ 
+.SearchDiv h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #0d1f35;
+    letter-spacing: -0.5px;
+    position: relative;
+    padding-left: 14px;
+}
+
+.SearchDiv h2::before{
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 25px;
+    margin-right: 5px;
+    background-color: rgb(0, 146, 12);
+}
+
+.SearchDiv div {
+    margin-right: 15px;
+    display: flex;
+}
+
+.SearchDiv div {
+    margin-right: 15px;
+    display: flex;
+}
+
+.SearchDiv button {
+    border: 2px solid rgb(230, 230, 230);
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    color: #00275e;
+}
+
+.SearchDiv button:hover {
+    transform: translateY(-0.5px);
+    box-shadow: 1px 1px 5px 1px rgb(223, 223, 223);
+}
+
+ 
+.SearchDiv input {
+    width: 300px;
+    padding: 11px 16px 11px 40px;
+    border: 1.5px solid #dbe4ee;
+    margin-right: 10px;
+    border-radius: 8px;
+    background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 10px center;
+    font-size: 0.875rem;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+ 
+.SearchDiv input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+ 
+.SearchDiv input::placeholder {
+    color: #94a3b8;
+}
+
+ 
+.RecEnt {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+ 
+.ProjectContainer {
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+ 
+ 
+.ProjectTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+ 
+.ProjectTable thead {
+    background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+    border-bottom: 2px solid #e2e8f0;
+}
+ 
+.ProjectTable th {
+    padding: 13px 18px;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+}
+ 
+.ProjectTable th:first-child {
+    padding-left: 22px;
+    color: #2563eb;
+}
+ 
+ 
+.ProjectTable tbody tr {
+    transition: background 0.15s ease;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+}
+ 
+.ProjectTable tbody tr:last-child {
+    border-bottom: none;
+}
+ 
+.ProjectTable tbody tr:hover {
+    background: #f0f7ff;
+}
+ 
+.ProjectTable tbody tr:hover td:first-child {
+    color: #2563eb;
+}
+ 
+.ProjectTable td {
+    padding: 15px 18px;
+    font-size: 0.875rem;
+    color: #334155;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+ 
+.ProjectTable td:first-child {
+    font-weight: 600;
+    color: #1e293b;
+    padding-left: 22px;
+}
+ 
+
+.Badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+ 
+.Badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+ 
+
+.BadgeActive {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+.BadgeActive::before {
+    background: #22c55e;
+}
+ 
+
+.BadgeInProgress {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+.BadgeInProgress::before {
+    background: #3b82f6;
+}
+ 
+.BadgePending {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+.BadgePending::before {
+    background: #f59e0b;
+}
+ 
+.BadgeOnHold {
+    background: #fdf4ff;
+    color: #7e22ce;
+    border: 1px solid #e9d5ff;
+}
+.BadgeOnHold::before {
+    background: #a855f7;
+}
+ 
+.BadgeCancelled {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+.BadgeCancelled::before {
+    background: #ef4444;
+}
+ 
+
+.BadgeDefault {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+.BadgeDefault::before {
+    background: #94a3b8;
+}
+ 
+ 
+.EmptyState {
+    text-align: center;
+    padding: 3.5rem 1rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.ViewWin {
+    width: 100%;
+    height: 100%;
+    background: #f9fafb;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+}
+
+.ProjectSideBar{
+    display: flex;
+    flex-direction: column;
+    width: 325px;
+    background-color: rgb(0, 22, 63);
+}
+
+.ProjectSideBarTop{
+    padding: 1rem ;
+}
+
+.ProjectSideBarTop div:first-child{
+    font-size: 20px;
+    color: white;
+    padding-bottom: 10px;
+    padding-left: 15px;
+}
+
+.ProjectSideBarTop div:last-child{
+    font-size: 25px;
+    color: white;
+    padding: 15px;
+    background-color: rgb(0, 36, 102);
+    border-radius: 20px;
+    border-top: 2px solid rgb(0, 51, 146);
+    border-bottom: 2px solid rgb(0, 51, 146);
+}
+
+.ProjectSideBarBottom{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 1rem ;
+
+}
+
+.ProjectSideBarBottom div:first-child{
+    font-size: 18px;
+    color: rgb(221, 221, 221);
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(82, 82, 82);
+}
+
+.ProjectSideBarBottom div:last-child{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.ProjectSideBarBottom div:last-child button{
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+    text-align: left;
+    background-color: rgb(0, 22, 63);
+    margin-bottom: 5px;
+    color: white;
+    border: 1px solid rgb(0, 22, 63);
+    font-size: 16px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    align-items: center;
+}
+
+.ProjectSideBarBottom div:last-child button:hover{
+    background-color: rgb(0, 36, 102);
+    border: 1px solid rgb(0, 36, 102);
+}
+
+.HoverSideButton {
+    background-color: rgb(0, 36, 102) !important;
+    border: 1px solid rgb(0, 36, 102) !important;
+    border-left: 3px solid rgb(100, 160, 255) !important;
+}
+
+.ProjectMainContent {
+    flex: 1;
+    display: flex;             
+    flex-direction: column;    
+    min-height: 0;             
+    overflow: hidden;           
+}
+
+.ProjectMainContentWtOv {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ProjectMainHeader{
+    display: flex;
+    padding: 10px;
+    padding-left: 10px;
+    background-color: white;
+    border-bottom: 1px solid rgb(214, 214, 214);
+    align-items: center;
+}
+
+.ProjectMainHeaderIn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ProjectMainHeaderIn div{
+    color: #00275e;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+.ProjectMainHeaderBtns{
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ProjectMainHeaderBtns button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.CommentsBtn{
+    background-color: #edfffb;
+    border: 1px solid rgba(150, 231, 150, 0.719);
+    color: green;
+    transition: background-color 0.3s ease;
+}
+
+.CommentsBtn:hover{
+    background-color: #b8ffde;
+    border: 1px solid rgba(150, 231, 150, 0.719);
+    color: green;
+}
+
+.FinReportBtn{
+    background-color: #e5f7ff;
+    border: 1px solid rgba(150, 208, 231, 0.719);
+    color: rgb(0, 92, 128);
+    transition: background-color 0.3s ease;
+}
+
+.FinReportBtn:hover{
+    background-color: #b8eeff;
+    border: 1px solid rgba(150, 226, 231, 0.719);
+    color: rgb(0, 92, 128);
+}
+
+.DeleteProjBtn{
+    background-color: #fff5db;
+    border: 1px solid rgba(231, 212, 150, 0.719);
+    color: rgb(128, 98, 0);
+    transition: background-color 0.3s ease;
+}
+
+.DeleteProjBtn:hover{
+    background-color: #fff0ae;
+    border: 1px solid rgba(226, 205, 135, 0.719);
+    color: rgb(128, 98, 0);
+}
+
+.CloseProjBtn{
+    background-color: #f4e8ff;
+    border: 1px solid rgba(195, 150, 231, 0.719);
+    color: rgb(70, 0, 128);
+    transition: background-color 0.3s ease;
+}
+
+.CloseProjBtn:hover{
+    background-color: #dfb8ff;
+    border: 1px solid rgba(205, 135, 226, 0.719);
+    color: rgb(70, 0, 128);
+}
+
+.BackBtn{
+    background-color: #fffcfc;
+    border: 1px solid rgba(231, 150, 150, 0.719);
+    color: rgb(128, 15, 0);
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+}
+
+.BackBtn:hover{
+    background-color: #ffdada;
+    border: 1px solid rgba(226, 135, 135, 0.719);
+    color: rgb(128, 15, 0);
+}
+
+
+.ProjectMainContentShow {
+    flex: 1;
+    background-color: white;
+    min-height: 0;       
+    overflow-y: auto;     
+    padding: 20px;
+}
+
+.ProjectMainContentShowWtOv {
+    flex: 1;
+    height: 100%;
+    background-color: white;
+    padding: 20px;
+    overflow: visible;
+}
+
+.OvRoot {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+ 
+
+.OvHero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 100%);
+    border-radius: 14px;
+    padding: 26px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 36px;
+    color: #fff;
+    position: relative;
+}
+ 
+.OvHeroLeft {
+    flex-shrink: 0;
+}
+ 
+.OvHeroIdLabel {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 5px;
+}
+ 
+.OvHeroId {
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+}
+ 
+
+.OvHeroMeta {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 32px;
+}
+ 
+
+ 
+.OvHeroMetaLabel {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.38);
+    margin-bottom: 4px;
+}
+ 
+.OvHeroMetaValue {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.88);
+}
+ 
+.OvHeroAudit {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    min-width: 190px;
+}
+ 
+.OvAuditRow {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+}
+ 
+.OvAuditRow svg {
+    flex-shrink: 0;
+    color: rgba(255,255,255,0.35);
+}
+ 
+.OvAuditMono {
+    font-size: 11px;
+}
+ 
+
+.Pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+ 
+.PillDefault { background: rgba(255,255,255,0.1);  color: rgba(255,255,255,0.5); }
+.PillGreen   { background: rgba(74,222,128,0.15);  color: #4ade80; }
+.PillAmber   { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+.PillBlue    { background: rgba(96,165,250,0.15);  color: #60a5fa; }
+.PillPurple  { background: rgba(167,139,250,0.15); color: #a78bfa; }
+.PillIndigo  { background: rgba(129,140,248,0.15); color: #818cf8; }
+.PillRed     { background: rgba(248,113,113,0.15); color: #f87171; }
+ 
+
+.OvCard {
+    background: #fff;
+    border: 1px solid #e2e5ea;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+ 
+.OvCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 18px;
+    border-bottom: 1px solid #e2e5ea;
+    background: #fafbfc;
+}
+ 
+.OvCardHeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.OvCardHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+ 
+.OvCardIcon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #e8f0fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0066cc;
+    flex-shrink: 0;
+}
+ 
+.OvCardTitle {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #0d1b2a;
+}
+ 
+.OvCardBody {
+    padding: 18px;
+}
+ 
+
+.OvEditBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e5ea;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.14s ease;
+}
+ 
+.OvEditBtn:hover {
+    background: #f0f2f5;
+    border-color: #c8cdd6;
+    color: #0d1b2a;
+}
+ 
+.OvStakeholderBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1.5px dashed #93c5fd;
+    background: #eff6ff;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2563eb;
+    cursor: pointer;
+    transition: all 0.14s ease;
+}
+ 
+.OvStakeholderBtn:hover {
+    background: #dbeafe;
+    border-style: solid;
+}
+ 
+
+.OvGrid {
+    display: grid;
+    gap: 10px;
+}
+ 
+.OvGrid2 { grid-template-columns: 1fr 1fr; }
+.OvGrid3 { grid-template-columns: 1fr 1fr 1fr; }
+.OvGrid4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+ 
+@media (max-width: 900px) {
+    .OvGrid3, .OvGrid4 { grid-template-columns: 1fr 1fr; }
+}
+ 
+@media (max-width: 580px) {
+    .OvGrid2, .OvGrid3, .OvGrid4 { grid-template-columns: 1fr; }
+    .OvHero { flex-direction: column; gap: 20px; }
+    .OvHeroAudit { min-width: unset; width: 100%; }
+}
+ 
+.OvField {
+    background: #f5f6f8;
+    border: 1px solid #e2e5ea;
+    border-radius: 8px;
+    padding: 11px 13px;
+}
+ 
+.OvFieldLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #8896a8;
+    margin-bottom: 5px;
+}
+ 
+.OvFieldLabelIcon {
+    color: #8896a8;
+}
+ 
+.OvFieldValue {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d1b2a;
+    line-height: 1.4;
+    word-break: break-word;
+}
+ 
+.OvFieldValueMono {
+    font-size: 13px;
+}
+
+.TasksRoot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.TasksPanel {
+    background: #fff;
+    border: 1px solid #e2e5ea;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.TasksPanelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e5ea;
+}
+
+.TasksPanelHeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.TasksPanelHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.TasksPanelIcon {
+    color: #2563eb;
+    flex-shrink: 0;
+}
+
+.TasksPanelIconGreen {
+    color: #16a34a;
+    flex-shrink: 0;
+}
+
+.TasksPanelTitle {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #0d1b2a;
+}
+
+.TasksCounter {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    background: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.TasksAddBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    font-size: 12px;
+    font-weight: 700;
+    color: #16a34a;
+    cursor: pointer;
+    transition: all 0.14s ease;
+}
+
+.TasksAddBtn:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+.TasksList {
+    display: flex;
+    flex-direction: column;
+}
+
+.TaskRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.12s ease;
+}
+
+.TaskRow:last-child {
+    border-bottom: none;
+}
+
+.TaskRow:hover {
+    background: #f8fafc;
+}
+
+.TaskRowDone {
+    opacity: 0.55;
+}
+
+.TaskRowNum {
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    width: 18px;
+    flex-shrink: 0;
+}
+
+.TaskRowLabel {
+    flex: 1;
+    font-size: 14px;
+    color: #1e293b;
+    line-height: 1.45;
+}
+
+.TaskRowLabelDone {
+    text-decoration: line-through;
+    color: #758091;
+}
+
+.TaskRowBtns {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+
+.TaskDelBtn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid #fecaca;
+    background: #fff;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    flex-shrink: 0;
+}
+
+.TaskDelBtn:hover {
+    background: #fef2f2;
+    border-color: #f87171;
+    color: #dc2626;
+}
+
+.TaskDelBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: #e2e5ea;
+}
+
+.TaskDelBtn:disabled:hover {
+    background: #fff;
+    border-color: #e2e5ea;
+    color: #94a3b8;
+}
+
+.TaskCheckBtn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid #bfdbfe;
+    background: #fff;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    flex-shrink: 0;
+}
+
+.TaskCheckBtn:hover {
+    background: #eff6ff;
+    border-color: #60a5fa;
+    color: #2563eb;
+}
+
+.TaskCheckBtn:disabled {
+    cursor: not-allowed;
+}
+
+.TaskCheckBtnDone {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #16a34a;
+}
+
+.TaskCheckBtnDone:hover {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #16a34a;
+}
+
+.TasksEmpty {
+    padding: 48px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+
+.SsRoot {
+    background: #fff;
+    border: 1px solid #e2e5ea;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+ 
+.SsTopBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 18px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e5ea;
+    flex-shrink: 0;
+}
+ 
+.SsTopBarLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.SsTopBarIcon { color: #2563eb; }
+ 
+.SsTopBarTitle {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #0d1b2a;
+}
+ 
+.SsTopBarSub {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 1px;
+}
+ 
+.SsTopBarActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+ 
+.SsBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 13px;
+    border-radius: 7px;
+    border: 1px solid #e2e5ea;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    white-space: nowrap;
+}
+ 
+.SsBtn:hover {
+    background: #f0f2f5;
+    border-color: #c8cdd6;
+    color: #0d1b2a;
+}
+ 
+.SsBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+ 
+.SsBtnBlue {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #2563eb;
+}
+ 
+.SsBtnBlue:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+}
+ 
+.SsEmpty {
+    padding: 56px 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+ 
+.SsEmptyIcon { opacity: 0.22; }
+ 
+
+.SsBody {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+ 
+
+.SsVersionBar {
+    width: 120px;
+    min-width: 120px;
+    border-right: 1px solid #e2e5ea;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 8px;
+    gap: 4px;
+}
+ 
+.SsVersionBarLabel {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #94a3b8;
+    padding: 2px 4px 8px;
+    border-bottom: 1px solid #e2e5ea;
+    margin-bottom: 2px;
+}
+ 
+.SsVersionBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    text-align: left;
+    width: 100%;
+}
+ 
+.SsVersionBtn:hover {
+    background: #fff;
+    border-color: #e2e5ea;
+}
+ 
+.SsVersionBtnActive {
+    background: #fff !important;
+    border-color: #bfdbfe !important;
+    box-shadow: 0 1px 4px rgba(37,99,235,0.1);
+}
+ 
+.SsVersionNum {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+ 
+.SsVersionBtnActive .SsVersionNum { color: #2563eb; }
+ 
+.SsVersionSub {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+ 
+.SsDetail {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+}
+ 
+.SsDetail::-webkit-scrollbar { width: 5px; }
+.SsDetail::-webkit-scrollbar-thumb { background: #e2e5ea; border-radius: 3px; }
+ 
+
+.SsDetailStrip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+ 
+.SsDetailStripLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.SsDetailV {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0d1b2a;
+}
+ 
+.SsDetailTech {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+ 
+.SsDetailDate {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #5f6875;
+}
+ 
+
+.SsDesc {
+    background: #f8fafc;
+    border: 1px solid #e2e5ea;
+    border-left: 3px solid #2563eb;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.5;
+}
+ 
+
+.SsTableWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+ 
+.SsTableLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+}
+ 
+.SsTableCount {
+    font-weight: 600;
+    color: #94a3b8;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: 0;
+}
+ 
+.SsTableScroll {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1px solid #e2e5ea;
+}
+ 
+.SsTableScroll::-webkit-scrollbar { 
+    width: 5px; height: 5px; 
+}
+
+.SsTableScroll::-webkit-scrollbar-thumb { 
+    background: #e2e5ea; border-radius: 3px; 
+}
+ 
+.SsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+ 
+.SsTable thead tr {
+    background: #0d1b2a;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+ 
+.SsTable th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+ 
+.SsTable td {
+    padding: 10px 14px;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+}
+ 
+.SsTable tbody tr:last-child td { border-bottom: none; }
+.SsTable tbody tr:nth-child(even) { background: #f8fafc; }
+.SsTable tbody tr:hover { background: #eff6ff; }
+ 
+.SsTdMono {
+    font-size: 13px;
+}
+ 
+.SsDetailFooter {
+    display: flex;
+    gap: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.sechDiv{
+    display: flex;
+    align-items: center;
+}
+
+.sechDiv button{
+    width: 28px;
+    height: 28px;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+
+    color: rgb(187, 187, 187);
+    border: none;
+    border-radius: 50%;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.sechDiv button:hover{
+    color: rgb(0, 77, 107);
+}
+
+.sech {
+    color: #00275e;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 10px ;
+    font-size: 18px;
+}
+
+.HeadComp {
+    display: flex;
+    align-items: center;
+}
+
+.fieldPop {
+    margin-left: auto;
+    margin-right: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    background-color: white;
+    border: 2px dashed blue;
+    transition: border 0.3s ease ;
+}
+
+.fieldPop:hover{
+    background-color: #ffffff;
+    border: 2px solid blue;
+}
+
+.ProjectCustomer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.ProjecIn {
+    padding: 10px;
+    border: 1px dotted grey;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.ProjecIn > div:first-child{
+    padding: 10px;
+    font-size: 16px;
+}
+
+.ProjecIn > div:last-child{
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid gray;
+    color: #00293a;
+    border-radius: 5px;
+}
+
+.ProjecIn button{
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(49, 49, 49);
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.ProjecIn button:hover{
+    background-color: rgb(95, 95, 95);
+    transform: translateX(1px);
+}
+
+.ContentStart {
+    display: flex;
+    padding: 5px;
+    background-color: #d9e9ff;
+    border-radius: 30px;
+}
+
+.ContentStart div {
+    font-size: 16px;
+    color: #00293a;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.ContentStart button {
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    margin-left: auto;
+    margin-right: 10px;
+    transition: color 0.3s ease-in;
+    font-weight: 800;
+}
+
+.ContentStart button:hover {
+    color: #9f1239;
+}
+
+.GridThree{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.GridFour{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.GridTwo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.SamSubTables{
+    height: 100px;
+}
+
+.GridtF {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.TaskProp {
+    padding: 20px;
+    justify-content: center;
+    border: 1px dotted black;
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin: 5px;
+}
+
+.TaskProp > div:first-child{
+    padding: 5px;
+    justify-self: center;
+    margin-bottom: 5px;
+}
+
+.TaskComp {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(68, 44, 0);
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 10px;
+}
+
+.TaskComp div{
+    align-items: flex-start;
+    padding: 8px;
+    color: rgb(0, 44, 85);
+}
+
+.TrueBtn {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 50%;
+    border: 2px solid #bdbdbd;
+
+    background-color: white;
+    color: #414141;
+    margin-right: 6px;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.TrueBtn:hover {
+    background-color: #00cfd1;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 207, 209, 0.3);
+    transform: translateY(-0.5px);
+}
+
+.TrueBtn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 207, 209, 0.3);
+}
+
+.TrueBtn:disabled {
+    border: 2px solid #00dbdf;
+    color: #ffffff;
+    background-color: #00b6b9;
+
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.TrueBtn:disabled:hover {
+    background-color: #f5f5f5;
+    color: #b5b5b5;
+    box-shadow: none;
+    transform: none;
+}
+
+.DelBtn {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 50%;
+    border: 2px solid #ffecb8;
+
+    background-color: white;
+    color: #414141;
+
+    margin-left: auto;
+    margin-right: 5px;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.DelBtn:hover {
+    background-color: #d17d00;
+    color: white;
+    box-shadow: 0 4px 10px rgba(209, 136, 0, 0.3);
+    transform: translateY(-0.5px);
+}
+
+.DelBtn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(209, 59, 0, 0.3);
+}
+
+.DelBtn:disabled {
+    border: 2px solid #b1b1b1;
+    color: #b5b5b5;
+    background-color: #f5f5f5;
+
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.DelBtn:disabled:hover {
+    background-color: #f5f5f5;
+    color: #b5b5b5;
+    box-shadow: none;
+    transform: none;
+}
+
+.AddTaskBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.AddTaskBtn button{
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 50%;
+    border: 2px solid #00bd74;
+
+    background-color: white;
+    color: #414141;
+
+    margin-left: auto;
+    margin-right: 5px;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.AddTaskBtn button:hover{
+    background-color: #00bd74;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 209, 146, 0.3);
+    transform: translateY(-0.5px);
+}
+
+.AddTaskBtn button:active{
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 209, 157, 0.3);
+}
+
+
+.FalseBtn{
+    align-items: flex-end;
+    font-size: 14px;
+    border: 4px solid rgb(81, 81, 81);
+    color: rgb(0, 44, 85);
+    background-color: white;
+    border-radius: 100%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+.ProjecTabView {
+    padding: 10px;
+    border: 1px dotted grey;
+    border-radius: 5px;
+    margin: 10px;
+    height: 400px;
+}
+
+.ProjecTabView > div:first-child{
+    padding: 10px;
+    font-size: 16px;
+}
+
+.ProjecTabView > div:last-child{
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 320px;
+}
+
+.SamSubTables{
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.TableCont {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+
+.TableCont thead tr {
+    background-color: #005db4;
+    color: #ffffff;
+    text-align: left;
+}
+
+.TableCont th,
+.TableCont td {
+    padding: 12px 15px;
+}
+
+.TableCont tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.TableCont tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.TableCont tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.TableCont tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+
+.ProjecInOnBtn {
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.ProjecInBtn {
+    width: 200px;
+    justify-self:center;
+    color: white;
+    height: 100%;
+    padding: 6px 5px;
+    border: none;
+    border-radius: 20px;
+    background-image: linear-gradient(rgb(0, 80, 117),rgb(0, 66, 104));
+    transition: background-image 0.3s ease;
+    transition: transform 0.3s ease;
+}
+
+.ProjecInBtn:hover {
+    background-image: linear-gradient(rgb(0, 85, 141),rgb(0, 77, 129));  
+    transform: translateY(-2px); 
+    box-shadow: 3px 3px 5px rgb(103, 111, 114);
+}
+
+.ProjecOnBtn {
+    width: 50%;
+    justify-self:center;
+    color: white;
+    height: 100%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-image: linear-gradient(rgb(0, 92, 38),rgb(0, 77, 30));
+    transition: background-image 0.3s ease;
+}
+
+.ProjecOnBtn:hover {
+    background-image: linear-gradient(rgb(0, 141, 54),rgb(0, 129, 43));   
+}
+
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.269);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalBox {
+    background: #ffffff;
+    width: 70%;
+    max-width: 900px;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.modalHeader button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modalBody {
+  margin-top: 20px;
+  min-height: 0;
+}
+
+.formElem {
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formElem input,
+.formElem  select{
+    margin-top: 5px;
+    padding: 6px;
+    border: 1px solid rgb(88, 88, 88);
+    border-radius: 4px;
+}
+
+.formElem textarea {
+    margin-top: 5px;
+}
+
+.formElem button{
+    padding: 5px;
+    background-color: #005f77;
+    border: 1px dashed rgb(0, 80, 126);
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    width: 200px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.formElem button:hover{
+    background-color: #007ba1;
+}
+
+.formElem button:disabled{
+    cursor: not-allowed;
+    background-color: #004e66;
+}
+
+.formElem button:active{
+    border: 2px solid rgb(255, 202, 103);
+}
+
+.formElem button:focus{
+    border: 2px solid rgb(255, 202, 103);
+}
+
+.formElemel {
+    margin: 5px;
+}
+
+.modalBox textarea,
+.modalBox select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  margin-top: 6px;
+}
+
+.FinBtns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FinBtns button {
+    padding: 5px;
+    border: 1px solid rgb(71, 8, 0);
+    border-radius: 20px;
+    width: 120px;
+    margin: 2px;
+    background-color: #803300;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.FinBtns button:hover {
+    border: 1px solid gray;
+    background-color: #9e3f00;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 10px rgb(139, 157, 179);
+}
+
+
+.FinBtn button:disabled {
+    cursor: none;
+}
+
+
+
+
+
+.NewSopComp {
+    position: fixed;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #e6eaf0;
+    box-shadow:
+        0 10px 35px rgba(15, 23, 42, 0.12),
+        0 2px 10px rgba(15, 23, 42, 0.06);
+    z-index: 1000;
+    box-sizing: border-box;
+    animation: formFade 0.25s ease;
+}
+ 
+.NewSopComp::-webkit-scrollbar { width: 5px; }
+.NewSopComp::-webkit-scrollbar-thumb { background: #e2e5ea; border-radius: 3px; }
+ 
+@keyframes formFade {
+    from { opacity: 0; transform: translateY(-48%) translateX(16px); }
+    to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+ 
+.FormHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+ 
+.FormTitle {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0d1b2a;
+    margin: 0 0 4px;
+}
+ 
+.FormSubtitle {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+}
+ 
+.CloseBtn {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #f5f7fa;
+    color: #64748b;
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+ 
+.CloseBtn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+ 
+.FormSection {
+    margin-bottom: 18px;
+}
+ 
+.FormSectionLabel {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    padding-left: 2px;
+}
+ 
+.SopForm {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8fafc;
+}
+ 
+.SopFormDiv {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+ 
+.SopFormDiv label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+ 
+.SopFormDiv input,
+.SopFormDiv textarea,
+.SopFormDiv select {
+    width: 100%;
+    padding: 10px 13px;
+    border-radius: 10px;
+    border: 1px solid #dbe2ea;
+    background: #ffffff;
+    font-size: 13px;
+    color: #0f172a;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+ 
+.SopFormDiv input:focus,
+.SopFormDiv textarea:focus,
+.SopFormDiv select:focus {
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+ 
+.SopFormDiv input:disabled {
+    background: #f1f5f9;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+ 
+.SopFormDiv textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.5;
+}
+ 
+.SopFormGrid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+ 
+.InlinePillBtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1.5px solid #bfdbfe;
+    background: #eff6ff;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563eb;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    margin-left: 6px;
+}
+ 
+.InlinePillBtn:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+ 
+.RadioGroup {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0 4px;
+}
+ 
+.RadioLabel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    cursor: pointer;
+    margin: 0;
+}
+ 
+.RadioLabel input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+ 
+.StakeholderRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+ 
+.StakeholderFields {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+ 
+.StakeholderRemoveBtn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #dc2626;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.14s ease;
+    margin-bottom: 2px;
+}
+ 
+.StakeholderRemoveBtn:hover {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+}
+ 
+.StakeholderAddBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1.5px dashed #86efac;
+    background: #f0fdf4;
+    font-size: 12px;
+    font-weight: 700;
+    color: #16a34a;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    margin-top: 4px;
+    align-self: flex-start;
+}
+ 
+.StakeholderAddBtn:hover {
+    background: #dcfce7;
+    border-style: solid;
+}
+ 
+
+.DeliverablesList {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 160px;
+    overflow-y: auto;
+}
+ 
+.DeliverableItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.4;
+}
+ 
+.DeliverableDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2563eb;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+ 
+.LabelHint {
+    font-size: 10px;
+    font-weight: 500;
+    color: #94a3b8;
+    text-transform: none;
+    letter-spacing: 0;
+}
+ 
+
+.FormSubmitRow {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 8px;
+}
+ 
+.SubmitBtn {
+    padding: 11px 28px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+ 
+.SubmitBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.32);
+}
+ 
+.SubmitBtn:active {
+    transform: scale(0.98);
+}
+ 
+.SubmitBtn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+ 
+.loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+}
+ 
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+ 
+
+
+
+.commentOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.commentModal {
+    width: 100%;
+    max-width: 550px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.commentModalHead{
+    display: flex;
+}
+
+.commentModalHead div:last-child{
+    margin-left: auto;
+    vertical-align: top;
+}
+
+.commentModalHead div:last-child button{
+    border-radius: 4px;
+    background-color: white;
+    color: grey;
+    border: 1px solid grey;
+    width: 25px;
+    height: 25px;
+}
+
+.commentModalHead div:last-child button:hover{
+    background-color: rgba(255, 0, 0, 0.199);
+    color: rgb(124, 82, 82);
+    border: 1px solid rgb(150, 0, 0);
+    cursor: pointer;
+}
+
+.commentTitle {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.commentSubtitle {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.commentInput {
+    width: 100%;
+    min-height: 130px;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.commentInput:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.buttonContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submitButton {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+}
+
+.deleteButton {
+    border: none;
+    background: #eb2525;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+}
+
+.submitButton:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.deleteButton:hover {
+    background: #d81d1d;
+    transform: translateY(-1px);
+}
+
+.submitButton:active {
+    transform: translateY(0);
+}
+
+.deleteButton:active {
+    transform: translateY(0);
+}
+
+.acknoListBox {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #f1f1f1;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 0 12px;
+    background: #f8f8f8;
+}
+
+.acknoListTitle {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888888;
+    margin-bottom: 8px;
+}
+
+.acknoItem {
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+}
+
+.acknoItemHead {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.acknoBy {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2d2d2d;
+}
+
+.acknoDate {
+    font-size: 11px;
+    color: #888888;
+}
+
+.acknoComment {
+    font-size: 12px;
+    color: #555555;
+    white-space: pre-wrap;
+    border-left: 2px solid #007736;
+    padding-left: 8px;
+    margin-top: 4px;
+}
+
+.acknoEmpty {
+    font-size: 12px;
+    color: #aaaaaa;
+    font-style: italic;
+    text-align: center;
+    padding: 12px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

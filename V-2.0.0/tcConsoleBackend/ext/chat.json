@@ -1,0 +1,56 @@
+[
+    {
+        "id": "ObjectId()",
+        "userId": "ObjectId('6992c3c33e6e3328098ce5b0')",  
+        "title": "Custom Service Client Discussion",
+        "model": "gpt-4.1",
+        "createdAt": "ISODate()",
+        "updatedAt": "ISODate()",
+        "isArchived": false
+    },
+    {
+        "id": "ObjectId()",
+        "userId": "ObjectId('6992c3c33e6e3328098ce5b0')",  
+        "title": "Custom Service Client Discussion",
+        "model": "gpt-4.1",
+        "createdAt": "ISODate()",
+        "updatedAt": "ISODate()",
+        "isArchived": false
+    },
+    {
+        "id": "ObjectId()",
+        "userId": "ObjectId('6992c3c33e6e3328098ce5b0')",  
+        "title": "Custom Service Client Discussion",
+        "model": "gpt-4.1",
+        "createdAt": "ISODate()",
+        "updatedAt": "ISODate()",
+        "isArchived": false
+    },
+    {
+        "id": "ObjectId()",
+        "userId": "ObjectId('6992c3c33e6e3328098ce5b0')",  
+        "title": "Custom Service Client Discussion",
+        "model": "gpt-4.1",
+        "createdAt": "ISODate()",
+        "updatedAt": "ISODate()",
+        "isArchived": false
+    },
+    {
+        "id": "ObjectId()",
+        "userId": "ObjectId('6992c3c33e6e3328098ce5b0')",  
+        "title": "Custom Service Client Discussion",
+        "model": "gpt-4.1",
+        "createdAt": "ISODate()",
+        "updatedAt": "ISODate()",
+        "isArchived": false
+    },
+    {
+        "id": "ObjectId()",
+        "userId": "ObjectId('6992c3c33e6e3328098ce5b0')",  
+        "title": "Custom Service Client Discussion",
+        "model": "gpt-4.1",
+        "createdAt": "ISODate()",
+        "updatedAt": "ISODate()",
+        "isArchived": false
+    }
+]
